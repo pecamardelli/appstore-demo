@@ -1,8 +1,5 @@
-# Dependencies
-node-modules/
-
-### Automatically created by GitHub
 # Logs
+log/
 logs
 *.log
 npm-debug.log*

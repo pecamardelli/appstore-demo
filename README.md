@@ -1,7 +1,7 @@
-# Alkemy Challenge
+# App Store
 
-App store application intended to be similar to Google Play Store.
-
+A Google Play like app store.
+- RESTful API.
 - Backend developed using [Node.js](https://nodejs.org/en/) and [Express.js](http://expressjs.com/en/) as the `http` framework.
 - All the data is stored in a relational database. I preferred to use the old and trusty [MySQL](https://www.mysql.com/).
 - Frontend developed using [React.js](https://reactjs.org/)
@@ -43,7 +43,7 @@ NODE_ENV=development
 
 If you need to install MySQL server on your machine, check [this reference](https://dev.mysql.com/doc/refman/8.0/en/installing.html). If you have a remote host, provide all information in the `.env` file.
 
-Next, run the database setup script located at the `db` folder.
+Next, move to root folder and run the database setup script located at the `db` folder.
 
 ```sh
 node db/db-setup.js
@@ -53,4 +53,6 @@ This script will do the following:
 
 - Create a database with the name specified in the `.env` file.
 - Create the `users` table and populate it with several developer and client role entries.
-- Create the `apps` table and populate it with 
+- Create the `categories` table and populate it with some entries.
+- Create the `apps` table and populate it with entries linked to a user.
+- Create the `purchases` table and populate it with some sales linked to a client user.
