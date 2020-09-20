@@ -4,6 +4,7 @@ import RegisterForm   from './components/registerForm';
 import NotFound       from './components/common/not-found';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (

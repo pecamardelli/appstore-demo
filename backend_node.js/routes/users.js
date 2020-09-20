@@ -1,28 +1,29 @@
-const	auth				= require('../middleware/middle_auth');
-const	jwt					= require('jsonwebtoken');
-const	config				= require('config');
-const	jpc					= require('joi-password-complexity');
-const	bcrypt				= require('bcrypt');
-const	_					= require('lodash');
-const	{ User, validate }	= require('../models/model_user');
-const	mongoose			= require('mongoose');
-const	express				= require('express');
+//const	auth		= require('../middleware/middle_auth');
+const	jwt			= require('jsonwebtoken');
+const	config		= require('config');
+const	jpc			= require('joi-password-complexity');
+const	bcrypt		= require('bcryptjs');
+const	_			= require('lodash');
+const	User		= require('../models/model_user');
+const	express		= require('express');
 
 const router	= express.Router();
 
-router.get('/me', auth, async (req, res) => {
+router.get('/me', async (req, res) => {
 	const user	= await User.findById(req.body._id).select('-password');
 	res.send(user);
 });
 
 router.post('/', async (req, res) => {
-	// Check the validity of the received data. If invalid, return a 400 error.
-	const { error }	= validate(req.body);		// We only need the error object.
-	
-	if (error) return res.status(400).send(error.details[0].message);
-	
+	console.log(req.body)
+	const user	= User.build(req.body);
+	user.save()
+		.then(console.log('Orale'))
+		.catch(({ errors }) => res.status(400).send(errors[0].message));
+	/*
 	let user	= await User.findOne({ email: req.body.email });
 	if (user) return res.status(400).send('The user is already registered.');
+	
 	
 	const jpc_res	= jpc().validate(req.body.password);
 	console.log(jpc_res);
@@ -35,6 +36,8 @@ router.post('/', async (req, res) => {
 	await user.save();
 	const token	= user.generateAuthToken();
 	res.header('x-auth-token', token).send(_.pick(user, [ '_id', 'name', 'email' ]));
+	*/
+	//res.send('ok');
 });
 
 module.exports	= router;

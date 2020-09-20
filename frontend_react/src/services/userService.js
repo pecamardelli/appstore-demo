@@ -1,4 +1,4 @@
-import http from './httpService';
+import http 		from './httpService';
 import userObject	from '../includes/userObject';
 
 export function register(user) {

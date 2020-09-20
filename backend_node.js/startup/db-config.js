@@ -10,24 +10,22 @@ const dbDebugger	= require('debug')('app:db');	// Definnig the database debug na
 //const mysql			= require('mysql');				// Using MySQL as the relational database.
 const { Sequelize }	= require('sequelize');
 
-if (!process.env.DB_HOST ||
-	!process.env.DB_PASSWORD ||
-	!process.env.DB_USER ||
-	!process.env.DB_PORT ||
-	!process.env.DB_NAME)
+if (!process.env.APP_STORE_DB_HOST ||
+	!process.env.APP_STORE_DB_PASSWORD ||
+	!process.env.APP_STORE_DB_USER ||
+	!process.env.APP_STORE_DB_PORT ||
+	!process.env.APP_STORE_DB_NAME)
 	{
-	module.exports.db	= undefined;
-	dbDebugger('Not connecting to database: env variables undefined.');
-	return null;
+	throw new Error('Not connecting to MySQL: Environment variables not set.');
 }
 
 module.exports = new Sequelize(
-	process.env.DB_NAME,
-	process.env.DB_USER,
-	process.env.DB_PASSWORD,
+	process.env.APP_STORE_DB_NAME,
+	process.env.APP_STORE_DB_USER,
+	process.env.APP_STORE_DB_PASSWORD,
 	{
-		host:		process.env.DB_HOST,
-		port:		process.env.DB_PORT,
+		host:		process.env.APP_STORE_DB_HOST,
+		port:		process.env.APP_STORE_DB_PORT,
 		dialect:	'mysql'
 	}
 );

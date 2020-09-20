@@ -3,7 +3,7 @@ const	jwt			= require('jsonwebtoken');
 const { Sequelize }	= require('sequelize');
 const sequelize		= require('../startup/db-config');
 
-const roles	= [ 'client', 'developer' ];
+const roles	= [ 'Client', 'Developer' ];
 
 module.exports	= sequelize.define('user', {
 	id: {
@@ -42,4 +42,22 @@ module.exports	= sequelize.define('user', {
 
 sequelize.sync()
 	.then(function() {})
-	.catch(function(error) {});
+	.catch(function(error) {console.log('Error syncing db', error)});
+
+/*
+const User = require('./models/model_user');
+User.create({
+        firstname:  'Pablin',
+        lastname:   'Camardelli',
+        email:      'pecamardelli@gmail.com',
+        role:       'developer',
+        username:   'elmaspablin',
+        password:   'Pablin324'
+    })
+    .then(console.log('Usuario creado...'))
+    .catch(err => console.log(err.errors.map(e => e.message)));
+
+
+User.findOne({ where: { username: 'elmaspablin' }})
+.then(user => console.log(user.username))
+*/
