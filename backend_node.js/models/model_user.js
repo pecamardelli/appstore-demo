@@ -1,11 +1,11 @@
-const	config		= require('config');
-const	jwt			= require('jsonwebtoken');
 const { Sequelize }	= require('sequelize');
 const sequelize		= require('../startup/db-config');
+const jwt			= require('jsonwebtoken');
+const config		= require('config');
 
 const roles	= [ 'Client', 'Developer' ];
 
-module.exports	= sequelize.define('user', {
+const User	= sequelize.define('User', {
 	id: {
 		type:			Sequelize.INTEGER,
 		primaryKey:		true,
@@ -27,12 +27,12 @@ module.exports	= sequelize.define('user', {
 	email: {
 		type:		Sequelize.STRING,
 		unique:		true,
-		validate:	{ isEmail: true }
+		validate:	{ max: 255, notEmpty: true, isEmail: true }
 	},
 	username: {
 		type:		Sequelize.STRING,
 		unique:		true,
-		validate:	{ max: 255 }
+		validate:	{ max: 255, notEmpty: true }
 	},
 	password: {
 		type:		Sequelize.STRING,
@@ -40,10 +40,18 @@ module.exports	= sequelize.define('user', {
 	}
 });
 
-sequelize.sync()
-	.then(function() {})
-	.catch(function(error) {console.log('Error syncing db', error)});
+const generateAuthToken =  (id, username, role) => {
+	const token	= jwt.sign({ id, username, role }, config.get('jwtPrivateKey'));
+	return token;
+}
 
+sequelize.sync()
+	.then(() => { /* Do nothing for now */ })
+	.catch((error) => { console.log('Error syncing users table', error) });
+
+
+module.exports.User					= User;
+module.exports.generateAuthToken	= generateAuthToken;
 /*
 const User = require('./models/model_user');
 User.create({

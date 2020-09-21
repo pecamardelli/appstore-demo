@@ -1,13 +1,14 @@
 import http			from './httpService';
 import jwtDecode	from 'jwt-decode';
 
-// Extracting this key to a constant. Just to make the code more cleaner.
+// Extracting this key to a constant. Just to clean up the code.
 const tokenKey	= 'token';
 
 http.setJwt(getJwt());
 
-export async function login({ username, password }) {
-	const { data: jwt }	= await http.post('/auth', { username, password });
+export async function login({ email, password }) {
+	const { data: jwt }	= await http.post('/auth', { email, password });
+
 	localStorage.setItem(tokenKey, jwt);
 }
 

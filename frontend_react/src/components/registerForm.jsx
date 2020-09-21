@@ -1,5 +1,6 @@
 import React		from 'react';
 import Joi			from 'joi-browser';
+import { Link }		from 'react-router-dom';
 import { toast }	from 'react-toastify';
 import { register }	from '../services/userService';
 import Form from	'./common/form';
@@ -83,6 +84,7 @@ class RegisterForm extends Form {
 							{ this.renderInput('confirmPassword', 'Confirm password', 'password')}
 							{ this.renderButton('Register') }
 						</form>
+						<br />Already registered? <Link to='/login'>Login</Link>
 					</div>
 				</div>
 			</React.Fragment>

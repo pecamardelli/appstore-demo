@@ -17,9 +17,23 @@ router.get('/me', async (req, res) => {
 router.post('/', async (req, res) => {
 	console.log(req.body)
 	const user	= User.build(req.body);
+
+	try {
+		await user.save();
+		res.send('User successfully registered!');
+	}
+	catch ({ errors }) {
+		const msg	= (errors[0].type === 'unique violation') ? `${errors[0].value} is registered` : errors[0].message;
+		res.status(400).send(msg)
+	}
+
+	/*
 	user.save()
-		.then(console.log('Orale'))
-		.catch(({ errors }) => res.status(400).send(errors[0].message));
+		.then()
+		//.catch(({ errors }) => console.log(errors));
+		.catch(({ errors }) => {
+			
+		});
 	/*
 	let user	= await User.findOne({ email: req.body.email });
 	if (user) return res.status(400).send('The user is already registered.');
