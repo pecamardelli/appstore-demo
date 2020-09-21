@@ -1,3 +1,7 @@
+/*
+ *	User authentication services are defined here.
+*/
+
 import http			from './httpService';
 import jwtDecode	from 'jwt-decode';
 
@@ -6,16 +10,19 @@ const tokenKey	= 'token';
 
 http.setJwt(getJwt());
 
+// Send the login http request to the backend and store the token.
 export async function login({ email, password }) {
 	const { data: jwt }	= await http.post('/auth', { email, password });
 
 	localStorage.setItem(tokenKey, jwt);
 }
 
+// Perform an automatic login when a new user is registered.
 export function loginWithJwt(jwt) {
 	localStorage.setItem(tokenKey, jwt);
 }
 
+// Decode the jwt and return the user. Otherwise, show the error message.
 export function getCurrentUser() {
 	try {
 		const jwt	= localStorage.getItem(tokenKey);

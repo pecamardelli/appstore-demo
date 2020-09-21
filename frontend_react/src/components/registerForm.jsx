@@ -3,8 +3,8 @@ import Joi			from 'joi-browser';
 import { Link }		from 'react-router-dom';
 import { toast }	from 'react-toastify';
 import { register }	from '../services/userService';
-import Form from	'./common/form';
-import auth from	'../services/authService';
+import auth 		from '../services/authService';
+import Form 		from './common/form';
 import userObject	from '../includes/userObject';
 
 class RegisterForm extends Form {
@@ -50,12 +50,13 @@ class RegisterForm extends Form {
 			// The backend has to send the jason web token in order to login from here and
 			// avoid the need of logging in from the form.
 			// The web token can be on the header of the http response or within the body.
-			auth.loginWithJwt(response.headers['x-auth-token']);
+			console.log(response)
+			//auth.loginWithJwt(response.headers['x-auth-token']);
+			auth.loginWithJwt(response.data);
 			toast.success(`User '${this.state.data.name}' succesfully registered!`);
 			// Using the history object to move to the home page will not re-render the app component
 			// We need to do a full page reload to update the navbar with the name of the logged in user
 			// as well as the logout link.
-			//this.props.history.push('/movies');
 			window.location	= '/';
 		}
 		catch (ex) {
@@ -69,22 +70,33 @@ class RegisterForm extends Form {
 	};
 	
 	render() {
-		return (
+		if(auth.getCurrentUser()) {
+			toast.error('Cannot register while logged in!');
+			this.props.history.push('/apps');
+			return null;
+		}
+		else return (
 			<React.Fragment>
-				<h1>Register</h1>
-				<div className='row'>
-					<div className='col-5 mx-auto'>
-						<form onSubmit={this.handleSubmit} >
-							{ this.renderInput('firstname', 'First name') }
-							{ this.renderInput('lastname', 'Last name') }
-							{ this.renderInput('email', 'Email', 'email') }
-							{ this.renderSelect('role', 'Role', this.roles) }
-							{ this.renderInput('username', 'Username') }
-							{ this.renderInput('password', 'Password', 'password')}
-							{ this.renderInput('confirmPassword', 'Confirm password', 'password')}
-							{ this.renderButton('Register') }
-						</form>
-						<br />Already registered? <Link to='/login'>Login</Link>
+				<div className='row' style={{ marginTop: '1%' }}>
+					<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
+						<div className="card-header">
+							<h4 className="card-title">REGISTER</h4>
+						</div>
+						<div className="card-body">
+							<form onSubmit={this.handleSubmit} >
+								{ this.renderInput('firstname', 'First name') }
+								{ this.renderInput('lastname', 'Last name') }
+								{ this.renderInput('email', 'Email', 'email') }
+								{ this.renderSelect('role', 'Role', this.roles) }
+								{ this.renderInput('username', 'Username') }
+								{ this.renderInput('password', 'Password', 'password')}
+								{ this.renderInput('confirmPassword', 'Confirm password', 'password')}
+								{ this.renderButton('Register') }
+							</form>
+						</div>
+						<div className="card-footer bg-light border-secondary">
+						Already registered? <Link to='/login'>Login</Link>
+						</div>
 					</div>
 				</div>
 			</React.Fragment>

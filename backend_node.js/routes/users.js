@@ -1,10 +1,10 @@
 //const	auth		= require('../middleware/middle_auth');
+const	{ User, generateAuthToken }	= require('../models/model_user');
 const	jwt			= require('jsonwebtoken');
 const	config		= require('config');
 const	jpc			= require('joi-password-complexity');
 const	bcrypt		= require('bcryptjs');
 const	_			= require('lodash');
-const	User		= require('../models/model_user');
 const	express		= require('express');
 
 const router	= express.Router();
@@ -20,10 +20,13 @@ router.post('/', async (req, res) => {
 
 	try {
 		await user.save();
-		res.send('User successfully registered!');
+		const token	= generateAuthToken(user.id, user.username, user.role);
+		//res.header('x-auth-token', token).send('User successfully registered!');
+		res.send(token);
 	}
-	catch ({ errors }) {
-		const msg	= (errors[0].type === 'unique violation') ? `${errors[0].value} is registered` : errors[0].message;
+	catch (ex) {
+		const msg	= (ex.errors[0].type === 'unique violation') ?
+			`${ex.errors[0].value} is registered` : ex.errors[0].message;
 		res.status(400).send(msg)
 	}
 
