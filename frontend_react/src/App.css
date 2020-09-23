@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.btn {
+  width: 100px;
+  margin-right: 10px;
+}
+
+.btn-outline-danger:hover {
+  background-color: #cc3300 !important;
+}
+
+.bi {
+  fill: #CC3300;
+  margin-right: 10px;
+}
+
+.bi:hover {
+  fill: gray;
+  margin-right: 10px;
+}

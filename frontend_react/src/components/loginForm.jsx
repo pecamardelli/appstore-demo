@@ -11,13 +11,6 @@ class LoginForm extends Form {
 		errors: {}
 	};
 	
-	//username	= React.createRef();
-	
-	componentDidMount() {
-		// Use refs only when necessary. In this case, using the autoFocus atributte would be a better choice
-		//this.username.current.focus();
-	}
-	
 	schema	= {
 		email:		Joi.string().min(5).max(64).required().email().label('Email'),
 		password:	Joi.string().min(8).max(64).required().label('Password')
@@ -47,14 +40,6 @@ class LoginForm extends Form {
 	};
 	
 	render() {
-		//if(auth.getCurrentUser()) return <Redirect to='/movies' />;
-		/*
-		if(auth.getCurrentUser()) {
-			toast.error('You already are logged in, klutz!');
-			return <Redirect to='/movies' />;
-		}
-		*/
-
 		return (
 			<React.Fragment>
 				<div className='row' style={{ marginTop: '10%' }}>
@@ -70,7 +55,7 @@ class LoginForm extends Form {
 							</form>
 						</div>
 						<div className="card-footer bg-light border-secondary">
-							Don't have a user yet? <Link to='/register'>Register</Link>
+							Don't have a user yet? <Link to='/register'>Sign up!</Link>
 						</div>
 					</div>
 				</div>

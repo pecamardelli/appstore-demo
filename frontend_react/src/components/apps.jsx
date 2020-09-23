@@ -1,11 +1,11 @@
 import React from 'react';
 
-const apps = () => {
+function Apps(props) {
     return (
         <div>
-            <h1>The Apps Component</h1>
+            <h1>The Apps Component!</h1>
         </div>
     );
-};
+}
 
-export default apps;
+export default Apps;

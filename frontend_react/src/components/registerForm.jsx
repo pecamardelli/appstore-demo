@@ -1,4 +1,4 @@
-import React		from 'react';
+import React, { Fragment }	from 'react';
 import Joi			from 'joi-browser';
 import { Link }		from 'react-router-dom';
 import { toast }	from 'react-toastify';
@@ -33,16 +33,7 @@ class RegisterForm extends Form {
 			}
 		}).label('Confirm password')
 	};
-	/*
 	
-		confirmPassword: Joi.string().equal(Joi.ref('password')).required().options({
-			language:{
-				any: {
-					allowOnly: ' does not match'
-				}
-			}
-		}).label('Confirm password')
-	*/
 	doSubmit = async() => {
 		try {
 			const new_user	= { ...this.state.data };
@@ -56,7 +47,7 @@ class RegisterForm extends Form {
 			toast.success(`User '${this.state.data.name}' succesfully registered!`);
 			// Using the history object to move to the home page will not re-render the app component
 			// We need to do a full page reload to update the navbar with the name of the logged in user
-			// as well as the logout link.
+			// as well as the user menu.
 			window.location	= '/';
 		}
 		catch (ex) {
@@ -76,11 +67,11 @@ class RegisterForm extends Form {
 			return null;
 		}
 		else return (
-			<React.Fragment>
+			<Fragment>
 				<div className='row' style={{ marginTop: '1%' }}>
 					<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
 						<div className="card-header">
-							<h4 className="card-title">REGISTER</h4>
+							<h4 className="card-title">SIGN UP!</h4>
 						</div>
 						<div className="card-body">
 							<form onSubmit={this.handleSubmit} >
@@ -95,11 +86,11 @@ class RegisterForm extends Form {
 							</form>
 						</div>
 						<div className="card-footer bg-light border-secondary">
-						Already registered? <Link to='/login'>Login</Link>
+							Already registered? <Link to='/login'>Sign in!</Link>
 						</div>
 					</div>
 				</div>
-			</React.Fragment>
+			</Fragment>
 		);
 	}
 }
