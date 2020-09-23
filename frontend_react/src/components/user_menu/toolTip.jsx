@@ -1,9 +1,7 @@
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import React    from 'react';
 
-const MenuEntry = (props) => {
-    const iconSize  = '1.5em';
-
+const ToolTipEntry = (props) => {
     const renderTooltip = (overlayProps) => (
         <Tooltip id="button-tooltip" { ...overlayProps }>
           { props.tip }
@@ -21,4 +19,4 @@ const MenuEntry = (props) => {
     );
 }
 
-export default MenuEntry;
+export default ToolTipEntry;
