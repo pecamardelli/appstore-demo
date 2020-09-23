@@ -2,7 +2,7 @@ import React, { useState }	from 'react';
 import { Link, NavLink }	from 'react-router-dom';
 import logo		from '../../images/logo100.png';
 import auth		from '../../services/authService';
-import UserMenu from './userMenu';
+import UserMenu from './user_menu/userMenu';
 import SignMenu from './signMenu';
 
 const NavBar	= () => {
