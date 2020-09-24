@@ -3,7 +3,7 @@ const userObject = {
     firstname:  '',
     lastname:   '',
     email:      '',
-    role:       '',
+    roleId:     0,
     username:   '',
     password:   ''
 };

@@ -8,17 +8,17 @@ function ProfileMenu(props) {
         <Table hover size="sm" style={{ marginTop: '15px'}}>
             <tbody>
                 <tr>
-                    <Link to='/apps'>
+                    <Link to='/me/products'>
                         <td style={{ textAlign: "right"}}>
                             <h6 style={{ marginTop: '3px'}} className='text-secondary'>
-                                My apps
+                                My products
                             </h6>
                         </td>
-                        <td style={{ width: '20%'}}>{ userMenuIcons.myAppsIcon() }</td>
+                        <td style={{ width: '20%'}}>{ userMenuIcons.myProductsIcon() }</td>
                     </Link>
                 </tr>
                 <tr>
-                    <Link to='/apps'>
+                    <Link to='/me'>
                         <td style={{ textAlign: "right"}}>
                             <h6 style={{ marginTop: '3px'}} className='text-secondary'>
                                 My profile

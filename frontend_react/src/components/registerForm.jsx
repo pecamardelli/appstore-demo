@@ -1,28 +1,31 @@
-import React, { Fragment }	from 'react';
+import React, { Fragment }		from 'react';
+import { register, getRoles }	from '../services/userService';
 import Joi			from 'joi-browser';
 import { Link }		from 'react-router-dom';
 import { toast }	from 'react-toastify';
-import { register }	from '../services/userService';
 import auth 		from '../services/authService';
 import Form 		from './common/form';
 import userObject	from '../includes/userObject';
+import http			from '../services/httpService';
+
 
 class RegisterForm extends Form {
 	state	= {
-		data: userObject,
+		data:	userObject,
+		roles:	[],
 		errors: {}
 	};
 	
-	roles	= [
-		{ name: 'Client', id: 1 },
-		{ name: 'Developer', id: 2 }
-	];
+	async componentDidMount() {
+		const { data: roles}	= await getRoles();
+		this.setState({ roles });
+	}
 
 	schema	= {
 		firstname:	Joi.string().min(1).max(255).required().label('First name'),
 		lastname:	Joi.string().min(1).max(255).required().label('Last name'),
 		email:		Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required().label('Email'),
-		role:		Joi.string().min(1).max(255).required().label('Role'),
+		roleId:		Joi.string().min(1).max(255).required().label('Role'),
 		username:	Joi.string().min(1).max(255).required().label('Username'),
 		password:	Joi.string().min(8).max(64).required().label('Password'),
 		confirmPassword: Joi.string().equal(Joi.ref('password')).min(8).max(64).required().options({
@@ -37,6 +40,7 @@ class RegisterForm extends Form {
 	doSubmit = async() => {
 		try {
 			const new_user	= { ...this.state.data };
+			console.log(new_user)
 			const response	= await register(new_user);
 			// The backend has to send the jason web token in order to login from here and
 			// avoid the need of logging in from the form.
@@ -78,7 +82,7 @@ class RegisterForm extends Form {
 								{ this.renderInput('firstname', 'First name') }
 								{ this.renderInput('lastname', 'Last name') }
 								{ this.renderInput('email', 'Email', 'email') }
-								{ this.renderSelect('role', 'Role', this.roles) }
+								{ this.renderSelect('roleId', 'Role', this.state.roles) }
 								{ this.renderInput('username', 'Username') }
 								{ this.renderInput('password', 'Password', 'password')}
 								{ this.renderInput('confirmPassword', 'Confirm password', 'password')}

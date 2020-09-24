@@ -1,39 +1,40 @@
 import React, { Fragment }	from 'react';
-import Joi			from 'joi-browser';
-import { toast }	from 'react-toastify';
-import auth 		from '../services/authService';
-import Form 		from './common/form';
+import { submitCategory }	from './../services/categoryService';
+import { getProducts }	from '../services/productService';
+import { toast }		from 'react-toastify';
+import Form 			from './common/form';
+import Joi				from 'joi-browser';
 
 class CategoryForm extends Form {
 	state	= {
-		data: {},
-		errors: {}
+		data: 		{},
+		products:	[],
+		errors:		{}
 	};
 	
-	products	= [
-		{ name: 'Application', id: 1 },
-		{ name: 'Movie', id: 2 },
-		{ name: 'Music', id: 3 },
-		{ name: 'Book', id: 4 }
-	];
+	async componentDidMount() {
+		const { data: products }	= await getProducts();
+		this.setState({ products });
+	}
 
 	schema	= {
-		product:	Joi.string().min(1).max(255).required().label('Product'),
-		name:   	Joi.string().min(1).max(255).required().label('Name')
+		productId:		Joi.number().min(1).max(255).required().label('Product'),
+		displayName:   	Joi.string().min(1).max(255).required().label('Name')
 	};
 	
 	doSubmit = async() => {
 		try {
             console.log('Submitting:', this.state.data)
-            /*
-			const new_user	= { ...this.state.data };
-            const response	= await register(new_user);
             
-			auth.loginWithJwt(response.data);
-            toast.success(`User '${this.state.data.name}' succesfully registered!`);
-            
-            window.location	= '/';
-            */
+			const newCategory	= { ...this.state.data };
+
+			try {
+				await submitCategory(newCategory)
+				toast.success(`Category '${this.state.data.name}' succesfully submitted!`);
+			}
+			catch(ex) {
+				toast.error(`Error: ${ex.message}`)
+			}
 		}
 		catch (ex) {
 			if(ex.response && ex.response.status === 400) {
@@ -55,8 +56,8 @@ class CategoryForm extends Form {
 						</div>
 						<div className="card-body">
 							<form onSubmit={this.handleSubmit} >
-								{ this.renderSelect('product', 'Product', this.products) }
-								{ this.renderInput('name', 'Name') }
+								{ this.renderSelect('productId', 'Product', this.state.products) }
+								{ this.renderInput('displayName', 'Name') }
 								{ this.renderButton('Add') }
 							</form>
 						</div>

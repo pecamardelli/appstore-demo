@@ -10,3 +10,7 @@ export function register(user) {
 
 	return http.post('/users', newUser);
 }
+
+export function getRoles() {
+	return http.get('/users/signuproles');
+}

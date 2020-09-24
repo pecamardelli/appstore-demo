@@ -11,6 +11,7 @@ const	logger	= require('./lib/logger');
 const	express	= require('express');
 const	app		= express();
 
+require('./models/modelProduct')
 require('./startup/routes')(app);
 require('./startup/config')();
 //require('./startup/logging')();

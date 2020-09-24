@@ -12,7 +12,7 @@ export default class Form extends Component {
 	validate = () => {
 		//const result	= this.schema.validate(this.state.data);
 		const { error }	= Joi.validate(this.state.data, this.schema, { abortEarly: false });
-		
+		console.log(error)
 		if(!error) return null;
 	
 		const errors	= {};	
@@ -25,6 +25,8 @@ export default class Form extends Component {
 		let obj;
 		let schema;
 
+		// It is required to validate both password boxes because
+		// confirmPassword references password.
 		if(name === 'confirmPassword') {
 			obj	= {
 				password:			this.state.data.password,
@@ -43,7 +45,6 @@ export default class Form extends Component {
 		}
 
 		const { error }	= Joi.validate(obj, schema);
-		
 		return error ? error.details[0].message : null;
 	};
 	
@@ -60,7 +61,7 @@ export default class Form extends Component {
 	handleChange	= ({ currentTarget: input }) => {
 		const errors		= { ...this.state.errors };
 		const errMsg		= this.validateProperty(input);
-		console.log(errMsg)
+		
 		if(errMsg) errors[input.name] = errMsg;
 		else delete errors[input.name];
 		

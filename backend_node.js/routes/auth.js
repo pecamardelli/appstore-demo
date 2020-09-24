@@ -1,4 +1,4 @@
-const { User, generateAuthToken }	= require('../models/model_user');
+const { User, generateAuthToken }	= require('../models/modelUser');
 const Joi		= require('joi');
 const bcrypt	= require('bcryptjs');
 const express	= require('express');

@@ -12,15 +12,15 @@ function UserMenu(props) {
             <Link to='/categories'>
                 <ToolTipEntry icon={userMenuIcons.categoryIcon()} tip='Add category' />
             </Link>
-            <Link to='/apps'>
-                <ToolTipEntry icon={userMenuIcons.appIcon()} tip='Add application' />
+            <Link to='/products'>
+                <ToolTipEntry icon={userMenuIcons.productIcon()} tip='Add product' />
             </Link>
-            <Link to='/apps'>
+            <Link to='/me/wishlist'>
                 <ToolTipEntry icon={userMenuIcons.cartIcon()} tip='My wish list' />
             </Link>
-            <Link to='/apps'>
+            <div role='button' >
                 <PopOverEntry icon={userMenuIcons.userIcon()} content={ProfileMenu} />
-            </Link>
+            </div>
         </div>
     );
 }

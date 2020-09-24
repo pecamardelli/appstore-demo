@@ -12,8 +12,15 @@ const PopOverEntry = ({ icon, title, content: Component }) => {
     );
 
     return (
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+        <OverlayTrigger
+            trigger="click"
+            transition={true}
+            rootClose={true}
+            placement="bottom"
+            overlay={popover}>
+
             { icon }
+
         </OverlayTrigger>
     );
 }

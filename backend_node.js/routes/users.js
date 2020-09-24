@@ -1,17 +1,26 @@
 //const	auth		= require('../middleware/middle_auth');
-const	{ User, generateAuthToken }	= require('../models/model_user');
-const	jwt			= require('jsonwebtoken');
-const	config		= require('config');
-const	jpc			= require('joi-password-complexity');
-const	bcrypt		= require('bcryptjs');
-const	_			= require('lodash');
-const	express		= require('express');
+const { User, generateAuthToken }	= require('../models/modelUser');
+const Role			= require('../models/modelUserRole');
+//const jwt			= require('jsonwebtoken');
+//const config		= require('config');
+//const jpc			= require('joi-password-complexity');
+//const bcrypt		= require('bcryptjs');
+//const _				= require('lodash');
+const express		= require('express');
+const { Sequelize } = require('../startup/dbConfig');
 
 const router	= express.Router();
 
+const	Op		= Sequelize.Op;
+
 router.get('/me', async (req, res) => {
-	const user	= await User.findById(req.body._id).select('-password');
+	const user	= await User.findById(req.body.id).select('-password');
 	res.send(user);
+});
+
+router.get('/signuproles', async (req, res) => {
+	const roles	= await Role.findAll({ where: { accessValue: { [Op.gte]: 4 }}});
+	res.send(roles);
 });
 
 router.post('/', async (req, res) => {

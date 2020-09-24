@@ -9,7 +9,7 @@ const Select	= ({ name, label, error, smallLabel, options, ...rest }) => {
 			<div className='col-7 mx-auto'>
 			<select id={name} name={name} {...rest} aria-describedby="selectHelp" className="form-control form-control-sm">
 				<option key='none' value='' />
-				{options.map(o => <option key={o.id} value={o.name}>{o.name}</option>)}
+				{options.map(o => <option key={o.id} value={o.id}>{o.displayName}</option>)}
 			</select>
 			{ error && <div className='alert alert-danger'>{error}</div> }
 			<small id="selectHelp" className="form-text text-muted">{smallLabel}</small>
