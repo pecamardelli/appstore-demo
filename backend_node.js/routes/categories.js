@@ -5,15 +5,14 @@ const Product   = require('../models/modelProduct');
 const router	= express.Router();
 
 router.get('/', async (req, res) => {
-	const products	= await Product.findAll();
-	res.send(products);
+	const categories	= await Category.findAll();
+	res.send(categories);
 });
 
 router.post('/', async (req, res) => {
 
 	try {
 		await Category.create(req.body);
-console.log(req.body)
 		res.send('Category successfully submitted!');
 	}
 	catch (ex) {

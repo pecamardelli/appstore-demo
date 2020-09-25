@@ -30,6 +30,7 @@ function App() {
     <Fragment>
       <ToastContainer />
       <NavBar />
+      <hr />
       <main className='container'>
         <Switch>
           <Route path='/register'   component={RegisterForm} />
