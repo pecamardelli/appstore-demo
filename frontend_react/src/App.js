@@ -1,22 +1,23 @@
 import { Route, Switch, Redirect }  from 'react-router-dom';
-import { ToastContainer }           from 'react-toastify';
-import React, { Fragment }          from 'react';
+import { toast, ToastContainer }           from 'react-toastify';
+import React, { Fragment, useEffect, useState }          from 'react';
+import ProductContainer      from './components/productContainer';
 import ProtectedRoute	from './components/common/protectedRoute';
 import RegisterForm   from './components/registerForm';
 import CategoryForm   from './components/categoryForm';
 import ProductForm    from './components/productForm';
 import LoginForm      from './components/loginForm';
-import WishList       from './components/wishList';
-import MyProducts     from './components/myProducts';
-import MyProfile      from './components/myProfile';
+import WishList       from './components/user_menu/wishList';
+import MyProducts     from './components/user_menu/myProducts';
+import MyProfile      from './components/user_menu/myProfile';
 import NotFound       from './components/common/not-found';
 import NavBar         from './components/common/navBar';
-import Logout			    from './components/logout';
+import Logout			    from './components/user_menu/logout';
 import Apps           from './components/apps';
 import Movies         from './components/movies';
 import Music          from './components/music';
 import Books          from './components/books';
-//import UserContext    from './context/userContext';
+import { getProducts }	from './services/productService';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,7 +25,22 @@ import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  //const [ user, setUser ] = useState({});
+  const [ products, setProducts ] = useState([]);
+
+  useEffect(() => {
+    async function call() {
+        try {
+            const { data: products }	= await getProducts();
+            setProducts(products);
+        }
+        catch(ex) {
+            toast.error('Could not retrieve categories from backend.', ex.response.data);
+        }
+    }
+
+  call();
+    
+  }, [ setProducts ]);
   
   return (
     <Fragment>
@@ -35,10 +51,17 @@ function App() {
         <Switch>
           <Route path='/register'   component={RegisterForm} />
           <Route path='/login'		  component={LoginForm} />
+  
+           { /*
           <Route path='/apps'       component={Apps} />
           <Route path='/movies'     component={Movies} />
           <Route path='/music'      component={Music} />
           <Route path='/books'      component={Books} />
+          */}
+           <Route
+              path='/store/:product'
+              render={props => <ProductContainer {...props} />}
+            />
           <ProtectedRoute
             path='/categories'
             component={CategoryForm}
@@ -56,13 +79,12 @@ function App() {
             component={MyProducts}
           />
           <ProtectedRoute
-            path='/me'
-            exact
+            path='/me/profile'
             component={MyProfile}
           />
           <Route path='/logout'     component={Logout} />
           <Route path='/not-found'	component={NotFound} />
-          <Redirect from='/' to='/apps' />
+          <Redirect from='/' to='/store' />
           <Redirect to='/not-found' />
         </Switch>
       </main>

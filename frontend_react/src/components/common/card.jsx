@@ -2,8 +2,8 @@ import React, { Fragment }    from 'react';
 import { Link } from 'react-router-dom';
 
 function Card(props) {
-    console.log(props)
-     return (
+
+    return (
         <Fragment>
             <div className="card border-dark mb-4" >
                 <Link to={ props.data.endPoint }>

@@ -3,14 +3,13 @@ import { toast } from 'react-toastify';
 import http     from '../services/httpService';
 import CardDeck from './common/cardDeck';
 
-
 function Apps(props) {
     const [ categories, setCategories ] = useState([]);
 
     useEffect(() => {
         async function call() {
             try {
-                const result    = await http.get('/apps');
+                const result    = await http.get('/store/apps');
                 setCategories(result.data);
             }
             catch(ex) {

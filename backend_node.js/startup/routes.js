@@ -3,7 +3,7 @@ const auth			= require('../routes/auth');
 const users			= require('../routes/users');
 const products		= require('../routes/products');
 const categories	= require('../routes/categories');
-const root			= require('../routes/root');
+const store			= require('../routes/store');
 const express		= require('express');
 const cors 			= require('cors');
 
@@ -17,6 +17,6 @@ module.exports	= function(app) {
 	app.use('/api/products',	products);
 	app.use('/api/categories',	categories);
 	app.use('/api/auth',		auth);
-	app.use('/api/',			root);
+	app.use('/api/store',		store);
 	app.use(error);
 }

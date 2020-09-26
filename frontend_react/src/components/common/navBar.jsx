@@ -34,7 +34,7 @@ const NavBar	= () => {
 		
 			<div className="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul className="navbar-nav mr-auto">
-					<NavLink className='nav-item nav-link' to='/apps'>Apps</NavLink>
+					<NavLink className='nav-item nav-link' to='/store/apps'>Apps</NavLink>
 					<NavLink className='nav-item nav-link' to='/movies'>Movies</NavLink>
 					<NavLink className='nav-item nav-link' to='/music'>Music</NavLink>
 					<NavLink className='nav-item nav-link' to='/books'>Books</NavLink>
