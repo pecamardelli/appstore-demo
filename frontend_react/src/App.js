@@ -17,7 +17,6 @@ import Apps           from './components/apps';
 import Movies         from './components/movies';
 import Music          from './components/music';
 import Books          from './components/books';
-import { getProducts }	from './services/productService';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,22 +24,7 @@ import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const [ products, setProducts ] = useState([]);
-
-  useEffect(() => {
-    async function call() {
-        try {
-            const { data: products }	= await getProducts();
-            setProducts(products);
-        }
-        catch(ex) {
-            toast.error('Could not retrieve categories from backend.', ex.response.data);
-        }
-    }
-
-  call();
-    
-  }, [ setProducts ]);
+  
   
   return (
     <Fragment>
@@ -58,10 +42,10 @@ function App() {
           <Route path='/music'      component={Music} />
           <Route path='/books'      component={Books} />
           */}
-           <Route
-              path='/store/:product'
-              render={props => <ProductContainer {...props} />}
-            />
+          <Route
+            path='/store/:product'
+            render={props => <ProductContainer {...props} />}
+          />
           <ProtectedRoute
             path='/categories'
             component={CategoryForm}

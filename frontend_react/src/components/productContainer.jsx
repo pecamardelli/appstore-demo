@@ -5,13 +5,14 @@ import CardDeck     from './common/cardDeck';
 
 function ProductContainer(props) {
     const [ content, setContent ]   = useState([]);
-console.log(props)
-const { match } = props;
+    const { match } = props;
+
     useEffect(() => {
         async function call() {
             try {
                 const result    = await http.get(`/store/${match.params.product}`);
-                setContent(result.data);
+                if(result) setContent(result.data);
+                else setContent([]);
             }
             catch(ex) {
                 toast.error('Could not retrieve data from the backend.', ex.response.data);
@@ -19,7 +20,7 @@ const { match } = props;
         }
 
         call();
-    }, [ setContent ]);
+    });
 
     return (
         <CardDeck cards={ content }/>
