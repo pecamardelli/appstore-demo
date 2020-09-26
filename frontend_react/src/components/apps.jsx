@@ -14,7 +14,7 @@ function Apps(props) {
                 setCategories(result.data);
             }
             catch(ex) {
-                toast.error('Could not retrieve categories from backend.', ex.message);
+                toast.error('Could not retrieve categories from backend.', ex.response.data);
             }
         }
 

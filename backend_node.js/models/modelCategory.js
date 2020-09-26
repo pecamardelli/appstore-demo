@@ -27,15 +27,34 @@ const Category	= sequelize.define('Category', {
         type:		Sequelize.STRING,
 		validate:	{
             notEmpty:   true,
-            max:        64,
+            max:        255,
             async function (value) {
                 const existingCategory = await Category.findOne({ where: { displayName: value }});
-                if(existingCategory && existingCategory.productId === this.productId) {
-                    throw new Error('There is a category with that name for that product!');
+                if(existingCategory && existingCategory.dataValues.productId == this.productId) {
+                    throw new Error(`'${value}' category already exists for this product.`);
                 }
             }
         }
+	},
+	endPoint: {
+        type:		    Sequelize.STRING
+	},
+	description: {
+        type:		Sequelize.STRING,
+		validate:	{
+            notEmpty:   true,
+            max:        255
+        }
 	}
+}, {
+    hooks: {
+      afterValidate: async (category, options) => {
+        const product   = await Product.findOne({ where: { id: category.productId }});
+        const endpoint  = `/${product.dataValues.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}/${category.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}`;
+        category.endPoint = endpoint;
+      }
+    },
+    sequelize
 });
 
 // Let's sync to create the table if doesn't exists

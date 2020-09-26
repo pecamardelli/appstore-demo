@@ -16,7 +16,8 @@ router.post('/', async (req, res) => {
 		res.send('Category successfully submitted!');
 	}
 	catch (ex) {
-		res.status(400).send(ex.message);
+		console.log(ex)
+		res.status(400).send(ex.errors[0].message);
     }
 });
 

@@ -2,7 +2,7 @@ import React		from 'react';
 import Joi			from 'joi-browser';
 import { Link }		from 'react-router-dom';
 import { toast }	from 'react-toastify';
-import Form			from './common/form';
+import Form			from './common/forms/form';
 import auth			from '../services/authService';
 
 class LoginForm extends Form {

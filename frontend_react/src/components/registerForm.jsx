@@ -4,7 +4,7 @@ import Joi			from 'joi-browser';
 import { Link }		from 'react-router-dom';
 import { toast }	from 'react-toastify';
 import auth 		from '../services/authService';
-import Form 		from './common/form';
+import Form 		from './common/forms/form';
 import userObject	from '../includes/userObject';
 import http			from '../services/httpService';
 

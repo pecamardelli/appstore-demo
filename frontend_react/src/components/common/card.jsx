@@ -1,20 +1,27 @@
-import React, { Fragment } from 'react';
+import React, { Fragment }    from 'react';
 import { Link } from 'react-router-dom';
 
 function Card(props) {
     console.log(props)
      return (
-        <Link to=''>
+        <Fragment>
             <div className="card border-dark mb-4" >
-                <div className="card-body">
-                    <h5 className="card-title">{ props.data.displayName }</h5>
-                    <p className="card-text">{ props.data.productId }</p>
-                </div>
+                <Link to={ props.data.endPoint }>
+                    <div className="card-body">
+                        <h5 className="card-title">{ props.data.displayName }</h5>
+                        <p className="card-text">{ props.data.description }</p>
+                    </div>
+                </Link>
                 <div className="card-footer">
-                    <small className="text-muted">{ props.data.id }</small>
+                    <ul className="list-group list-group-flush">
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            Total apps
+                            <span className="badge badge-danger badge-pill">14</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </Link>
+        </Fragment>
     );
 }
 

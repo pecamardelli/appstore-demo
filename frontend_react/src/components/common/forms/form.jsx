@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Joi			from 'joi-browser';
 import Input		from './input';
 import Select		from './select';
+import TextArea		from './textArea';
 
 export default class Form extends Component {
 	state = {
@@ -91,6 +92,22 @@ export default class Form extends Component {
 				onChange={this.handleChange}
 				autoFocus={autoFocus}
 				type={type}
+				smallLabel={smallLabel}
+				error={errors[name]}
+			/>
+		);
+	}
+
+	renderTextArea		= (name, label, smallLabel = '', autoFocus = false) => {
+		const	{ data, errors }	= this.state;
+		
+		return (
+			<TextArea
+				name={name}
+				value={data[name]}
+				label={label}
+				onChange={this.handleChange}
+				autoFocus={autoFocus}
 				smallLabel={smallLabel}
 				error={errors[name]}
 			/>

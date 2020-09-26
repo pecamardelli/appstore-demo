@@ -2,7 +2,7 @@ import React, { Fragment }	from 'react';
 import { submitCategory }	from './../services/categoryService';
 import { getProducts }	from '../services/productService';
 import { toast }		from 'react-toastify';
-import Form 			from './common/form';
+import Form 			from './common/forms/form';
 import Joi				from 'joi-browser';
 
 class CategoryForm extends Form {
@@ -19,21 +19,19 @@ class CategoryForm extends Form {
 
 	schema	= {
 		productId:		Joi.number().min(1).max(255).required().label('Product'),
-		displayName:   	Joi.string().min(1).max(255).required().label('Name')
+		displayName:   	Joi.string().min(1).max(255).required().label('Name'),
+		description:   	Joi.string().min(5).max(255).required().label('Description')
 	};
 	
 	doSubmit = async() => {
 		try {
-            console.log('Submitting:', this.state.data)
-            
 			const newCategory	= { ...this.state.data };
-
 			try {
 				await submitCategory(newCategory)
 				toast.success(`Category '${this.state.data.name}' succesfully submitted!`);
 			}
 			catch(ex) {
-				toast.error(`Error: ${ex.message}`)
+				toast.error(`Error: ${ex.response.data}`)
 			}
 		}
 		catch (ex) {
@@ -58,6 +56,7 @@ class CategoryForm extends Form {
 							<form onSubmit={this.handleSubmit} >
 								{ this.renderSelect('productId', 'Product', this.state.products) }
 								{ this.renderInput('displayName', 'Name') }
+								{ this.renderTextArea('description', 'Description') }
 								{ this.renderButton('Add') }
 							</form>
 						</div>
