@@ -16,7 +16,7 @@ const Item	= sequelize.define('User', {
 	},
 	photo: {
 		type:			Sequelize.STRING,
-		validate:		{ notEmpty: true, isUrl: true },
+		validate:		{ isUrl: true },
 		defaultValue:	'https://picsum.photos.com/200'
 	},
 	productId: {
@@ -74,6 +74,7 @@ sequelize.sync()
 
 
 module.exports.Item					= Item;
+
 /*
 const User = require('./models/model_user');
 User.create({

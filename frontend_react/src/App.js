@@ -1,7 +1,7 @@
 import { Route, Switch, Redirect }  from 'react-router-dom';
-import { toast, ToastContainer }           from 'react-toastify';
-import React, { Fragment, useEffect, useState }          from 'react';
-import ProductContainer      from './components/productContainer';
+import { ToastContainer }           from 'react-toastify';
+import React, { Fragment }          from 'react';
+import ProductContainer             from './components/productContainer';
 import ProtectedRoute	from './components/common/protectedRoute';
 import RegisterForm   from './components/registerForm';
 import CategoryForm   from './components/categoryForm';
@@ -13,10 +13,6 @@ import MyProfile      from './components/user_menu/myProfile';
 import NotFound       from './components/common/not-found';
 import NavBar         from './components/common/navBar';
 import Logout			    from './components/user_menu/logout';
-import Apps           from './components/apps';
-import Movies         from './components/movies';
-import Music          from './components/music';
-import Books          from './components/books';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,13 +31,6 @@ function App() {
         <Switch>
           <Route path='/register'   component={RegisterForm} />
           <Route path='/login'		  component={LoginForm} />
-  
-           { /*
-          <Route path='/apps'       component={Apps} />
-          <Route path='/movies'     component={Movies} />
-          <Route path='/music'      component={Music} />
-          <Route path='/books'      component={Books} />
-          */}
           <Route
             path='/store/:product'
             render={props => <ProductContainer {...props} />}

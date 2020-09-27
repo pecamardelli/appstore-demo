@@ -5,12 +5,13 @@ axios.defaults.baseURL	= process.env.REACT_APP_API_URL;
 // Set up axios interceptor for all the responses from the server.
 // First parameter is the function that will be executed when the request succeeded.
 // The second one will execute on error.
+
 axios.interceptors.response.use(null, error => {
 	// Check if we are dealing with an expected error or not. 400 to 499 are expected error statuses.
 	const expectedError	= error.response && error.response.status >= 400 && error.response.status < 500;
 	
 	if(!expectedError) {
-		toast.error('Unexpected error!. Unable to complete request...');
+		toast.error(` ${error.toString()}: Unable to complete request.`);
 	}
 	
 	// Need to return a rejected promise to pass control to the catch block

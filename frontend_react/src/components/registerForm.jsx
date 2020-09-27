@@ -6,7 +6,6 @@ import { toast }	from 'react-toastify';
 import auth 		from '../services/authService';
 import Form 		from './common/forms/form';
 import userObject	from '../includes/userObject';
-import http			from '../services/httpService';
 
 
 class RegisterForm extends Form {

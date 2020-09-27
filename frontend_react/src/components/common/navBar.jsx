@@ -18,13 +18,14 @@ const NavBar	= (props) => {
 				setProducts(products);
 			}
 			catch(ex) {
-				toast.error('Could not retrieve categories from backend.', ex.response.data);
+				console.log(ex)
+				toast.error('Could not retrieve categories from backend.', ex);
 			}
 		}
 
 	call();
 		
-	}, [ setProducts ]);
+	}, [ setProducts, setUser ]);
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -52,15 +53,14 @@ const NavBar	= (props) => {
 		
 			<div className="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul className="navbar-nav mr-auto">
-					{products.map(p => <NavLink className='nav-item nav-link' to={`/store/${p.displayName.toLowerCase()}`}>{p.displayName}</NavLink>)}
-					{
-					/*
-					<NavLink className='nav-item nav-link' to='/store/apps'>Apps</NavLink>
-					<NavLink className='nav-item nav-link' to='/movies'>Movies</NavLink>
-					<NavLink className='nav-item nav-link' to='/music'>Music</NavLink>
-					<NavLink className='nav-item nav-link' to='/books'>Books</NavLink>
-					*/
-					}
+					{ products.map(
+						p => <NavLink
+								key={ p.id }
+								className='nav-item nav-link'
+								to={`/store/${p.displayName.toLowerCase()}`}>
+									{ p.displayName }
+								</NavLink>
+					)}
 				</ul>
 			</div>
 			{ currentUser ? <UserMenu username={ currentUser.username } /> : <SignMenu /> }

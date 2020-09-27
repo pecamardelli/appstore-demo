@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
 
 	try {
 		await Category.create(req.body);
-		res.send('Category successfully submitted!');
+		res.send('Category saved!');
 	}
 	catch (ex) {
 		console.log(ex)

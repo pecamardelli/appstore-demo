@@ -4,9 +4,8 @@ const Product = require('./modelProduct');
 
 // Here is the role model
 // id           ->  Quite self explanatory
-// accessValue  ->  A number that determines the permissions of the role.
-//                  Higher number means lower permissions. The site owner must be 1.
 // displayName  ->  The name of the role: Site owner, Admin, client, developer, etc.
+// description  ->  Some generic latin words.
 
 const Category	= sequelize.define('Category', {
 	id: {
@@ -37,7 +36,7 @@ const Category	= sequelize.define('Category', {
         }
 	},
 	endPoint: {
-        type:		    Sequelize.STRING
+        type:		Sequelize.STRING
 	},
 	description: {
         type:		Sequelize.STRING,
@@ -49,9 +48,12 @@ const Category	= sequelize.define('Category', {
 }, {
     hooks: {
       afterValidate: async (category, options) => {
-        const product   = await Product.findOne({ where: { id: category.productId }});
-        const endpoint  = `/${product.dataValues.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}/${category.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}`;
-        category.endPoint = endpoint;
+          // What is this for?? Well, we'll rely on the display name to generate
+          // the dynamic route at the front-end and, obviously, "Health & Care" and such
+          // would not be a valid url.
+        const product       = await Product.findOne({ where: { id: category.productId }});
+        const endpoint      = `/${product.dataValues.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}/${category.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}`;
+        category.endPoint   = endpoint;
       }
     },
     sequelize

@@ -14,7 +14,7 @@ function Card(props) {
                 </Link>
                 <div className="card-footer">
                     <ul className="list-group list-group-flush">
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                        <li key='1' className="list-group-item d-flex justify-content-between align-items-center">
                             Total apps
                             <span className="badge badge-danger badge-pill">14</span>
                         </li>

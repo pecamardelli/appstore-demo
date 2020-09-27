@@ -15,12 +15,13 @@ function ProductContainer(props) {
                 else setContent([]);
             }
             catch(ex) {
-                toast.error('Could not retrieve data from the backend.', ex.response.data);
+                console.log(ex)
+                toast.error('Could not retrieve data from the backend.', ex);
             }
         }
 
         call();
-    });
+    }, [ setContent, match ]);
 
     return (
         <CardDeck cards={ content }/>

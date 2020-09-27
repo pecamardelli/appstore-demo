@@ -13,8 +13,13 @@ class CategoryForm extends Form {
 	};
 	
 	async componentDidMount() {
-		const { data: products }	= await getProducts();
-		this.setState({ products });
+		try {
+			const { data: products }	= await getProducts();
+			this.setState({ products });
+		}
+		catch(ex) {
+			console.log(ex);
+		}
 	}
 
 	schema	= {
@@ -26,28 +31,24 @@ class CategoryForm extends Form {
 	doSubmit = async() => {
 		try {
 			const newCategory	= { ...this.state.data };
-			try {
-				await submitCategory(newCategory)
-				toast.success(`Category '${this.state.data.name}' succesfully submitted!`);
-			}
-			catch(ex) {
-				toast.error(`Error: ${ex.response.data}`)
-			}
+			await submitCategory(newCategory)
+			toast.success(`Category '${this.state.data.name}' succesfully submitted!`);
 		}
 		catch (ex) {
 			if(ex.response && ex.response.status === 400) {
 				const errors	= { ...this.state.errors };
 				errors.category	= ex.response.data;
-				this.setState({ errors });
-				return toast.error(`Error: ${ex.response.data}`);	
+				this.setState({ errors });	
 			}
+
+			return toast.error(`Error: ${ex.response.data}`);
 		}
 	};
 	
 	render() {
 		return (
 			<Fragment>
-				<div className='row' style={{ marginTop: '10%' }}>
+				<div className='row' style={{ marginTop: '5%' }}>
 					<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
 						<div className="card-header">
 							<h4 className="card-title">Add new category</h4>
