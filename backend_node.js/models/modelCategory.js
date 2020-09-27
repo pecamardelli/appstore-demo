@@ -1,8 +1,7 @@
 const { Sequelize }	= require('sequelize');
 const sequelize		= require('../startup/dbConfig');
-const Product = require('./modelProduct');
+const Section       = require('./modelSection');
 
-// Here is the role model
 // id           ->  Quite self explanatory
 // displayName  ->  The name of the role: Site owner, Admin, client, developer, etc.
 // description  ->  Some generic latin words.
@@ -13,12 +12,12 @@ const Category	= sequelize.define('Category', {
 		primaryKey:		true,
 		autoIncrement:	true
     },
-    productId: {
+    sectionId: {
         type:			Sequelize.INTEGER,
         validate:       {
             async function (value) {
-                const prodId = await Product.findOne({ where: { id: value }});
-                if(!prodId) throw new Error('Invalid product ID!');
+                const sectionId = await Section.findOne({ where: { id: value }});
+                if(!sectionId) throw new Error('Invalid section ID!');
             }
         }
     },
@@ -50,9 +49,9 @@ const Category	= sequelize.define('Category', {
       afterValidate: async (category, options) => {
           // What is this for?? Well, we'll rely on the display name to generate
           // the dynamic route at the front-end and, obviously, "Health & Care" and such
-          // would not be a valid url.
-        const product       = await Product.findOne({ where: { id: category.productId }});
-        const endpoint      = `/${product.dataValues.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}/${category.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}`;
+          // would not be valid urls.
+        const section       = await Section.findOne({ where: { id: category.sectionId }});
+        const endpoint      = `/store/${section.dataValues.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}/${category.displayName.toLowerCase().replace(/[^a-zA-Z]/g, "")}`;
         category.endPoint   = endpoint;
       }
     },

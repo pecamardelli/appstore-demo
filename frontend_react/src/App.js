@@ -1,11 +1,12 @@
 import { Route, Switch, Redirect }  from 'react-router-dom';
 import { ToastContainer }           from 'react-toastify';
 import React, { Fragment }          from 'react';
-import ProductContainer             from './components/productContainer';
+import SectionContainer             from './components/sectionContainer';
+import CategoryContainer            from './components/categoryContainer';
 import ProtectedRoute	from './components/common/protectedRoute';
 import RegisterForm   from './components/registerForm';
 import CategoryForm   from './components/categoryForm';
-import ProductForm    from './components/productForm';
+import SectionForm    from './components/sectionForm';
 import LoginForm      from './components/loginForm';
 import WishList       from './components/user_menu/wishList';
 import MyProducts     from './components/user_menu/myProducts';
@@ -20,8 +21,6 @@ import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  
-  
   return (
     <Fragment>
       <ToastContainer />
@@ -32,16 +31,22 @@ function App() {
           <Route path='/register'   component={RegisterForm} />
           <Route path='/login'		  component={LoginForm} />
           <Route
-            path='/store/:product'
-            render={props => <ProductContainer {...props} />}
+            path='/store/:section'
+            exact
+            render={ props => <SectionContainer { ...props } /> }
+          />
+          <Route
+            path='/store/:section/:category'
+            exact
+            render={ props => <CategoryContainer { ...props } /> }
           />
           <ProtectedRoute
             path='/categories'
             component={CategoryForm}
           />
           <ProtectedRoute
-            path='/products'
-            component={ProductForm}
+            path='/sections'
+            component={SectionForm}
           />
           <ProtectedRoute
             path='/me/wishlist'
@@ -57,7 +62,7 @@ function App() {
           />
           <Route path='/logout'     component={Logout} />
           <Route path='/not-found'	component={NotFound} />
-          <Redirect from='/' to='/store' />
+          <Redirect from='/' exact to='/store' />
           <Redirect to='/not-found' />
         </Switch>
       </main>

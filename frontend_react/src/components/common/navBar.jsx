@@ -1,6 +1,6 @@
 import React, { useState, useEffect }	from 'react';
 import { Link, NavLink }	from 'react-router-dom';
-import { getProducts }		from '../../services/productService';
+import { getSections }		from '../../services/sectionService';
 import { toast }	from 'react-toastify';
 import logo			from '../../images/logo100.png';
 import auth			from '../../services/authService';
@@ -9,23 +9,23 @@ import SignMenu 	from './signMenu';
 
 const NavBar	= (props) => {
 	const [ currentUser, setUser ]	= useState(auth.getCurrentUser());
-	const [ products, setProducts ] = useState([]);
+	const [ sections, setSections ] = useState([]);
 
 	useEffect(() => {
 		async function call() {
 			try {
-				const { data: products }	= await getProducts();
-				setProducts(products);
+				const { data: sections }	= await getSections();
+				setSections(sections);
 			}
 			catch(ex) {
 				console.log(ex)
-				toast.error('Could not retrieve categories from backend.', ex);
+				toast.error('Could not retrieve sections from backend.', ex);
 			}
 		}
 
 	call();
 		
-	}, [ setProducts, setUser ]);
+	}, [ setSections, setUser ]);
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -53,7 +53,7 @@ const NavBar	= (props) => {
 		
 			<div className="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul className="navbar-nav mr-auto">
-					{ products.map(
+					{ sections.map(
 						p => <NavLink
 								key={ p.id }
 								className='nav-item nav-link'

@@ -1,6 +1,6 @@
 import React, { Fragment }	from 'react';
 import { submitCategory }	from './../services/categoryService';
-import { getProducts }	from '../services/productService';
+import { getSections }	from '../services/sectionService';
 import { toast }		from 'react-toastify';
 import Form 			from './common/forms/form';
 import Joi				from 'joi-browser';
@@ -8,14 +8,14 @@ import Joi				from 'joi-browser';
 class CategoryForm extends Form {
 	state	= {
 		data: 		{},
-		products:	[],
+		sections:	[],
 		errors:		{}
 	};
 	
 	async componentDidMount() {
 		try {
-			const { data: products }	= await getProducts();
-			this.setState({ products });
+			const { data: sections }	= await getSections();
+			this.setState({ sections });
 		}
 		catch(ex) {
 			console.log(ex);
@@ -23,15 +23,16 @@ class CategoryForm extends Form {
 	}
 
 	schema	= {
-		productId:		Joi.number().min(1).max(255).required().label('Product'),
+		sectionId:		Joi.number().min(1).max(255).required().label('Section'),
 		displayName:   	Joi.string().min(1).max(255).required().label('Name'),
 		description:   	Joi.string().min(5).max(255).required().label('Description')
 	};
 	
 	doSubmit = async() => {
 		try {
-			const newCategory	= { ...this.state.data };
-			await submitCategory(newCategory)
+			const category	= { ...this.state.data };
+			console.log(category)
+			await submitCategory(category);
 			toast.success(`Category '${this.state.data.name}' succesfully submitted!`);
 		}
 		catch (ex) {
@@ -55,7 +56,7 @@ class CategoryForm extends Form {
 						</div>
 						<div className="card-body">
 							<form onSubmit={this.handleSubmit} >
-								{ this.renderSelect('productId', 'Product', this.state.products) }
+								{ this.renderSelect('sectionId', 'Section', this.state.sections) }
 								{ this.renderInput('displayName', 'Name') }
 								{ this.renderTextArea('description', 'Description') }
 								{ this.renderButton('Add') }

@@ -1,10 +1,10 @@
 import React, { Fragment }	from 'react';
-import { submitProduct }	from './../services/productService';
+import { submitSection }	from '../services/sectionService';
 import { toast }		from 'react-toastify';
 import Form 			from './common/forms/form';
 import Joi				from 'joi-browser';
 
-class ProductForm extends Form {
+class SectionForm extends Form {
 	state	= {
 		data: 		{},
 		errors:		{}
@@ -17,14 +17,14 @@ class ProductForm extends Form {
 	
 	doSubmit = async () => {
 		try {
-			const newProduct	= { ...this.state.data };
-			await submitProduct(newProduct);
-			toast.success(`Product '${this.state.data.name}' succesfully submitted!`);
+			const section	= { ...this.state.data };
+			await submitSection(section);
+			toast.success(`Section '${this.state.data.name}' succesfully submitted!`);
 		}
 		catch (ex) {
 			if(ex.response && ex.response.status === 400) {
 				const errors	= { ...this.state.errors };
-				errors.category	= ex.response.data;
+				errors.section	= ex.response.data;
 				this.setState({ errors });	
 			}
 
@@ -38,7 +38,7 @@ class ProductForm extends Form {
 				<div className='row' style={{ marginTop: '5%' }}>
 					<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
 						<div className="card-header">
-							<h4 className="card-title">Add new product</h4>
+							<h4 className="card-title">Add new section</h4>
 						</div>
 						<div className="card-body">
 							<form onSubmit={this.handleSubmit} >
@@ -54,4 +54,4 @@ class ProductForm extends Form {
 	}
 }
 
-export default ProductForm;
+export default SectionForm;

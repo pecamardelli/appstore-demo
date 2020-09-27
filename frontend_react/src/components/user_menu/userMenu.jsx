@@ -12,8 +12,8 @@ function UserMenu(props) {
             <Link to='/categories'>
                 <ToolTipEntry icon={userMenuIcons.categoryIcon()} tip='Add category' />
             </Link>
-            <Link to='/products'>
-                <ToolTipEntry icon={userMenuIcons.productIcon()} tip='Add product' />
+            <Link to='/sections'>
+                <ToolTipEntry icon={userMenuIcons.productIcon()} tip='Add section' />
             </Link>
             <Link to='/me/wishlist'>
                 <ToolTipEntry icon={userMenuIcons.cartIcon()} tip='My wish list' />

@@ -1,7 +1,7 @@
 const error			= require('../middleware/mwErrors');
 const auth			= require('../routes/auth');
 const users			= require('../routes/users');
-const products		= require('../routes/products');
+const sections		= require('../routes/sections');
 const categories	= require('../routes/categories');
 const store			= require('../routes/store');
 const express		= require('express');
@@ -14,7 +14,7 @@ module.exports	= function(app) {
 	// This is our public file folder
 	app.use(express.static('public'));
 	app.use('/api/users',		users);
-	app.use('/api/products',	products);
+	app.use('/api/sections',	sections);
 	app.use('/api/categories',	categories);
 	app.use('/api/auth',		auth);
 	app.use('/api/store',		store);

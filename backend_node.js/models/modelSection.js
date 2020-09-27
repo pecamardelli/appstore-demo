@@ -6,7 +6,7 @@ const sequelize		= require('../startup/dbConfig');
 // displayName  ->  The name of the product: app, movie, book, music, comic and so on.
 // description  ->  Some generic latin words.
 
-const Product	= sequelize.define('Product', {
+const Section	= sequelize.define('Section', {
 	id: {
 		type:			Sequelize.INTEGER,
 		primaryKey:		true,
@@ -27,9 +27,9 @@ const Product	= sequelize.define('Product', {
 });
 
 // Let's sync to create the table if doesn't exists
-Product.sync()
+Section.sync()
 	.then(() => { /* Do nothing for now */ })
-	.catch((error) => { console.log('Error syncing products table', error) });
+	.catch((error) => { console.log('Error syncing sections table', error) });
 
 
-module.exports = Product;
+module.exports = Section;

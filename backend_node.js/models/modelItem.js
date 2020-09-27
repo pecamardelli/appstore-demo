@@ -1,7 +1,7 @@
 const { Sequelize }	= require('sequelize');
 const { User }		= require('./modelUser');
 const Category		= require('./modelCategory');
-const Product		= require('./modelProduct');
+const Section		= require('./modelSection');
 const sequelize		= require('../startup/dbConfig');
 
 const Item	= sequelize.define('User', {
@@ -19,12 +19,12 @@ const Item	= sequelize.define('User', {
 		validate:		{ isUrl: true },
 		defaultValue:	'https://picsum.photos.com/200'
 	},
-	productId: {
+	sectionId: {
 		type:		Sequelize.INTEGER,
 		validate:       {
             async function (value) {
-                const prodId = await Product.findOne({ where: { id: value }});
-                if(!prodId) throw new Error('Invalid product ID!');
+                const prodId = await Section.findOne({ where: { id: value }});
+                if(!prodId) throw new Error('Invalid section ID!');
             }
         }
 	},
@@ -55,11 +55,13 @@ const Item	= sequelize.define('User', {
 	},
 	price: {
 		type:		Sequelize.FLOAT,
-		validate:	{ min: 0, notNull: true }
+		allowNull:	false,
+		validate:	{ min: 0 }
 	},
 	downloads: {
 		type:		Sequelize.INTEGER.UNSIGNED,
-		validate:	{ min: 0, notNull: true }
+		allowNull:	false,
+		validate:	{ min: 0 }
 	},
 	rating: {
 		type:			Sequelize.FLOAT,
@@ -73,7 +75,7 @@ sequelize.sync()
 	.catch((error) => { console.log('Error syncing users table', error) });
 
 
-module.exports.Item					= Item;
+module.exports	= Item;
 
 /*
 const User = require('./models/model_user');
