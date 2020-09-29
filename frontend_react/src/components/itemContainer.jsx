@@ -18,6 +18,7 @@ function ItemContainer(props) {
                 if(result){
                     const createdAt         = new Date(result.data.createdAt);
                     result.data.createdAt   = createdAt.toDateString();
+                    
                     result.data.photo       = `${process.env.REACT_APP_API_URL}${result.data.photo}`;
                     
                     setItem(result.data);
@@ -49,7 +50,7 @@ function ItemContainer(props) {
         <div className="card border-dark mb-3" style={{ width: '100%' }}>
             <div className="row no-gutters">
                 <div className="col-md-4">
-                    <img src={ item.photo } className="card-img-top" alt="..." />
+                    <img src={ item.photo } className="card-img-top" alt={ item.displayName } />
                 </div>
                 <div className="col-md-8" style={{ height: '90%'}}>
                     <div className="card-body">
@@ -78,7 +79,7 @@ function ItemContainer(props) {
                     </div>
                     <div className="card-footer" style={{ height: '10%'}}>
                         <span className="d-flex justify-content-between align-items-center">
-                            <h5 style={{ margin: '1px 0 0 0' }}>Downloads { item.downloads }</h5>
+                            <h5 style={{ margin: '1px 0 0 0' }}>Downloads: { item.downloads }</h5>
                             <span>
                                 { Icons.addToCartIcon('2em') }
                                 { Icons.addedToCartIcon('2em') }

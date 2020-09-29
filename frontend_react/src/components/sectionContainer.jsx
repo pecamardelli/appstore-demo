@@ -2,6 +2,7 @@ import React, { useEffect, useState }    from 'react';
 import { toast }    from 'react-toastify';
 import http         from '../services/httpService';
 import CardDeck     from './common/cardDeck';
+import CategoryCard from './common/categoryCard';
 
 function SectionContainer(props) {
     const [ content, setContent ]   = useState([]);
@@ -11,7 +12,7 @@ function SectionContainer(props) {
         async function call() {
             try {
                 const result    = await http.get(`/store/${match.params.section}`);
-                
+
                 if(result) setContent(result.data);
                 else setContent([]);
             }
@@ -25,7 +26,7 @@ function SectionContainer(props) {
     }, [ setContent, match ]);
 
     return (
-        <CardDeck cards={ content }/>
+        <CardDeck cards={ content } cardComponent={ CategoryCard }/>
     );
 }
 
