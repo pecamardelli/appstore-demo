@@ -1,75 +1,93 @@
-const express		= require('express');
-const Section       = require('../models/modelSection');
-const Category      = require('../models/modelCategory');
-const Item          = require('../models/modelItem');
+const { User, Item, Category, Section }      = require('../models/models');
+const express	= require('express');
 
 const router	= express.Router();
 
-router.get('/:section', async (req, res) => {
-    let section;
+async function getSection(req, res) {
+    //let section;
     // Let's check if the section parameter is valid
     try {
-        section = await Section.findOne({ where: { displayName: req.params.section }});
+        const section = await Section.findOne({
+            where:      { displayName: req.params.section },
+            attributes: [ 'displayName', 'id', 'description' ]
+        });
         // Now let's see if the section has been found
-        if(!section) return res.status(400).send(`Invalid section ${req.params.section}`);
+        if(!section) {
+            res.status(400).send(`Invalid section ${req.params.section}`);
+            return null;
+        }
+
+        return section;
     }
     catch(ex) {
-        // Some nasty thing has happened to the MySQL server...
-        return res.status(500).send(`Internal Server Error: ${ex.message}`);
+        // Some nasty thing has happened into the MySQL server...
+        res.status(500).send(`Internal Server Error: ${ex.message}`);
+        return null;
     }
+}
 
+async function getCategories(res, section) {
     try {
-        const categories     = await Category.findAll({ where: { sectionId: section.dataValues.id } });
+        const categories     = await Category.findAll({
+            where:      { sectionId: section.dataValues.id },
+            attributes: [ 'displayName', 'id', 'endPoint', 'description' ]
+        });
         // Now let's see if the section has been found
-        if(!categories) return res.status(404).send(`No categories found for ${section.dataValues.displayName}`);
+        if(!categories) {
+            res.status(404).send(`No categories found for ${section.dataValues.displayName}`);
+            return null;
+        }
         
-        res.send(categories);
+        return categories;
     }
     catch(ex) {
         // Some nasty thing has happened to the MySQL server...
-        return res.status(500).send(`Internal Server Error: ${ex.message}`);
+        res.status(500).send(`Internal Server Error: ${ex.message}`);
+        return null;
     }
-});
+}
 
-router.get('/:section/:category', async (req, res) => {
-    let section;
-    // Let's check if the section parameter is valid
-    try {
-        section = await Section.findOne({ where: { displayName: req.params.section }});
-        // Now let's see if the section has been found
-        if(!section) return res.status(400).send(`Invalid section: ${req.params.section}`);
-    }
-    catch(ex) {
-        // Some nasty thing has happened to the MySQL server...
-        return res.status(500).send(`Internal Server Error: ${ex.message}`);
-    }
-
-    let category;
-
+async function getCategory(req, res, section) {
     try {
         category     = await Category.findOne({
             where: {
                 sectionId:      section.dataValues.id,
                 endPoint:       `/store/${req.params.section}/${req.params.category}`
-            }
+            },
+            attributes: [ 'displayName', 'id', 'endPoint', 'description' ]
         });
         // Now let's see if the section has been found
-        if(!category) return res.status(400).send(`Invalid category: ${req.params.category}`);
+        if(!category) {
+            res.status(400).send(`Invalid category: ${req.params.category}`);
+            return null;
+        }
+
+        return category;
     }
     catch(ex) {
         // Some nasty thing has happened to the MySQL server...
-        return res.status(500).send(`Internal Server Error: ${ex.message}`);
+        res.status(500).send(`Internal Server Error: ${ex.message}`);
+        return null;
     }
+}
 
-    // Looks like we found the section and the category.
-    // Let's find the items corresponding to them.
-
+async function getItems(res, section, category) {
     try {
         const items     = await Item.findAll({
             where: {
-                sectionId:      section.dataValues.id,
                 categoryId:     category.dataValues.id
-            }
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: [ 'username' ]
+                },
+                {
+                    model: Category,
+                    attributes: [ 'displayName' ]
+                }
+            ],
+            attributes: [ 'displayName', 'photo', 'description', 'price', 'rating', 'downloads', 'endPoint' ]
         });
         // Now let's see if the section has been found
         if(!items) return res.status(404).send(`No sections found!`);
@@ -79,6 +97,83 @@ router.get('/:section/:category', async (req, res) => {
         // Some nasty thing has happened to the MySQL server...
         return res.status(500).send(`Internal Server Error: ${ex.message}`);
     }
+}
+
+async function getItem(req, res, section, category) {
+    try {
+        const item     = await Item.findOne({
+            where: {
+                categoryId:     category.dataValues.id,
+                endPoint:       `/store/${req.params.section}/${req.params.category}/${req.params.item}`
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: [ 'firstname', 'lastname' ]
+                },
+                {
+                    model: Category,
+                    attributes: [ 'displayName' ]
+                }
+            ],
+            attributes: [
+                'displayName',
+                'photo',
+                'description',
+                'price',
+                'rating',
+                'downloads',
+                'createdAt',
+                'updatedAt'
+            ]
+        });
+        // Now let's see if the section has been found
+        if(!item) {
+            res.status(404).send(`Item not found!`);
+            return null;
+        }
+        
+        return item;
+    }
+    catch(ex) {
+        // Some nasty thing has happened to the MySQL server...
+        res.status(500).send(`Internal Server Error: ${ex.message}`);
+        return null;
+    }
+}
+
+router.get('/:section', async (req, res) => {
+    const section   = await getSection(req, res);
+    if(!section) return;
+
+    const categories    = await getCategories(res, section);
+    if(!categories) return;
+
+    res.send(categories);
+});
+
+router.get('/:section/:category', async (req, res) => {
+    const section   = await getSection(req, res);
+    if(!section) return;
+
+    const category  = await getCategory(req, res, section);
+    if(!category) return;
+
+    // Looks like we found the section and the category.
+    // Let's find the items corresponding to them.
+    await getItems(res, section, category);
+});
+
+router.get('/:section/:category/:item', async (req, res) => {
+    const section   = await getSection(req, res);
+    if(!section) return;
+
+    const category  = await getCategory(req, res, section);
+    if(!category) return;
+
+    const item      = await getItem(req, res, section, category);
+    if(!item) res.status(400).send(`Item not found!`);
+    else res.send(item);
 });
 
 module.exports	= router;

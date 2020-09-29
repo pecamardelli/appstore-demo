@@ -1,6 +1,5 @@
 //const	auth		= require('../middleware/middle_auth');
-const { User, generateAuthToken }	= require('../models/modelUser');
-const Role			= require('../models/modelUserRole');
+const { User, Role }	= require('../models/models');
 //const jwt			= require('jsonwebtoken');
 //const config		= require('config');
 //const jpc			= require('joi-password-complexity');
@@ -24,22 +23,33 @@ router.get('/signuproles', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-	console.log(req.body)
-	const user	= User.build(req.body);
-
+	//const user	= User.build(req.body);
+	User.create(req.body)
+		.then(() => {
+			const token	= User.prototype.generateAuthToken(this);
+			res.send(token);
+		})
+		.catch(ex => {
+			const msg	= (ex.errors[0].type === 'unique violation') ?
+				`${ex.errors[0].value} is registered` : ex.errors[0].message;
+			res.status(400).send(msg);
+		});
+	
+/*
 	try {
-		await user.save();
-		const token	= generateAuthToken(user.id, user.username, user.role);
+		console.log('attempting to save')
+		await User.Create(req.body);
+		console.log('saved')
+		const token	= user.generateAuthToken();
+		console.log('token generated')
 		//res.header('x-auth-token', token).send('User successfully registered!');
-		res.send(token);
+		
 	}
 	catch (ex) {
-		const msg	= (ex.errors[0].type === 'unique violation') ?
-			`${ex.errors[0].value} is registered` : ex.errors[0].message;
-		res.status(400).send(msg)
+		
 	}
 
-	/*
+	
 	user.save()
 		.then()
 		//.catch(({ errors }) => console.log(errors));

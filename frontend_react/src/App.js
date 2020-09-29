@@ -3,6 +3,7 @@ import { ToastContainer }           from 'react-toastify';
 import React, { Fragment }          from 'react';
 import SectionContainer             from './components/sectionContainer';
 import CategoryContainer            from './components/categoryContainer';
+import ItemContainer                from './components/itemContainer';
 import ProtectedRoute	from './components/common/protectedRoute';
 import RegisterForm   from './components/registerForm';
 import CategoryForm   from './components/categoryForm';
@@ -39,6 +40,11 @@ function App() {
             path='/store/:section/:category'
             exact
             render={ props => <CategoryContainer { ...props } /> }
+          />
+          <Route
+            path='/store/:section/:category/:item'
+            exact
+            render={ props => <ItemContainer { ...props } /> }
           />
           <ProtectedRoute
             path='/categories'

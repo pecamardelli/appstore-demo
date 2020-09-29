@@ -23,7 +23,7 @@ class CategoryForm extends Form {
 	}
 
 	schema	= {
-		sectionId:		Joi.number().min(1).max(255).required().label('Section'),
+		sectionId:		Joi.string().min(1).max(36).required().label('Section'),
 		displayName:   	Joi.string().min(1).max(255).required().label('Name'),
 		description:   	Joi.string().min(5).max(255).required().label('Description')
 	};

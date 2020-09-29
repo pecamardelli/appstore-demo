@@ -12,6 +12,7 @@ function CategoryContainer(props) {
             try {
                 const endpoint  = `/store/${match.params.section}/${match.params.category}`;
                 const result    = await http.get(endpoint);
+                console.log(result)
                 if(result) setContent(result.data);
                 else setContent([]);
             }
