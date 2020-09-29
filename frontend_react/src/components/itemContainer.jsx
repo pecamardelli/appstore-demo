@@ -18,6 +18,8 @@ function ItemContainer(props) {
                 if(result){
                     const createdAt         = new Date(result.data.createdAt);
                     result.data.createdAt   = createdAt.toDateString();
+                    result.data.photo       = `${process.env.REACT_APP_API_URL}${result.data.photo}`;
+                    
                     setItem(result.data);
                     setStars(<ReactStars
                         size={ 30 }

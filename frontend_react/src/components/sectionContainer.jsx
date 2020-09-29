@@ -11,6 +11,7 @@ function SectionContainer(props) {
         async function call() {
             try {
                 const result    = await http.get(`/store/${match.params.section}`);
+                
                 if(result) setContent(result.data);
                 else setContent([]);
             }

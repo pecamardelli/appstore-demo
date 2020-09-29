@@ -13,12 +13,13 @@ module.exports	= function(app) {
 	app.use(express.json());
 	app.use(cors());
 	// This is our public file folder
-	app.use(express.static('public'));
+	app.use('/api', express.static('assets'));
 	app.use('/api/users',		users);
 	app.use('/api/sections',	sections);
 	app.use('/api/categories',	categories);
 	app.use('/api/items',		items);
 	app.use('/api/auth',		auth);
+	app.use('/api/store',		store);
 	app.use('/api/store',		store);
 	app.use(error);
 }
