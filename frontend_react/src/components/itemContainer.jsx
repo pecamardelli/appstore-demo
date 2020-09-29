@@ -1,4 +1,5 @@
 import React, { useEffect, useState }    from 'react';
+import Icons        from './user_menu/userIcons';
 import { toast }    from 'react-toastify';
 import http         from '../services/httpService';
 import ReactStars   from 'react-rating-stars-component';
@@ -64,12 +65,23 @@ function ItemContainer(props) {
                                 Uploaded on { item ? item.createdAt : <strong>no date available</strong> }
                             </small>
                         </p>
+                        <div className="row" style={{ marginTop: '-15px'}}>
+                            <div style={{ margin: '0 0 -20px -4px' }} className="col-md-3" >
+                                { stars }
+                            </div>
+                            <div style={{ margin: '12px 0 -10px -35px' }} >
+                                <h5><strong>{item.rating}</strong></h5>
+                            </div>
+                        </div>
                     </div>
                     <div className="card-footer" style={{ height: '10%'}}>
                         <span className="d-flex justify-content-between align-items-center">
-                            { stars }
-                            <h5><strong>{item.rating}</strong></h5>
-                            <h6>Downloads { item.downloads }</h6>
+                            <h5 style={{ margin: '1px 0 0 0' }}>Downloads { item.downloads }</h5>
+                            <span>
+                                { Icons.addToCartIcon('2em') }
+                                { Icons.addedToCartIcon('2em') }
+                                { Icons.buyedIcon('2em') }
+                            </span>
                         </span>
                     </div>
                 </div>
