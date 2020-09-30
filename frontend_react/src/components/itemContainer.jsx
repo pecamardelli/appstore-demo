@@ -27,9 +27,7 @@ function ItemContainer(props) {
                         value={ result.data.rating }
                         edit={ false }
                         isHalf={true}
-                        >
-                            { result.data.rating }
-                        </ReactStars>
+                        />
                     );
                 }
                 else {

@@ -2,7 +2,6 @@ import React    from 'react';
 import { Link } from 'react-router-dom';
 
 function CategoryCard(props) {
-
     return (
         <div className="card border-dark mb-4 text-center" >
             <Link to={ props.data.endPoint }>
@@ -21,7 +20,7 @@ function CategoryCard(props) {
                 <ul className="list-group list-group-flush">
                     <li key='1' className="list-group-item d-flex justify-content-between align-items-center">
                         Total apps
-                        <span className="badge badge-danger badge-pill">14</span>
+                        <span className="badge badge-danger badge-pill">{ props.data.total }</span>
                     </li>
                 </ul>
             </div>

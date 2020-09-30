@@ -20,6 +20,5 @@ module.exports	= function(app) {
 	app.use('/api/items',		items);
 	app.use('/api/auth',		auth);
 	app.use('/api/store',		store);
-	app.use('/api/store',		store);
 	app.use(error);
 }

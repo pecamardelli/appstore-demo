@@ -310,5 +310,6 @@ User.hasOne(Role);
 Role.belongsTo(User, { foreignKey: 'roleId' });
 Section.hasMany(Category);
 Category.belongsTo(Section, { foreignKey: 'sectionId' });
+Category.hasMany(Item);
 Item.belongsTo(User, { foreignKey: 'authorId' });
 Item.belongsTo(Category, { foreignKey: 'categoryId' });

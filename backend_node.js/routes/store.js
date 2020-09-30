@@ -1,5 +1,6 @@
 const { User, Item, Category, Section }      = require('../models/models');
 const express	= require('express');
+const { Sequelize } = require('sequelize');
 
 const router	= express.Router();
 
@@ -30,7 +31,20 @@ async function getCategories(res, section) {
     try {
         const categories     = await Category.findAll({
             where:      { sectionId: section.dataValues.id },
-            attributes: [ 'displayName', 'id', 'endPoint', 'description' ]
+            attributes: [
+                ['displayName', 'displayName'],
+                ['id', 'id'],
+                ['endPoint', 'endPoint'],
+                ['description', 'description'],
+                [Sequelize.fn("COUNT", Sequelize.col("items.id")), "total"]
+            ],
+            include: [
+                { 
+                    model:      Item,
+                    attributes: []
+                }
+            ],
+            group: ['Category.id'] 
         });
         // Now let's see if the section has been found
         if(!categories) {
@@ -99,7 +113,7 @@ async function getItems(res, section, category) {
     }
 }
 
-async function getItem(req, res, section, category) {
+async function getItem(req, res, category) {
     try {
         const item     = await Item.findOne({
             where: {
@@ -171,9 +185,8 @@ router.get('/:section/:category/:item', async (req, res) => {
     const category  = await getCategory(req, res, section);
     if(!category) return;
 
-    const item      = await getItem(req, res, section, category);
-    if(!item) res.status(400).send(`Item not found!`);
-    else res.send(item);
+    const item      = await getItem(req, res, category);
+    if(item) res.send(item);
 });
 
 module.exports	= router;
