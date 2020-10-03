@@ -4,6 +4,8 @@ const Category	    = require('./category');
 const User		    = require('./user');
 const Item		    = require('./item');
 
+const statuses		= [ 'pending', 'onCart', 'canceled', 'completed' ];
+
 const Sale	= sequelize.define('Sale', {
 	id: {
 		type:			Sequelize.UUID,
@@ -41,10 +43,10 @@ const Sale	= sequelize.define('Sale', {
     },
     status: {
         type:       Sequelize.ENUM,
-        values:     [ 'pending', 'onCart', 'canceled', 'completed' ],
+        values:     statuses,
         validate:   {
             function (value) {
-                if (!(value in this.status.values)) throw new Error('Invalid invoice status!');
+                if (!statuses.includes(value)) throw new Error('Invalid invoice status!');
             }
         }
     }

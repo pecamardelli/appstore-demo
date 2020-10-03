@@ -5,6 +5,8 @@ const sections		= require('../routes/sections');
 const categories	= require('../routes/categories');
 const items			= require('../routes/items');
 const store			= require('../routes/store');
+const sales			= require('../routes/sales');
+const me			= require('../routes/me');
 const express		= require('express');
 const cors 			= require('cors');
 
@@ -20,5 +22,7 @@ module.exports	= function(app) {
 	app.use('/api/items',		items);
 	app.use('/api/auth',		auth);
 	app.use('/api/store',		store);
+	app.use('/api/sales',		sales);
+	app.use('/api/me',			me);
 	app.use(error);
 }
