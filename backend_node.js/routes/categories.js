@@ -5,7 +5,7 @@ const router	= express.Router();
 
 router.get('/', async (req, res) => {
 	const categories	= await Category.findAll({
-		attributes: [ 'displayName', 'id', 'endPoint', 'description' ]
+		attributes: [ 'displayName', 'id', 'path', 'description' ]
 	});
 	res.send(categories);
 });

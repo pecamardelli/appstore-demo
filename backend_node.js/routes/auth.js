@@ -6,8 +6,8 @@ const express	= require('express');
 const router	= express.Router();
 
 router.post('/', async (req, res) => {
-	// Check the validity of the received data. If invalid, return a 400 error.
-	const { error }	= validate(req.body);		// Grab the error object.
+	// First of all, check the request's validity.
+	const { error }	= validate(req.body);		// Grab the error object if any.
 	if (error) return res.status(400).send(error.details[0].message);
 	
 	const user	= await User.findOne({ where: { email: req.body.email }})

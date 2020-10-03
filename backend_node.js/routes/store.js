@@ -34,7 +34,7 @@ async function getCategories(res, section) {
             attributes: [
                 ['displayName', 'displayName'],
                 ['id', 'id'],
-                ['endPoint', 'endPoint'],
+                ['path', 'path'],
                 ['description', 'description'],
                 [Sequelize.fn("COUNT", Sequelize.col("items.id")), "total"]
             ],
@@ -66,9 +66,9 @@ async function getCategory(req, res, section) {
         category     = await Category.findOne({
             where: {
                 sectionId:      section.dataValues.id,
-                endPoint:       `/store/${req.params.section}/${req.params.category}`
+                path:           `/store/${req.params.section}/${req.params.category}`
             },
-            attributes: [ 'displayName', 'id', 'endPoint', 'description' ]
+            attributes: [ 'displayName', 'id', 'path', 'description' ]
         });
         // Now let's see if the section has been found
         if(!category) {
@@ -101,7 +101,7 @@ async function getItems(res, section, category) {
                     attributes: [ 'displayName' ]
                 }
             ],
-            attributes: [ 'displayName', 'photo', 'description', 'price', 'rating', 'downloads', 'endPoint' ]
+            attributes: [ 'displayName', 'photo', 'description', 'price', 'rating', 'downloads', 'path' ]
         });
         // Now let's see if the section has been found
         if(!items) return res.status(404).send(`No sections found!`);
@@ -118,7 +118,7 @@ async function getItem(req, res, category) {
         const item     = await Item.findOne({
             where: {
                 categoryId:     category.dataValues.id,
-                endPoint:       `/store/${req.params.section}/${req.params.category}/${req.params.item}`
+                path:           `/store/${req.params.section}/${req.params.category}/${req.params.item}`
             },
             include: [
                 {

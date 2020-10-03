@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function CategoryCard(props) {
     return (
         <div className="card border-dark mb-4 text-center" >
-            <Link to={ props.data.endPoint }>
+            <Link to={ props.data.path }>
                 <div className="card-body" style={{ marginTop: '10px' }}>
                     <img
                         src={ `${process.env.REACT_APP_API_URL}/categories/${props.data.id}.png` }
