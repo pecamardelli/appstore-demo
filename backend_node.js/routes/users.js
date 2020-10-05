@@ -1,10 +1,9 @@
 const { User, Role, Sale }	= require('../models/models');
 const { Sequelize } = require('../startup/dbConfig');
 const express		= require('express');
-const JwtDecode 	= require('jwt-decode');
 
 const router	= express.Router();
-const	Op		= Sequelize.Op;
+const Op		= Sequelize.Op;
 
 router.get('/signuproles', async (req, res) => {
 	const roles	= await Role.findAll({ where: { accessValue: { [Op.gte]: 4 }}});

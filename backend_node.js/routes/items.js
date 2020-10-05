@@ -16,6 +16,16 @@ router.get('/', async (req, res) => {
 	res.send(item);
 });
 
+router.get('/:id', async (req, res) => {
+    const item	= await Item.findOne({
+        where: { id: req.params.id }
+    });
+
+    if(!item) return res.status(404).send('Item not found.');
+
+	res.send(item);
+});
+
 router.post('/', async (req, res) => {
     // No need to implement validation here.
     // It's already done in the model.

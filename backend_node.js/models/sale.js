@@ -1,6 +1,5 @@
 const { Sequelize }	= require('sequelize');
 const sequelize		= require('../startup/dbConfig');
-const Category	    = require('./category');
 const User		    = require('./user');
 const Item		    = require('./item');
 
@@ -37,18 +36,15 @@ const Sale	= sequelize.define('Sale', {
 		validate:	{ min: 0 }
     },
 	quantity: {
-		type:		Sequelize.INTEGER.UNSIGNED,
-		allowNull:	false,
-		validate:	{ min: 0 }
+		type:			Sequelize.INTEGER.UNSIGNED,
+		allowNull:		false,
+		defaultValue:	1,
+		validate:		{ min: 0 }
     },
     status: {
-        type:       Sequelize.ENUM,
-        values:     statuses,
-        validate:   {
-            function (value) {
-                if (!statuses.includes(value)) throw new Error('Invalid invoice status!');
-            }
-        }
+        type:       	Sequelize.ENUM,
+        values:     	statuses,
+        defaultValue:	statuses[0]
     }
 });
 

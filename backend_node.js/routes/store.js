@@ -1,5 +1,5 @@
 const { User, Item, Category, Section }      = require('../models/models');
-const express	= require('express');
+const express	    = require('express');
 const { Sequelize } = require('sequelize');
 
 const router	= express.Router();
@@ -131,6 +131,7 @@ async function getItem(req, res, category) {
                 }
             ],
             attributes: [
+                'id',
                 'displayName',
                 'photo',
                 'description',
@@ -141,7 +142,7 @@ async function getItem(req, res, category) {
                 'updatedAt'
             ]
         });
-        // Now let's see if the section has been found
+        
         if(!item) {
             res.status(404).send(`Item not found!`);
             return null;
