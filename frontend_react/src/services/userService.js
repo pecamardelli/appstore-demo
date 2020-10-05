@@ -1,16 +1,18 @@
 import http 		from './httpService';
 import userObject	from '../includes/userObject';
 
+const userUrl	= '/users';
+
 export function register(user) {
 	const newUser	= {};
 
-	for(const prop in userObject) {
-		newUser[prop] = user[prop];
+	for(const key in userObject) {
+		newUser[key] = user[key];
 	}
 
-	return http.post('/users', newUser);
+	return http.post(userUrl, newUser);
 }
 
 export function getRoles() {
-	return http.get('/users/signuproles');
+	return http.get(`${userUrl}/signuproles`);
 }

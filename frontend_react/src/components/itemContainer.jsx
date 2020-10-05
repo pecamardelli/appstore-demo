@@ -1,8 +1,8 @@
 import React, {useEffect, useState}    from 'react';
-import {toast}    from 'react-toastify';
+import {toast}      from 'react-toastify';
 import http         from '../services/httpService';
 import ReactStars   from 'react-rating-stars-component';
-import ItemToCart   from './itemToCart';
+import ItemOptions  from './itemOptions';
 
 function ItemContainer(props) {
     const [ item, setItem ]     = useState({});
@@ -83,7 +83,7 @@ function ItemContainer(props) {
                                 // several data about it is needed to add to cart.
                                 // I didn't feel like using a context for this.
                             }
-                            <ItemToCart item={item} />
+                            <ItemOptions item={item} />
                         </span>
                     </div>
                 </div>

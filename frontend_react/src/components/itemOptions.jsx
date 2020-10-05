@@ -1,12 +1,12 @@
 import React, { useState, useEffect }   from 'react';
-import { getSale, submitSale }          from './../services/saleService';
+import { getSale, submitSale }          from '../services/saleService';
 import { Link }         from 'react-router-dom';
 import { toast }        from 'react-toastify';
 import JwtDecode        from 'jwt-decode';
 import ToolTipEntry     from './user_menu/toolTip';
 import Icons            from './user_menu/userIcons';
 
-function ItemToCart({ item }) {
+function ItemOptions({ item }) {
     const [ saleState, setSaleState ]   = useState('');
     const [ isMine, setIsMine]          = useState(false);
 
@@ -69,4 +69,4 @@ function ItemToCart({ item }) {
         return <ToolTipEntry icon={Icons.buyedIcon('2em')} tip='Buyed' />
 }
 
-export default ItemToCart;
+export default ItemOptions;
