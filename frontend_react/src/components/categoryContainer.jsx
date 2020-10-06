@@ -1,6 +1,6 @@
 import React, { useEffect, useState }    from 'react';
+import { getCategoryItems } from './../services/storeService';
 import { toast }    from 'react-toastify';
-import http         from '../services/httpService';
 import CardDeck     from './common/cardDeck';
 import ItemCard     from './common/itemCard';
 
@@ -11,8 +11,7 @@ function CategoryContainer(props) {
     useEffect(() => {
         async function call() {
             try {
-                const path      = `/store/${match.params.section}/${match.params.category}`;
-                const result    = await http.get(path);
+                const result    = await getCategoryItems(`${match.params.section}/${match.params.category}`);
                 
                 if(result) setContent(result.data);
                 else setContent([]);
@@ -26,7 +25,7 @@ function CategoryContainer(props) {
     }, [ setContent, match ]);
 
     return (
-        <CardDeck cards={ content } cardComponent={ ItemCard }/>
+        <CardDeck cards={ content } cardComponent={ ItemCard } cols={4}/>
     );
 }
 

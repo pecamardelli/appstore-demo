@@ -26,7 +26,7 @@ function SectionContainer(props) {
     }, [ setContent, match ]);
 
     return (
-        <CardDeck cards={ content } cardComponent={ CategoryCard }/>
+        <CardDeck cards={ content } cardComponent={ CategoryCard } cols={4} />
     );
 }
 

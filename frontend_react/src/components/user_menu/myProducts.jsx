@@ -1,38 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState }    from 'react';
 import { getMyProducts }    from './../../services/myService';
 import { toast }            from 'react-toastify';
+import CardDeck             from '../common/cardDeck';
+import ProductCard          from './productCard';
 
 function MyProducts(props) {
-    const [ products, setProducts ] = useState([]);
+    const [ content, setContent ]   = useState([]);
+    const { match } = props;
 
     useEffect(() => {
-        async function getProducts() {
+        async function call() {
             try {
-                const { data: myProducts }  = await getMyProducts();
-                setProducts(myProducts);
+                const result    = await getMyProducts();
+                
+                if(result) setContent(result.data);
+                else setContent([]);
             }
-            catch (ex) {
-                toast.error(`Could not get product list: ${ex}`);
+            catch(ex) {
+                toast.error(ex.response.data);
             }
         }
 
-        getProducts();
-    }, [ setProducts ]);
-
-    function renderProductList() {
-        if (Array.isArray(products)) {
-            return products.map(p => <li key={p.id}>{p.displayName}</li>)
-        }
-        else console.log(products);
-    }
+        call();
+    }, [ setContent, match ]);
 
     return (
-        <div>
-            <ul>
-                { products.map(p => <li key={p.id}>{p.displayName}</li>) }
-            </ul>
-        </div>
+        <CardDeck cards={ content } cardComponent={ ProductCard }  cols={5}/>
     );
 }
 
-export default MyProducts; 
+export default MyProducts;

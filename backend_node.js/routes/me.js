@@ -1,4 +1,4 @@
-const { User, Sale, Item }	= require('../models/models');
+const { User, Sale, Item, Category }	= require('../models/models');
 const express		= require('express');
 const JwtDecode 	= require('jwt-decode');
 
@@ -23,16 +23,33 @@ router.get('/cart', async (req, res) => {
 });
 
 router.get('/products', async (req, res) => {
-    const user	= JwtDecode(req.header('x-auth-token'));
+	let user;
+
+	try {
+		user	= JwtDecode(req.header('x-auth-token'));
+	}
+	catch (ex) {
+		return res.status(400).send(ex);
+	}
 
 	try {
 		const items	= await Item.findAll({
-			where: { authorId: user.id }
+			where: { authorId: user.id },
+			include: [{
+				model: Category,
+				attributes:	[ 'displayName' ]
+			}],
+            attributes: [
+                'id',
+                'displayName',
+                'photo',
+                'updatedAt'
+			]
 		});
 		return res.send(items);
 	}
 	catch (ex) {
-		return res.status(500).send(`Internal server error: ${ex.errors[0].message}`);
+		return res.status(500).send(`Internal server error: ${ex}`);
 	}
 
 });
