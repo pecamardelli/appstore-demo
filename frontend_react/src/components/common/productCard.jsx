@@ -3,7 +3,7 @@ import { Link }     from 'react-router-dom';
 import userIcons    from '../user_menu/userIcons';
 import ReactStars   from 'react-rating-stars-component';
 
-function ItemCard({ data }) {
+function ProductCard({ data }) {
 
     return (
         <div className="card border-dark mb-4" >
@@ -43,4 +43,4 @@ function ItemCard({ data }) {
     );
 }
 
-export default ItemCard;
+export default ProductCard;

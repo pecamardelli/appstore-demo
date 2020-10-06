@@ -1,4 +1,4 @@
-import React, { Fragment }	from 'react';
+import React				from 'react';
 import { submitCategory }	from './../services/categoryService';
 import { getSections }	from '../services/sectionService';
 import { toast }		from 'react-toastify';
@@ -48,23 +48,21 @@ class CategoryForm extends Form {
 	
 	render() {
 		return (
-			<Fragment>
-				<div className='row' style={{ marginTop: '5%' }}>
-					<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
-						<div className="card-header">
-							<h4 className="card-title">Add new category</h4>
-						</div>
-						<div className="card-body">
-							<form onSubmit={this.handleSubmit} >
-								{ this.renderSelect('sectionId', 'Section', this.state.sections) }
-								{ this.renderInput('displayName', 'Name') }
-								{ this.renderTextArea('description', 'Description') }
-								{ this.renderButton('Add') }
-							</form>
-						</div>
+			<div className='row' style={{ marginTop: '5%' }}>
+				<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
+					<div className="card-header">
+						<h4 className="card-title">Add new category</h4>
+					</div>
+					<div className="card-body">
+						<form onSubmit={this.handleSubmit} >
+							{ this.renderSelect('sectionId', 'Section', this.state.sections) }
+							{ this.renderInput('displayName', 'Name') }
+							{ this.renderTextArea('description', 'Description') }
+							{ this.renderButton('Add') }
+						</form>
 					</div>
 				</div>
-			</Fragment>
+			</div>
 		);
 	}
 }

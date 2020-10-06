@@ -6,7 +6,7 @@ import JwtDecode        from 'jwt-decode';
 import ToolTipEntry     from './user_menu/toolTip';
 import Icons            from './user_menu/userIcons';
 
-function ItemOptions({ item }) {
+function ProductOptions({ item }) {
     const [ saleState, setSaleState ]   = useState('');
     const [ isMine, setIsMine]          = useState(false);
 
@@ -69,4 +69,4 @@ function ItemOptions({ item }) {
         return <ToolTipEntry icon={Icons.buyedIcon('2em')} tip='Buyed' />
 }
 
-export default ItemOptions;
+export default ProductOptions;

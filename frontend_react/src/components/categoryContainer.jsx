@@ -2,7 +2,7 @@ import React, { useEffect, useState }    from 'react';
 import { getCategoryItems } from './../services/storeService';
 import { toast }    from 'react-toastify';
 import CardDeck     from './common/cardDeck';
-import ItemCard     from './common/itemCard';
+import ProductCard  from './common/productCard';
 
 function CategoryContainer(props) {
     const [ content, setContent ]   = useState([]);
@@ -25,7 +25,7 @@ function CategoryContainer(props) {
     }, [ setContent, match ]);
 
     return (
-        <CardDeck cards={ content } cardComponent={ ItemCard } cols={4}/>
+        <CardDeck cards={ content } cardComponent={ ProductCard } cols={4}/>
     );
 }
 

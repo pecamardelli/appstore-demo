@@ -3,11 +3,12 @@ import { ToastContainer }           from 'react-toastify';
 import React, { Fragment }          from 'react';
 import SectionContainer             from './components/sectionContainer';
 import CategoryContainer            from './components/categoryContainer';
-import ItemContainer                from './components/itemContainer';
+import ProductContainer             from './components/productContainer';
 import ProtectedRoute	from './components/common/protectedRoute';
 import RegisterForm   from './components/registerForm';
 import CategoryForm   from './components/categoryForm';
 import SectionForm    from './components/sectionForm';
+import ProductForm    from './components/productForm';
 import LoginForm      from './components/loginForm';
 import WishList       from './components/user_menu/wishList';
 import MyProducts     from './components/user_menu/myProducts';
@@ -44,7 +45,7 @@ function App() {
           <Route
             path='/store/:section/:category/:item'
             exact
-            render={ props => <ItemContainer { ...props } /> }
+            render={ props => <ProductContainer { ...props } /> }
           />
           <ProtectedRoute
             path='/categories'
@@ -60,7 +61,12 @@ function App() {
           />
           <ProtectedRoute
             path='/me/products'
+            exact
             component={MyProducts}
+          />
+          <ProtectedRoute
+            path='/me/products/new'
+            component={ProductForm}
           />
           <ProtectedRoute
             path='/me/profile'

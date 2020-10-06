@@ -54,4 +54,35 @@ router.get('/products', async (req, res) => {
 
 });
 
+router.get('/products/:id', async (req, res) => {
+	let user;
+
+	try {
+		user	= JwtDecode(req.header('x-auth-token'));
+	}
+	catch (ex) {
+		return res.status(400).send(ex);
+	}
+
+	try {
+		const items	= await Item.findAll({
+			where: { authorId: user.id },
+			include: [{
+				model: Category,
+				attributes:	[ 'displayName' ]
+			}],
+            attributes: [
+                'id',
+                'displayName',
+                'photo',
+                'updatedAt'
+			]
+		});
+		return res.send(items);
+	}
+	catch (ex) {
+		return res.status(500).send(`Internal server error: ${ex}`);
+	}
+});
+
 module.exports	= router;

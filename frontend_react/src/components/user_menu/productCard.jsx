@@ -17,7 +17,7 @@ function ProductCard({ data }) {
                 <span className="d-flex justify-content-between align-items-center">
                     <h6>{ data.Category.displayName }</h6>
                     <span style={{ margin: '-10px 0 0 0' }}>
-                        <Link to={ data.path }>
+                        <Link to={ `/me/products/${data.id}` }>
                             <ToolTipEntry icon={Icons.editIcon()} tip='Edit' />
                         </Link>
                     </span>

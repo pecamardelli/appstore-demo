@@ -2,9 +2,9 @@ import React, {useEffect, useState}    from 'react';
 import {toast}      from 'react-toastify';
 import http         from '../services/httpService';
 import ReactStars   from 'react-rating-stars-component';
-import ItemOptions  from './itemOptions';
+import ProductOptions  from './productOptions';
 
-function ItemContainer(props) {
+function ProductContainer(props) {
     const [ item, setItem ]     = useState({});
     const [ stars, setStars ]   = useState();
     const { match }             = props;
@@ -83,7 +83,7 @@ function ItemContainer(props) {
                                 // several data about it is needed to add to cart.
                                 // I didn't feel like using a context for this.
                             }
-                            <ItemOptions item={item} />
+                            <ProductOptions item={item} />
                         </span>
                     </div>
                 </div>
@@ -92,4 +92,4 @@ function ItemContainer(props) {
     );
 }
 
-export default ItemContainer;
+export default ProductContainer;

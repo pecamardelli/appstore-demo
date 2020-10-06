@@ -1,7 +1,7 @@
-import React            from 'react';
-import { Table }        from 'react-bootstrap';
-import { Link }         from 'react-router-dom';
-import userMenuIcons    from './userIcons';
+import React        from 'react';
+import { Table }    from 'react-bootstrap';
+import { Link }     from 'react-router-dom';
+import icons        from './userIcons';
 
 function ProfileMenu(props) {
     return (
@@ -14,7 +14,17 @@ function ProfileMenu(props) {
                                 My products
                             </h6>
                         </td>
-                        <td style={{ width: '20%'}}>{ userMenuIcons.myProductsIcon() }</td>
+                        <td style={{ width: '20%'}}>{ icons.productIcon() }</td>
+                    </Link>
+                </tr>
+                <tr>
+                    <Link to='/me/wishlist'>
+                        <td style={{ textAlign: "right"}}>
+                            <h6 style={{ marginTop: '3px'}} className='text-secondary'>
+                                My wish list
+                            </h6>
+                        </td>
+                        <td style={{ width: '20%'}}>{ icons.cartIcon() }</td>
                     </Link>
                 </tr>
                 <tr>
@@ -24,7 +34,7 @@ function ProfileMenu(props) {
                                 My profile
                             </h6>
                         </td>
-                        <td style={{ width: '20%'}}>{ userMenuIcons.editIcon() }</td>
+                        <td style={{ width: '20%'}}>{ icons.profileIcon() }</td>
                     </Link>
                 </tr>
                 <tr>
@@ -34,7 +44,7 @@ function ProfileMenu(props) {
                                 Logout
                             </h6>
                         </td>
-                        <td style={{ width: '20%'}}>{ userMenuIcons.logoutIcon() }</td>
+                        <td style={{ width: '20%'}}>{ icons.logoutIcon() }</td>
                     </Link>
                 </tr>
             </tbody>
