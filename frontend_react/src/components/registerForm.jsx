@@ -1,12 +1,11 @@
-import React, { Fragment }		from 'react';
 import { register, getRoles }	from '../services/userService';
-import Joi			from 'joi-browser';
+import React		from 'react';
 import { Link }		from 'react-router-dom';
 import { toast }	from 'react-toastify';
+import Joi			from 'joi-browser';
 import auth 		from '../services/authService';
 import Form 		from './common/forms/form';
 import userObject	from '../includes/userObject';
-
 
 class RegisterForm extends Form {
 	state	= {
@@ -70,30 +69,28 @@ class RegisterForm extends Form {
 			return null;
 		}
 		else return (
-			<Fragment>
-				<div className='row' style={{ marginTop: '1%' }}>
-					<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
-						<div className="card-header">
-							<h4 className="card-title">SIGN UP!</h4>
-						</div>
-						<div className="card-body">
-							<form onSubmit={this.handleSubmit} >
-								{ this.renderInput('firstname', 'First name') }
-								{ this.renderInput('lastname', 'Last name') }
-								{ this.renderInput('email', 'Email', 'email') }
-								{ this.renderSelect('roleId', 'Role', this.state.roles) }
-								{ this.renderInput('username', 'Username') }
-								{ this.renderInput('password', 'Password', 'password')}
-								{ this.renderInput('confirmPassword', 'Confirm password', 'password')}
-								{ this.renderButton('Register') }
-							</form>
-						</div>
-						<div className="card-footer bg-light border-secondary">
-							Already registered? <Link to='/login'>Sign in!</Link>
-						</div>
+			<div className='row' style={{ marginTop: '1%' }}>
+				<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
+					<div className="card-header">
+						<h4 className="card-title">SIGN UP!</h4>
+					</div>
+					<div className="card-body">
+						<form onSubmit={this.handleSubmit} >
+							{ this.renderInput('firstname', 'First name') }
+							{ this.renderInput('lastname', 'Last name') }
+							{ this.renderInput('email', 'Email', 'email') }
+							{ this.renderSelect('roleId', 'Role', this.state.roles) }
+							{ this.renderInput('username', 'Username') }
+							{ this.renderInput('password', 'Password', 'password')}
+							{ this.renderInput('confirmPassword', 'Confirm password', 'password')}
+							{ this.renderButton('Register') }
+						</form>
+					</div>
+					<div className="card-footer bg-light border-secondary">
+						Already registered? <Link to='/login'>Sign in!</Link>
 					</div>
 				</div>
-			</Fragment>
+			</div>
 		);
 	}
 }

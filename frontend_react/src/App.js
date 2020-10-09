@@ -43,7 +43,7 @@ function App() {
             render={ props => <CategoryContainer { ...props } /> }
           />
           <Route
-            path='/store/:section/:category/:item'
+            path='/store/:section/:category/:product'
             exact
             render={ props => <ProductContainer { ...props } /> }
           />

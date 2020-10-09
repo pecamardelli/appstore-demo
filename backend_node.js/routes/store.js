@@ -1,4 +1,4 @@
-const { User, Item, Category, Section }      = require('../models/models');
+const { User, Product, Category, Section }      = require('../models/models');
 const express	    = require('express');
 const { Sequelize } = require('sequelize');
 
@@ -36,11 +36,11 @@ async function getCategories(res, section) {
                 ['id', 'id'],
                 ['path', 'path'],
                 ['description', 'description'],
-                [Sequelize.fn("COUNT", Sequelize.col("items.id")), "total"]
+                [Sequelize.fn("COUNT", Sequelize.col("products.id")), "total"]
             ],
             include: [
                 { 
-                    model:      Item,
+                    model:      Product,
                     attributes: []
                 }
             ],
@@ -85,9 +85,9 @@ async function getCategory(req, res, section) {
     }
 }
 
-async function getItems(res, section, category) {
+async function getProducts(res, category) {
     try {
-        const items     = await Item.findAll({
+        const products     = await Product.findAll({
             where: {
                 categoryId:     category.dataValues.id
             },
@@ -104,8 +104,8 @@ async function getItems(res, section, category) {
             attributes: [ 'displayName', 'photo', 'description', 'price', 'rating', 'downloads', 'path' ]
         });
         // Now let's see if the section has been found
-        if(!items) return res.status(404).send(`No sections found!`);
-        else res.send(items);
+        if(!products) return res.status(404).send(`No products found!`);
+        else res.send(products);
     }
     catch(ex) {
         // Some nasty thing has happened to the MySQL server...
@@ -113,12 +113,12 @@ async function getItems(res, section, category) {
     }
 }
 
-async function getItem(req, res, category) {
+async function getProduct(req, res, category) {
     try {
-        const item     = await Item.findOne({
+        const product     = await Product.findOne({
             where: {
                 categoryId:     category.dataValues.id,
-                path:           `/store/${req.params.section}/${req.params.category}/${req.params.item}`
+                path:           `/store/${req.params.section}/${req.params.category}/${req.params.product}`
             },
             include: [
                 {
@@ -143,12 +143,12 @@ async function getItem(req, res, category) {
             ]
         });
         
-        if(!item) {
-            res.status(404).send(`Item not found!`);
+        if(!product) {
+            res.status(404).send(`Product not found, baby!`);
             return null;
         }
         
-        return item;
+        return product;
     }
     catch(ex) {
         // Some nasty thing has happened to the MySQL server...
@@ -176,18 +176,18 @@ router.get('/:section/:category', async (req, res) => {
 
     // Looks like we found the section and the category.
     // Let's find the items corresponding to them.
-    await getItems(res, section, category);
+    await getProducts(res, category);
 });
 
-router.get('/:section/:category/:item', async (req, res) => {
+router.get('/:section/:category/:product', async (req, res) => {
     const section   = await getSection(req, res);
     if(!section) return;
 
     const category  = await getCategory(req, res, section);
     if(!category) return;
 
-    const item      = await getItem(req, res, category);
-    if(item) res.send(item);
+    const product      = await getProduct(req, res, category);
+    if(product) res.send(product);
 });
 
 module.exports	= router;

@@ -98,6 +98,24 @@ export default class Form extends Component {
 		);
 	}
 
+	renderNumber	= (name, label, step = 1, smallLabel = '', autoFocus = false) => {
+		const	{ data, errors }	= this.state;
+		
+		return (
+			<Input
+				name={name}
+				value={data[name]}
+				label={label}
+				onChange={this.handleChange}
+				autoFocus={autoFocus}
+				type='number'
+				step={step}
+				smallLabel={smallLabel}
+				error={errors[name]}
+			/>
+		);
+	}
+
 	renderTextArea		= (name, label, smallLabel = '', autoFocus = false) => {
 		const	{ data, errors }	= this.state;
 		

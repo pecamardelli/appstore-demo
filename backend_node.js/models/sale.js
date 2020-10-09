@@ -1,7 +1,7 @@
 const { Sequelize }	= require('sequelize');
 const sequelize		= require('../startup/dbConfig');
 const User		    = require('./user');
-const Item		    = require('./item');
+const Product	    = require('./product');
 
 const statuses		= [ 'pending', 'onCart', 'canceled', 'completed' ];
 
@@ -16,7 +16,7 @@ const Sale	= sequelize.define('Sale', {
 		type:			Sequelize.UUID,
 		validate:       {
             async function (value) {
-                const catId = await Item.findOne({ where: { id: value }});
+                const catId = await Product.findOne({ where: { id: value }});
                 if(!catId) throw new Error('Invalid item ID!');
             }
         }

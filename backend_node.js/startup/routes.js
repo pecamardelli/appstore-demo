@@ -3,7 +3,7 @@ const auth			= require('../routes/auth');
 const users			= require('../routes/users');
 const sections		= require('../routes/sections');
 const categories	= require('../routes/categories');
-const items			= require('../routes/items');
+const products		= require('../routes/products');
 const store			= require('../routes/store');
 const sales			= require('../routes/sales');
 const me			= require('../routes/me');
@@ -19,7 +19,7 @@ module.exports	= function(app) {
 	app.use('/api/users',		users);
 	app.use('/api/sections',	sections);
 	app.use('/api/categories',	categories);
-	app.use('/api/items',		items);
+	app.use('/api/products',	products);
 	app.use('/api/auth',		auth);
 	app.use('/api/store',		store);
 	app.use('/api/sales',		sales);

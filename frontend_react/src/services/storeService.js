@@ -2,6 +2,6 @@ import http 		from './httpService';
 
 const storeUrl	= '/store';
 
-export function getCategoryItems(path) {
+export function getDataFromStore(path) {
 	return http.get(`${storeUrl}/${path}`);
 }

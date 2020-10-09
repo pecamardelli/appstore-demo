@@ -2,14 +2,14 @@ import React        from 'react';
 import { Link }     from 'react-router-dom';
 import userIcons    from '../user_menu/userIcons';
 import ReactStars   from 'react-rating-stars-component';
+import noImage      from '../../assets/image_not_found.jpg';
 
 function ProductCard({ data }) {
-
     return (
         <div className="card border-dark mb-4" >
             <Link to={ data.path }>
                 <img
-                    src={ `${process.env.REACT_APP_API_URL}${data.photo}` }
+                    src={ data.photo ? `${process.env.REACT_APP_API_URL}${data.photo}` : noImage }
                     className="card-img-top"
                     alt={ data.displayName }
                 />

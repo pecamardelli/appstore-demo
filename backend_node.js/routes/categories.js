@@ -3,11 +3,18 @@ const { Category }  = require('../models/models');
 
 const router	= express.Router();
 
-router.get('/', async (req, res) => {
-	const categories	= await Category.findAll({
-		attributes: [ 'displayName', 'id', 'path', 'description' ]
-	});
-	res.send(categories);
+router.get('/:sectionId', async (req, res) => {
+	console.log(req.body);
+	try {
+		const categories	= await Category.findAll({
+			where:	{ sectionId: req.params.sectionId || true },
+			attributes: [ 'displayName', 'id', 'path', 'description' ]
+		});
+		res.send(categories);
+	}
+	catch (ex) {
+		res.status(500).send(ex.errors[0].message);
+	}
 });
 
 router.post('/', async (req, res) => {
@@ -20,7 +27,7 @@ router.post('/', async (req, res) => {
 	}
 	catch (ex) {
 		console.log(ex)
-		res.status(400).send(ex.errors[0].message);
+		res.status(500).send(ex.errors[0].message);
     }
 });
 

@@ -3,7 +3,7 @@ const sequelize		= require('../startup/dbConfig');
 const Category	    = require('./category');
 const User		    = require('./user');
 
-const Item	= sequelize.define('Item', {
+const Product	= sequelize.define('Product', {
 	id: {
 		type:			Sequelize.UUID,
 		defaultValue:	Sequelize.UUIDV4,
@@ -16,7 +16,7 @@ const Item	= sequelize.define('Item', {
 	},
 	photo: {
 		type:			Sequelize.STRING,
-		validate:		{ isUrl: true },
+		validate:		{ max: 255 },
 		defaultValue:	''
 	},
 	categoryId: {
@@ -85,8 +85,8 @@ const Item	= sequelize.define('Item', {
     sequelize
 });
 
-Item.sync()
+Product.sync()
 	.then(() => { /* Do nothing for now */ })
     .catch((error) => { console.log('Error syncing items table', error) });
 
-module.exports  = Item;
+module.exports  = Product;

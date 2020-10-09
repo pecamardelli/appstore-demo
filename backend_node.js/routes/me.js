@@ -65,7 +65,7 @@ router.get('/products/:id', async (req, res) => {
 	}
 
 	try {
-		const items	= await Item.findAll({
+		const items	= await Item.findOne({
 			where: { authorId: user.id },
 			include: [{
 				model: Category,

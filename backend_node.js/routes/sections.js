@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 		res.send('Section saved!');
 	}
 	catch (ex) {
-		res.status(400).send(ex.errors[0].message);
+		res.status(500).send(ex.errors[0].message);
     }
 });
 
