@@ -101,7 +101,7 @@ async function getProducts(res, category) {
                     attributes: [ 'displayName' ]
                 }
             ],
-            attributes: [ 'displayName', 'photo', 'description', 'price', 'rating', 'downloads', 'path' ]
+            attributes: [ 'id', 'displayName', 'description', 'price', 'rating', 'downloads', 'path' ]
         });
         // Now let's see if the section has been found
         if(!products) return res.status(404).send(`No products found!`);
@@ -133,7 +133,6 @@ async function getProduct(req, res, category) {
             attributes: [
                 'id',
                 'displayName',
-                'photo',
                 'description',
                 'price',
                 'rating',

@@ -116,6 +116,23 @@ export default class Form extends Component {
 		);
 	}
 
+	renderFile	= (name, label, smallLabel = '', autoFocus = false) => {
+		const	{ data, errors }	= this.state;
+		
+		return (
+			<Input
+				name={name}
+				value={data[name]}
+				label={label}
+				onChange={this.handleChange}
+				autoFocus={autoFocus}
+				type='file'
+				smallLabel={smallLabel}
+				error={errors[name]}
+			/>
+		);
+	}
+
 	renderTextArea		= (name, label, smallLabel = '', autoFocus = false) => {
 		const	{ data, errors }	= this.state;
 		

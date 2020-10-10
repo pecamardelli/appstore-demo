@@ -14,11 +14,6 @@ const Product	= sequelize.define('Product', {
 		type:		Sequelize.STRING,
 		validate:	{ notEmpty: true, max: 255 }
 	},
-	photo: {
-		type:			Sequelize.STRING,
-		validate:		{ max: 255 },
-		defaultValue:	''
-	},
 	categoryId: {
 		type:			Sequelize.UUID,
 		validate:       {

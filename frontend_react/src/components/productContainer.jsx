@@ -20,8 +20,6 @@ function ProductContainer(props) {
                     const createdAt         = new Date(result.data.createdAt);
                     result.data.createdAt   = createdAt.toDateString();
                     
-                    result.data.photo       = result.data.photo ? `${process.env.REACT_APP_API_URL}${result.data.photo}` : noImage;
-                    
                     setProduct(result.data);
                     setStars(<ReactStars
                         size={30}
@@ -49,7 +47,12 @@ function ProductContainer(props) {
         <div className="card border-dark mb-3" style={{width: '100%'}}>
             <div className="row no-gutters">
                 <div className="col-md-4">
-                    <img src={product.photo} className="card-img-top" alt={product.displayName} />
+                    <img
+                        src={`${process.env.REACT_APP_API_URL}/products/${product.id}_logo.png`}
+                        onError={(e) => {e.target.onerror = null; e.target.src=noImage }}
+                        className="card-img-top"
+                        alt={product.displayName}
+                    />
                 </div>
                 <div className="col-md-8" style={{height: '90%'}}>
                     <div className="card-body">

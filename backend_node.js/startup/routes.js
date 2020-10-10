@@ -12,7 +12,7 @@ const cors 			= require('cors');
 
 
 module.exports	= function(app) {
-	app.use(express.json());
+	app.use(express.json({limit: '50mb'}));
 	app.use(cors());
 	// This is our public file folder
 	app.use('/api', express.static('assets'));

@@ -1,15 +1,18 @@
-import React        from 'react';
+import React, { useState, useEffect }  from 'react';
 import { Link }     from 'react-router-dom';
 import userIcons    from '../user_menu/userIcons';
 import ReactStars   from 'react-rating-stars-component';
 import noImage      from '../../assets/image_not_found.jpg';
+import httpService  from '../../services/httpService';
 
 function ProductCard({ data }) {
+
     return (
         <div className="card border-dark mb-4" >
             <Link to={ data.path }>
                 <img
-                    src={ data.photo ? `${process.env.REACT_APP_API_URL}${data.photo}` : noImage }
+                    src={`${process.env.REACT_APP_API_URL}/products/${data.id}_logo.png`}
+                    onError={(e) => {e.target.onerror = null; e.target.src=noImage }}
                     className="card-img-top"
                     alt={ data.displayName }
                 />

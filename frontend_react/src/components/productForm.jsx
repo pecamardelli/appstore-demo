@@ -52,7 +52,7 @@ class ProductForm extends Form {
 	};
 	
 	handleImageUpdate = (imageObject) => {
-		const data	= { ...this.state.data, photo: imageObject };
+		const data	= { ...this.state.data, photo: imageObject.data_url };
 		this.setState({ data });
 		console.log(this.state.data);
 	}
@@ -83,7 +83,7 @@ class ProductForm extends Form {
 						<div className="card-header">
 							<strong>Product data</strong>
 						</div>
-						<form onSubmit={this.handleSubmit} >
+						<form onSubmit={this.handleSubmit} enctype="multipart/form-data" >
 							<div className="card-body">
 								{ this.renderInput('displayName', 'Display name') }
 								{ this.renderSelect('sectionId', 'Section', this.state.sections) }
