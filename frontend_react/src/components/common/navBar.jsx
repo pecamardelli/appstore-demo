@@ -2,7 +2,7 @@ import React, { useState, useEffect }	from 'react';
 import { Link, NavLink }	from 'react-router-dom';
 import { getSections }		from '../../services/sectionService';
 import { toast }	from 'react-toastify';
-import logo			from '../../images/logo100.png';
+import logo			from '../../assets/images/logo100.png';
 import auth			from '../../services/authService';
 import UserMenu 	from '../user_menu/userMenu';
 import SignMenu 	from './signMenu';

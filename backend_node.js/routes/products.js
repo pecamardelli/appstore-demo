@@ -1,17 +1,32 @@
+const { Product, Category, Section }   = require('../models/models');
 const express	    = require('express');
-const { Product }   = require('../models/models');
 const JwtDecode     = require('jwt-decode');
 const fs            = require('fs');
 
 const router	= express.Router();
-const imageDir  = './assets/items';
+const imageDir  = './assets/products';
 
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
     const product	= await Product.findOne({
-        where: {
-            sectionId:  req.body.sectionId,
-            categoryId: req.body.categoryId
-        }
+        where: { id: req.params.id },
+        include: [
+            {
+                model:      Category,
+                attributes: [ 'id', 'displayName' ],
+                include: [
+                    {
+                        model:      Section,
+                        attributes: [ 'id', 'displayName' ]
+                    }
+                ]
+            }
+        ],
+        attributes: [
+            'id',
+            'displayName',
+            'description',
+            'price'
+        ]
     });
 
     if(!product) return res.status(404).send('Item not found.');
@@ -39,13 +54,13 @@ router.post('/', async (req, res) => {
         const result = await Product.create(product);
 
         // Save the image file received.
-        // Remove the header from the encoded data chunk.
-        // Then, decode it.
-        let base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
-        //let binaryData = Buffer.from(base64Data, 'base64').toString('binary');
+        // Remove the header from the base64 data chunk.
+        const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
 
-        fs.open(`${imageDir}/${result.dataValues.id}_logo.png`, 'wx', (err, fd) => {
-            fs.writeFile(`${imageDir}/${result.dataValues.id}_logo.png`, base64Data, "base64", (err) => {
+        fs.open(`${imageDir}/${result.dataValues.id}_logo.png`, 'w', (err, fd) => {
+            if (err) return;
+
+            fs.writeFile(fd, base64Data, "base64", (err) => {
                 console.log(err);
             });
         });
@@ -54,6 +69,41 @@ router.post('/', async (req, res) => {
 	}
 	catch (ex) {
 		console.log(ex);
+		res.status(500).send(ex.errors);
+    }
+});
+
+router.put('/', async (req, res) => {
+    console.log(req.body);
+    
+    try {
+        const result = await Product.update({
+            displayName:    req.body.displayName,
+            categoryId:     req.body.categoryId,
+            description:    req.body.description,
+            price:          req.body.price
+        },
+        {
+            where: { id: req.body.id }
+        });
+
+        // Save the image file received, if any.
+        // Remove the header from the base64 data chunk.
+        if (req.body.photo) {
+            const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
+    
+            fs.open(`${imageDir}/${req.body.id}_logo.png`, 'w', (err, fd) => {
+                if (err) return;
+    
+                fs.writeFile(fd, base64Data, "base64", (err) => {
+                    console.log(err);
+                });
+            });
+        }
+
+		res.send('Product updated!');
+	}
+	catch (ex) {
 		res.status(500).send(ex.errors);
     }
 });

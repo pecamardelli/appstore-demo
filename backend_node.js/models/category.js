@@ -51,12 +51,12 @@ const Category	= sequelize.define('Category', {
             where:      { id: category.sectionId },
             attributes: [ 'displayName' ]
         });
-        const regexp        = new RegExp('[^a-z]', 'g');
+        const regexp        = new RegExp('[^a-z-]', 'g');
         
         const sectionUrl    = section.dataValues.displayName.toLowerCase().replace(regexp, "");
         const categoryUrl   = category.displayName.toLowerCase().replace(regexp, "");
-        const endpoint      = `/store/${sectionUrl}/${categoryUrl}`;
-        category.setDataValue('endPoint', endpoint);
+        const path          = `/store/${sectionUrl}/${categoryUrl}`;
+        category.setDataValue('path', path);
       }
     },
     sequelize

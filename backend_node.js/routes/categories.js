@@ -7,7 +7,7 @@ router.get('/:sectionId', async (req, res) => {
 	console.log(req.body);
 	try {
 		const categories	= await Category.findAll({
-			where:	{ sectionId: req.params.sectionId || true },
+			where:	{ sectionId: req.params.sectionId },
 			attributes: [ 'displayName', 'id', 'path', 'description' ]
 		});
 		res.send(categories);

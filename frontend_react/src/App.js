@@ -69,6 +69,10 @@ function App() {
             component={ProductForm}
           />
           <ProtectedRoute
+            path='/me/products/edit/:id'
+            component={ProductForm}
+          />
+          <ProtectedRoute
             path='/me/profile'
             component={MyProfile}
           />

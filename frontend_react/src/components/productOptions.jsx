@@ -37,7 +37,7 @@ function ProductOptions({ item }) {
         if (me.id === item.authorId) setIsMine(true);
         else getSaleData();
 
-    }, [ setSaleState, item.id ]);
+    }, [ setSaleState, item.id, item.authorId ]);
 
     const handleClick = async () => {
         try {
@@ -53,7 +53,7 @@ function ProductOptions({ item }) {
     // I know this may be a little unclean but it's a nice way to do
     // conditional rendering.
     if (isMine)
-        return  <Link to='/me/wishlist'>
+        return  <Link to={`/me/products/edit/${item.id}`}>
                     <ToolTipEntry icon={Icons.editIcon('2em')} tip='Edit product' />
                 </Link>
 

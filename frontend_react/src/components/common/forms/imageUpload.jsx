@@ -2,9 +2,9 @@ import React, { useState }  from 'react';
 import ImageUploading       from 'react-images-uploading';
 
 function ImageUpload(props) {
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState([{}]);
     const maxNumber = 69;
- 
+
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
         props.onImageUpdate(imageList[0]);
@@ -14,12 +14,11 @@ function ImageUpload(props) {
 
     return (
         <ImageUploading
-            multiple
+            multiple={false}
             value={images}
             onChange={onChange}
             maxNumber={maxNumber}
             dataURLKey="data_url"
-            multiple={false}
             resolutionType='more'
             resolutionHeight='500'
             resolutionWidth='500'
@@ -43,7 +42,10 @@ function ImageUpload(props) {
                     <div className="upload__image-wrapper">
                         {imageList.map((image, index) => (
                         <div key={index} className="image-item">
-                            <img src={image['data_url']} alt="" width="300" />
+                            <img
+                                src={image['data_url'] ? image['data_url'] : `${process.env.REACT_APP_API_URL}/products/${props.imageId}_logo.png`}
+                                alt="" width="300"
+                            />
                         </div>
                         ))}
                     </div>

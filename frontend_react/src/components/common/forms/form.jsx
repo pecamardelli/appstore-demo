@@ -13,7 +13,6 @@ export default class Form extends Component {
 	validate = () => {
 		//const result	= this.schema.validate(this.state.data);
 		const { error }	= Joi.validate(this.state.data, this.schema, { abortEarly: false });
-		console.log(error)
 		if(!error) return null;
 	
 		const errors	= {};	
@@ -116,23 +115,6 @@ export default class Form extends Component {
 		);
 	}
 
-	renderFile	= (name, label, smallLabel = '', autoFocus = false) => {
-		const	{ data, errors }	= this.state;
-		
-		return (
-			<Input
-				name={name}
-				value={data[name]}
-				label={label}
-				onChange={this.handleChange}
-				autoFocus={autoFocus}
-				type='file'
-				smallLabel={smallLabel}
-				error={errors[name]}
-			/>
-		);
-	}
-
 	renderTextArea		= (name, label, smallLabel = '', autoFocus = false) => {
 		const	{ data, errors }	= this.state;
 		
@@ -154,7 +136,7 @@ export default class Form extends Component {
 		return (
 			<Select
 				name={name}
-				value={data.genreId}
+				value={data[name]}
 				options={options}
 				label={label}
 				onChange={this.handleChange}

@@ -1,9 +1,9 @@
-import React, {useEffect, useState}    from 'react';
+import React, { useEffect, useState }    from 'react';
 import { getDataFromStore } from './../services/storeService';
-import {toast}              from 'react-toastify';
+import { toast }            from 'react-toastify';
 import ProductOptions       from './productOptions';
 import ReactStars           from 'react-rating-stars-component';
-import noImage              from '../assets/image_not_found.jpg';
+import noImage              from '../assets/images/image_not_found.png';
 
 function ProductContainer(props) {
     const [ product, setProduct ]   = useState({});

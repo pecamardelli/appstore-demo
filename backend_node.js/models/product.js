@@ -60,21 +60,21 @@ const Product	= sequelize.define('Product', {
 	}
 }, {
     hooks: {
-      afterValidate: async (item, options) => {
+      afterValidate: async (product, options) => {
         // What is this for?? Well, we'll rely on the display name to generate
-        // the dynamic route at the front-end and, obviously, "Health & Care" and such
-		// would not be valid urls.
+        // the dynamic route at the front-end and, obviously, "Health & Care"
+		// would not be a valid url.
 		
-		const category		= await Category.findOne({ where: { id: item.categoryId }});
-		const regexp        = new RegExp('[^a-z ]', 'g');
-        const itemName		= item.displayName
-                                .toLowerCase()
-                                .replace(regexp, "")
-                                .replace(" ", "-");
-		const itemPath      = `${category.path}/${itemName}`;
+		const category	= await Category.findOne({ where: { id: product.categoryId }});
+		const regexp    = new RegExp('[^a-z -]', 'g');
+        const name		= product.displayName
+                            .toLowerCase()
+                            .replace(regexp, "")
+                            .replace(" ", "-");
+		const path     	= `${category.path}/${name}`;
 		
 		// Set the value
-        item.setDataValue('path', itemPath);
+        product.setDataValue('path', path);
       }
     },
     sequelize
