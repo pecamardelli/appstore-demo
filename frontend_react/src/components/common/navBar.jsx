@@ -28,7 +28,7 @@ const NavBar	= (props) => {
 	}, [ setSections, setUser ]);
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light bg-light">
+		<nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: '#ffddbb'}}>
 			<Link className="navbar-brand" to="/">
 				<img
 					src={logo}

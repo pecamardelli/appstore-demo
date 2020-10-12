@@ -1,9 +1,9 @@
 import { Route, Switch, Redirect }  from 'react-router-dom';
-import { ToastContainer }           from 'react-toastify';
-import React, { Fragment }          from 'react';
-import SectionContainer             from './components/sectionContainer';
-import CategoryContainer            from './components/categoryContainer';
-import ProductContainer             from './components/productContainer';
+import React, { Fragment }  from 'react';
+import { ToastContainer }   from 'react-toastify';
+import SectionContainer     from './components/sectionContainer';
+import CategoryContainer    from './components/categoryContainer';
+import ProductContainer     from './components/productContainer';
 import ProtectedRoute	from './components/common/protectedRoute';
 import RegisterForm   from './components/registerForm';
 import CategoryForm   from './components/categoryForm';
@@ -16,18 +16,21 @@ import MyProfile      from './components/user_menu/myProfile';
 import NotFound       from './components/common/not-found';
 import NavBar         from './components/common/navBar';
 import Logout			    from './components/user_menu/logout';
+import Home           from './components/home';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   return (
     <Fragment>
       <ToastContainer />
       <NavBar />
-      <hr />
+      <br />
       <main className='container'>
         <Switch>
           <Route path='/register'   component={RegisterForm} />
@@ -78,7 +81,7 @@ function App() {
           />
           <Route path='/logout'     component={Logout} />
           <Route path='/not-found'	component={NotFound} />
-          <Redirect from='/' exact to='/store' />
+          <Route path='/' exact     component={Home} />
           <Redirect to='/not-found' />
         </Switch>
       </main>

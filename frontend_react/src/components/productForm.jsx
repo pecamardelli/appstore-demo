@@ -2,7 +2,7 @@ import { getProduct, submitProduct }	from '../services/productService';
 import { getSections }		from '../services/sectionService';
 import { getCategories }	from '../services/categoryService';
 import { toast }	from 'react-toastify';
-import React        from 'react';
+import React, { Fragment }        from 'react';
 import Joi			from 'joi-browser';
 import Form 		from './common/forms/form';
 import ImageUpload	from './common/forms/imageUpload';
@@ -93,33 +93,38 @@ console.log(product)
 	
 	render() {
 		return (
-			<div className="card border-dark mb-3" style={{width: '100%'}}>
-				<div className="row no-gutters">
-					<div className="col-md-4">
-						<ImageUpload
-							onImageUpdate={this.handleImageUpdate}
-							imageId={ this.state.data ? this.state.data.id : null }
-						/>
-					</div>
-					<div className="col-md-8" style={{height: '90%'}}>
-						<div className="card-header">
-							<strong>Product data</strong>
+			<Fragment>
+				<div>
+					<h2><strong>{ this.state.data.id ? 'Update product' : 'Add new product' }</strong></h2>
+				</div>
+				<div className="card border-dark mb-3" style={{width: '100%'}}>
+					<div className="row no-gutters">
+						<div className="col-md-4">
+							<ImageUpload
+								onImageUpdate={this.handleImageUpdate}
+								imageId={ this.state.data ? this.state.data.id : null }
+							/>
 						</div>
-						<form onSubmit={this.handleSubmit}>
-							<div className="card-body">
-								{ this.renderInput('displayName', 'Display name') }
-								{ this.renderSelect('sectionId', 'Section', this.state.sections) }
-								{ this.renderSelect('categoryId', 'Category', this.state.categories) }
-								{ this.renderTextArea('description', 'Description') }
-								{ this.renderNumber('price', 'Price', '0.01') }
+						<div className="col-md-8" style={{height: '90%'}}>
+							<div className="card-header">
+								<strong>Product data</strong>
 							</div>
-							<div className="card-footer text-muted bg-transparent">
-								{ this.state.data.id ? this.renderButton('Update') : this.renderButton('Submit') }
-							</div>
-						</form>
+							<form onSubmit={this.handleSubmit}>
+								<div className="card-body">
+									{ this.renderInput('displayName', 'Display name') }
+									{ this.renderSelect('sectionId', 'Section', this.state.sections) }
+									{ this.renderSelect('categoryId', 'Category', this.state.categories) }
+									{ this.renderTextArea('description', 'Description') }
+									{ this.renderNumber('price', 'Price', '0.01') }
+								</div>
+								<div className="card-footer text-muted bg-transparent">
+									{ this.state.data.id ? this.renderButton('Update') : this.renderButton('Submit') }
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
+			</Fragment>
 		);
 	}
 }
