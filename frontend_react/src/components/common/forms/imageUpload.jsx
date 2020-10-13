@@ -20,8 +20,8 @@ function ImageUpload(props) {
             maxNumber={maxNumber}
             dataURLKey="data_url"
             resolutionType='more'
-            resolutionHeight='500'
-            resolutionWidth='500'
+            resolutionHeight='300'
+            resolutionWidth='300'
             acceptType={['jpg','gif','png']}
         >
             {({
@@ -36,15 +36,16 @@ function ImageUpload(props) {
             // write your building UI
             <div className="card text-center" style={{ height: '100%'}}>
                 <div className="card-header">
-                    <strong>Product image</strong>
+                    <strong>{props.title}</strong>
                 </div>
                 <div className="card-body">
                     <div className="upload__image-wrapper">
                         {imageList.map((image, index) => (
                         <div key={index} className="image-item">
                             <img
-                                src={image['data_url'] ? image['data_url'] : `${process.env.REACT_APP_API_URL}/products/${props.imageId}_logo.png`}
-                                alt="" width="300"
+                                src={image['data_url'] ? image['data_url'] : `${process.env.REACT_APP_API_URL}${props.path}/${props.imageId}.png`}
+                                alt=''
+                                width='300'
                             />
                         </div>
                         ))}

@@ -4,12 +4,12 @@ import userIcons    from '../user_menu/userIcons';
 import ReactStars   from 'react-rating-stars-component';
 import noImage      from '../../assets/images/image_not_found.png';
 
-function ProductCard({data}) {
+function ProductCard({ data }) {
     return (
         <div className="card border-dark mb-4" >
-            <Link to={data.path}>
+            <Link to={`${data.Category.alias}/${data.alias}`}>
                 <img
-                    src={`${process.env.REACT_APP_API_URL}/products/${data.id}_logo.png`}
+                    src={`${process.env.REACT_APP_API_URL}/images/products/${data.id}.png`}
                     onError={(e) => {e.target.onerror = null; e.target.src=noImage}}
                     className="card-img-top"
                     alt={data.displayName}

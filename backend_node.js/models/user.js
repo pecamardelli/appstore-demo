@@ -3,7 +3,7 @@ const sequelize		= require('../startup/dbConfig');
 const jwt			= require('jsonwebtoken');
 const config		= require('config');
 const bcrypt		= require('bcryptjs');
-const Role			= require('./role');
+const { Role }		= require('./models');
 
 const User	= sequelize.define('User', {
 	id: {
@@ -58,10 +58,14 @@ const User	= sequelize.define('User', {
 });
 
 User.prototype.generateAuthToken =  function(user) {
+	console.log(user)
 	const token	= jwt.sign({
-        id:         user.id,
-        username:   user.username,
-        roleId:     user.roleId
+        id:        		user.id,
+        username:   	user.username,
+        firstname:   	user.firstname,
+        lastname:   	user.lastname,
+		role:			user.Role.dataValues.displayName,
+		accessValue:	user.Role.dataValues.accessValue
     }, config.get('jwtPrivateKey'));
 
 	return token;

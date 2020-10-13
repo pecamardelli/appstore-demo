@@ -5,7 +5,7 @@ const router	= express.Router();
 
 router.get('/', async (req, res) => {
 	const sections	= await Section.findAll({
-		attributes: [ 'displayName', 'id' ]
+		attributes: [ 'displayName', 'id', 'alias' ]
 	});
 	res.send(sections);
 });

@@ -48,7 +48,7 @@ function ProductContainer(props) {
             <div className="row no-gutters">
                 <div className="col-md-4">
                     <img
-                        src={`${process.env.REACT_APP_API_URL}/products/${product.id}_logo.png`}
+                        src={`${process.env.REACT_APP_API_URL}/products/${product.id}.png`}
                         onError={(e) => {e.target.onerror = null; e.target.src=noImage }}
                         className="card-img-top"
                         alt={product.displayName}

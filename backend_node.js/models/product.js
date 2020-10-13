@@ -1,7 +1,8 @@
+//const { Category, User }	= require('./models');
 const { Sequelize }	= require('sequelize');
 const sequelize		= require('../startup/dbConfig');
-const Category	    = require('./category');
-const User		    = require('./user');
+const Category		= require('./category');
+const User			= require('./user');
 
 const Product	= sequelize.define('Product', {
 	id: {
@@ -12,10 +13,12 @@ const Product	= sequelize.define('Product', {
 	},
 	displayName: {
 		type:		Sequelize.STRING,
+		unique:		'uniqueFlag',
 		validate:	{ notEmpty: true, max: 255 }
 	},
 	categoryId: {
-		type:			Sequelize.UUID,
+		type:		Sequelize.UUID,
+		unique:		'uniqueFlag',
 		validate:       {
             async function (value) {
                 const catId = await Category.findOne({ where: { id: value }});
@@ -24,7 +27,7 @@ const Product	= sequelize.define('Product', {
         }
 	},
 	authorId: {
-		type:			Sequelize.UUID,
+		type:		Sequelize.UUID,
 		validate:   {
 			async function (value) {
 				const userId = await User.findOne({ where: { id: value }});
@@ -32,8 +35,10 @@ const Product	= sequelize.define('Product', {
 			}
 		}
 	},
-	path: {
-        type:		Sequelize.STRING
+	alias: {
+        type:		Sequelize.STRING,
+		unique:     true,
+		validate:	{ max: 255 }
 	},
 	description: {
         type:		Sequelize.STRING(1024),
@@ -59,25 +64,26 @@ const Product	= sequelize.define('Product', {
 		validate:		{ min: 0, max: 5 }
 	}
 }, {
-    hooks: {
-      afterValidate: async (product, options) => {
-        // What is this for?? Well, we'll rely on the display name to generate
-        // the dynamic route at the front-end and, obviously, "Health & Care"
-		// would not be a valid url.
-		
-		const category	= await Category.findOne({ where: { id: product.categoryId }});
-		const regexp    = new RegExp('[^a-z -]', 'g');
-        const name		= product.displayName
-                            .toLowerCase()
-                            .replace(regexp, "")
-                            .replace(" ", "-");
-		const path     	= `${category.path}/${name}`;
-		
-		// Set the value
-        product.setDataValue('path', path);
-      }
-    },
-    sequelize
+	hooks: {
+		afterValidate: (product, options) => {
+		  // In here we'll generate the alias based on the displayName attribute.
+		  // Let's eliminate all characters except lowercase letters and hyphens
+		  const regexp    = new RegExp('[^a-z -]', 'g');
+		  const alias     = product.displayName
+								.toLowerCase()
+								.replace(regexp, "")
+								.replace(/ /g, "-")
+								.replace(/-+/g, "-");
+		  product.setDataValue('alias', alias);
+		}
+	},
+	sequelize
+}, {
+    uniqueKeys: {
+        uniqueFlag: {
+            fields: ['displayName', 'categoryId' ]
+        }
+    }
 });
 
 Product.sync()

@@ -1,6 +1,6 @@
 const { Sequelize }	= require('sequelize');
+const Section       = require('./section');
 const sequelize		= require('../startup/dbConfig');
-const Section	    = require('./section');
 
 const Category	= sequelize.define('Category', {
 	id: {
@@ -11,6 +11,7 @@ const Category	= sequelize.define('Category', {
     },
     sectionId: {
         type:			Sequelize.UUID,
+        unique:         'uniqueFlag',
         validate:       {
             async function (value) {
                 const sectionId = await Section.findOne({ where: { id: value }});
@@ -20,46 +21,42 @@ const Category	= sequelize.define('Category', {
     },
 	displayName: {
         type:		Sequelize.STRING,
-		validate:	{
-            notEmpty:   true,
-            max:        255,
-            async function (value) {
-                const existingCategory = await Category.findOne({ where: { displayName: value }});
-                if(existingCategory && existingCategory.dataValues.sectionId == this.sectionId) {
-                    throw new Error(`'${value}' category already exists for this section.`);
-                }
-            }
-        }
+        unique:     'uniqueFlag',
+        validate:	{ notEmpty: true, max: 255 }
 	},
-	path: {
-        type:		Sequelize.STRING
+	alias: {
+        type:		Sequelize.STRING,
+        unique:     true,
+        validate:	{ max: 255 }
 	},
 	description: {
         type:		Sequelize.STRING,
 		validate:	{
             notEmpty:   true,
-            max:        255
+            max:        1024
         }
 	}
 }, {
     hooks: {
-      afterValidate: async (category, options) => {
-          // What is this for?? Well, we'll rely on the display name to generate
-          // the dynamic route at the front-end and, obviously, "Health & Care" and such
-          // would not be valid urls.
-        const section       = await Section.findOne({
-            where:      { id: category.sectionId },
-            attributes: [ 'displayName' ]
-        });
-        const regexp        = new RegExp('[^a-z-]', 'g');
-        
-        const sectionUrl    = section.dataValues.displayName.toLowerCase().replace(regexp, "");
-        const categoryUrl   = category.displayName.toLowerCase().replace(regexp, "");
-        const path          = `/store/${sectionUrl}/${categoryUrl}`;
-        category.setDataValue('path', path);
+      afterValidate: (category, options) => {
+        // In here we'll generate the alias based on the displayName attribute.
+        // Let's eliminate all characters except lowercase letters and hyphens.
+        const regexp    = new RegExp('[^a-z -]', 'g');
+        const alias     = category.displayName
+                            .toLowerCase()
+                            .replace(regexp, "")
+                            .replace(/ /g, "-")
+                            .replace(/-+/g, "-");
+        category.setDataValue('alias', alias);
       }
     },
     sequelize
+}, {
+    uniqueKeys: {
+        uniqueFlag: {
+            fields: [ 'displayName', 'sectionId' ]
+        }
+    }
 });
 
 // Let's sync to create the table if doesn't exists
@@ -68,11 +65,3 @@ Category.sync()
 	.catch((error) => { console.log('Error syncing categories table', error) });
 
 module.exports  = Category;
-
-    /*
-Category.create(
-        { displayName:  'Books' }
-    )
-    .then(console.log('Rol creado...'))
-    .catch(err => console.log(err.errors.map(e => e.message)));
-*/

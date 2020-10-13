@@ -52,6 +52,12 @@ function App() {
           />
           <ProtectedRoute
             path='/categories'
+            exact
+            component={CategoryForm}
+          />
+          <ProtectedRoute
+            path='/categories/:id'
+            exact
             component={CategoryForm}
           />
           <ProtectedRoute

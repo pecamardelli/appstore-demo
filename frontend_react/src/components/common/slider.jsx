@@ -18,7 +18,7 @@ function Slider({ items = [], path = '/images' }) {
 
     return (
         <ReactSlider { ...settings }>
-            { items.map(i => <div className="card border-dark" role='button'>
+            { items.map(i => <div className="card border-dark" role='button' key={i.id}>
                 <Link to={`/store/${i.displayName.toLowerCase()}`}>
                     <div className="card-body text-center">
                         <img

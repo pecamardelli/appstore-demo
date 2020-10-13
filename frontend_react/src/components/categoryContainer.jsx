@@ -11,7 +11,7 @@ function CategoryContainer(props) {
     useEffect(() => {
         async function call() {
             try {
-                const result    = await getDataFromStore(`${match.params.section}/${match.params.category}`);
+                const result    = await getDataFromStore(match.params.section, match.params.category);
                 
                 if(result) setContent(result.data);
                 else setContent([]);

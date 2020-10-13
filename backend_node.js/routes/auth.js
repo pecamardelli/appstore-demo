@@ -1,4 +1,4 @@
-const { User }	= require('../models/models');
+const { User, Role }	= require('../models/models');
 const Joi		= require('joi');
 const bcrypt	= require('bcryptjs');
 const express	= require('express');
@@ -10,8 +10,24 @@ router.post('/', async (req, res) => {
 	const { error }	= validate(req.body);		// Grab the error object if any.
 	if (error) return res.status(400).send(error.details[0].message);
 	
-	const user	= await User.findOne({ where: { email: req.body.email }})
-	//let user	= await User.findOne({ email: req.body.email });
+	const { dataValues: user }	= await User.findOne({
+		where:		{ email: req.body.email },
+		include:	[
+			{
+				model:		Role,
+				attributes:	[ 'accessValue', 'displayName' ]
+			}
+		],
+		attributes:	[
+			'id',
+			'firstname',
+			'lastname',
+			'email',
+			'password',
+			'username'
+		]
+	});
+	
 	if (!user) return res.status(400).send('Invalid email or password.');
 
 	const validPassword	= await bcrypt.compare(req.body.password, user.password);

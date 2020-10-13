@@ -1,9 +1,10 @@
-import React				from 'react';
-import { submitCategory }	from './../services/categoryService';
+import { submitCategory, getCategory, updateCategory }	from './../services/categoryService';
+import React, { Fragment }	from 'react';
 import { getSections }	from '../services/sectionService';
 import { toast }		from 'react-toastify';
-import Form 			from './common/forms/form';
+import ImageUpload		from './common/forms/imageUpload';
 import Joi				from 'joi-browser';
+import Form 			from './common/forms/form';
 
 class CategoryForm extends Form {
 	state	= {
@@ -15,7 +16,27 @@ class CategoryForm extends Form {
 	async componentDidMount() {
 		try {
 			const { data: sections }	= await getSections();
-			this.setState({ sections });
+			const categoryId			= this.props.match.params.id;
+			let	category	= {};
+
+			if (categoryId) {
+				try {
+					const { data }    = await getCategory(categoryId);
+					console.log(data);
+					category = {
+						id:				data.id,
+						displayName:	data.displayName,
+						sectionId:		data.sectionId,
+						description:	data.description
+					};
+				}
+				catch (ex) {
+					toast.error(`Error retrieving category data: ${ex}`);
+				}
+			}
+			//console.log(category)
+
+			this.setState({ sections, data: category });
 		}
 		catch(ex) {
 			console.log(ex);
@@ -23,16 +44,26 @@ class CategoryForm extends Form {
 	}
 
 	schema	= {
+		id:				Joi.any().label('Id'),
 		sectionId:		Joi.string().min(1).max(36).required().label('Section'),
 		displayName:   	Joi.string().min(1).max(255).required().label('Name'),
-		description:   	Joi.string().min(5).max(255).required().label('Description')
+		description:   	Joi.string().min(5).max(255).required().label('Description'),
+		photo:   		Joi.any().label('Photo'),
 	};
 	
+	handleImageUpdate = (imageObject) => {
+		const photo	= imageObject ? imageObject.data_url : null;
+		const data	= { ...this.state.data, photo };
+		this.setState({ data });
+	}
+
 	doSubmit = async() => {
 		try {
 			const category	= { ...this.state.data };
-			console.log(category)
-			await submitCategory(category);
+
+			if (category.id) await updateCategory(category);
+			else await submitCategory(category);
+			
 			toast.success(`Category '${this.state.data.name}' succesfully submitted!`);
 		}
 		catch (ex) {
@@ -40,29 +71,48 @@ class CategoryForm extends Form {
 				const errors	= { ...this.state.errors };
 				errors.category	= ex.response.data;
 				this.setState({ errors });	
+				console.log(ex.response)
+				return toast.error(`Error: ${ex.response.data}`);
 			}
-
-			return toast.error(`Error: ${ex.response.data}`);
+			else return toast.error(`Error: ${ex}`);
 		}
 	};
 	
 	render() {
 		return (
-			<div className='row' style={{ marginTop: '5%' }}>
-				<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
-					<div className="card-header">
-						<h4 className="card-title">Add new category</h4>
-					</div>
-					<div className="card-body">
-						<form onSubmit={this.handleSubmit} >
-							{ this.renderSelect('sectionId', 'Section', this.state.sections) }
-							{ this.renderInput('displayName', 'Name') }
-							{ this.renderTextArea('description', 'Description') }
-							{ this.renderButton('Add') }
-						</form>
+			<Fragment>
+				<div>
+					<h2><strong>{ this.state.data.id ? 'Update category' : 'Add new category' }</strong></h2>
+					<hr />
+				</div>
+				<div className="card border-dark mb-3" style={{width: '100%'}}>
+					<div className="row no-gutters">
+						<div className="col-md-4">
+							<ImageUpload
+								onImageUpdate={this.handleImageUpdate}
+								imageId={ this.state.data ? this.state.data.id : null }
+								title='Category logo'
+								path='/categories'
+							/>
+						</div>
+						<div className="col-md-8" style={{height: '90%'}}>
+							<div className="card-header">
+								<strong>Category data</strong>
+							</div>
+							<form onSubmit={this.handleSubmit}>
+								<div className="card-body">
+									{ this.renderSelect('sectionId', 'Section', this.state.sections) }
+									{ this.renderInput('displayName', 'Name') }
+									{ this.renderTextArea('description', 'Description') }
+								</div>
+								<div className="card-footer text-muted bg-transparent">
+									{ this.state.data.id ? this.renderButton('Update') : this.renderButton('Submit') }
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
+			</Fragment>
 		);
 	}
 }

@@ -1,4 +1,4 @@
-const { User, Sale, Item, Category }	= require('../models/models');
+const { User, Sale, Product: Item, Category }	= require('../models/models');
 const express		= require('express');
 const JwtDecode 	= require('jwt-decode');
 

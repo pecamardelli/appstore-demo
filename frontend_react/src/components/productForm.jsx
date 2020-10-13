@@ -1,12 +1,12 @@
 import { getProduct, submitProduct }	from '../services/productService';
-import { getSections }		from '../services/sectionService';
+import React, { Fragment }        		from 'react';
 import { getCategories }	from '../services/categoryService';
+import { updateProduct }	from '../services/productService';
+import { getSections }		from '../services/sectionService';
 import { toast }	from 'react-toastify';
-import React, { Fragment }        from 'react';
 import Joi			from 'joi-browser';
 import Form 		from './common/forms/form';
 import ImageUpload	from './common/forms/imageUpload';
-import { updateProduct } from './../services/productService';
 
 class ProductForm extends Form {
 	state	= {
@@ -57,7 +57,7 @@ class ProductForm extends Form {
 	}
 
 	schema	= {
-		id:				Joi.any().label('Photo'),
+		id:				Joi.any().label('Id'),
 		displayName:	Joi.string().min(1).max(255).required().label('Display name'),
 		sectionId:		Joi.string().min(1).max(255).required().label('Section'),
 		categoryId:		Joi.string().min(1).max(255).required().label('Category'),
@@ -75,12 +75,11 @@ class ProductForm extends Form {
 	doSubmit = async() => {
 		try {
 			const product	= { ...this.state.data };
-console.log(product)
+			
 			if (product.id) await updateProduct(product);
 			else await submitProduct(product);
 
 			toast.success(`Product '${this.state.data.displayName}' succesfully submitted!`);
-			
 		}
 		catch (ex) {
 			if(ex.response && ex.response.status === 400) {
@@ -96,6 +95,7 @@ console.log(product)
 			<Fragment>
 				<div>
 					<h2><strong>{ this.state.data.id ? 'Update product' : 'Add new product' }</strong></h2>
+					<hr />
 				</div>
 				<div className="card border-dark mb-3" style={{width: '100%'}}>
 					<div className="row no-gutters">
@@ -103,6 +103,8 @@ console.log(product)
 							<ImageUpload
 								onImageUpdate={this.handleImageUpdate}
 								imageId={ this.state.data ? this.state.data.id : null }
+								title='Product image'
+								path='/products'
 							/>
 						</div>
 						<div className="col-md-8" style={{height: '90%'}}>

@@ -4,7 +4,7 @@ const JwtDecode     = require('jwt-decode');
 const fs            = require('fs');
 
 const router	= express.Router();
-const imageDir  = './assets/products';
+const imageDir  = './assets/images/products';
 
 router.get('/:id', async (req, res) => {
     const product	= await Product.findOne({
@@ -48,7 +48,6 @@ router.post('/', async (req, res) => {
 
     const product   = { ...req.body, authorId: user.id };
     delete product.photo;
-    console.log(product);
 
     try {
         const result = await Product.create(product);
@@ -57,7 +56,7 @@ router.post('/', async (req, res) => {
         // Remove the header from the base64 data chunk.
         const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
 
-        fs.open(`${imageDir}/${result.dataValues.id}_logo.png`, 'w', (err, fd) => {
+        fs.open(`${imageDir}/${result.dataValues.id}.png`, 'w', (err, fd) => {
             if (err) return;
 
             fs.writeFile(fd, base64Data, "base64", (err) => {
@@ -92,7 +91,7 @@ router.put('/', async (req, res) => {
         if (req.body.photo) {
             const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
     
-            fs.open(`${imageDir}/${req.body.id}_logo.png`, 'w', (err, fd) => {
+            fs.open(`${imageDir}/${req.body.id}.png`, 'w', (err, fd) => {
                 if (err) return;
     
                 fs.writeFile(fd, base64Data, "base64", (err) => {

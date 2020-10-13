@@ -1,5 +1,5 @@
-import http 		from './httpService';
-import userObject	from '../includes/userObject';
+import http 			from './httpService';
+import userObject		from '../includes/userObject';
 
 const userUrl	= '/users';
 
