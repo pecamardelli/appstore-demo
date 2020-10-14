@@ -1,5 +1,5 @@
-import { getProduct, submitProduct }	from '../services/productService';
-import React, { Fragment }        		from 'react';
+import { getProductById, submitProduct }	from '../services/productService';
+import React, { Fragment }  from 'react';
 import { getCategories }	from '../services/categoryService';
 import { updateProduct }	from '../services/productService';
 import { getSections }		from '../services/sectionService';
@@ -23,7 +23,7 @@ class ProductForm extends Form {
 			let	product	= {};
 
 			if (productId) {
-				const { data }    = await getProduct(productId);
+				const { data }    = await getProductById(productId);
 				product = {
 					id:				data.id,
 					displayName:	data.displayName,

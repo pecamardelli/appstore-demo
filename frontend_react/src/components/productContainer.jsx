@@ -1,5 +1,5 @@
 import React, { useEffect, useState }    from 'react';
-import { getDataFromStore } from './../services/storeService';
+import { getProductByPath } from './../services/productService';
 import { toast }            from 'react-toastify';
 import ProductOptions       from './productOptions';
 import ReactStars           from 'react-rating-stars-component';
@@ -14,7 +14,7 @@ function ProductContainer(props) {
         async function getProduct() {
             try {
                 const path      = `${match.params.section}/${match.params.category}/${match.params.product}`;
-                const result    = await getDataFromStore(path);
+                const result    = await getProductByPath(path);
                 
                 if(result){
                     const createdAt         = new Date(result.data.createdAt);
@@ -48,7 +48,7 @@ function ProductContainer(props) {
             <div className="row no-gutters">
                 <div className="col-md-4">
                     <img
-                        src={`${process.env.REACT_APP_API_URL}/products/${product.id}.png`}
+                        src={`${process.env.REACT_APP_API_URL}/images/products/${product.id}.png`}
                         onError={(e) => {e.target.onerror = null; e.target.src=noImage }}
                         className="card-img-top"
                         alt={product.displayName}
