@@ -17,13 +17,7 @@ class SectionForm extends Form {
 		description:   	Joi.string().min(5).max(255).required().label('Description'),
 		photo:   		Joi.any().label('Photo')
 	};
-	
-	handleImageUpdate = (imageObject) => {
-		const photo	= imageObject ? imageObject.data_url : null;
-		const data	= { ...this.state.data, photo };
-		this.setState({ data });
-	}
-	
+
 	doSubmit = async () => {
 		try {
 			const section	= { ...this.state.data };

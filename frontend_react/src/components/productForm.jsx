@@ -66,12 +66,6 @@ class ProductForm extends Form {
 		price:			Joi.number().min(0).max(255).required().label('Price')
 	};
 	
-	handleImageUpdate = (imageObject) => {
-		const photo	= imageObject ? imageObject.data_url : null;
-		const data	= { ...this.state.data, photo };
-		this.setState({ data });
-	}
-
 	doSubmit = async() => {
 		try {
 			const product	= { ...this.state.data };

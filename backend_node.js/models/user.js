@@ -3,7 +3,7 @@ const sequelize		= require('../startup/dbConfig');
 const jwt			= require('jsonwebtoken');
 const config		= require('config');
 const bcrypt		= require('bcryptjs');
-const { Role }		= require('./models');
+const Role			= require('./role');
 
 const User	= sequelize.define('User', {
 	id: {
@@ -19,6 +19,10 @@ const User	= sequelize.define('User', {
 	lastname: {
 		type:		Sequelize.STRING,
 		validate:	{ notEmpty: true, max: 255 }
+	},
+	bio:	{
+		type:		Sequelize.STRING,
+		validate:	{ max: 4096 }
 	},
 	roleId: {
 		type:			Sequelize.UUID,
@@ -65,7 +69,7 @@ User.prototype.generateAuthToken =  function(user) {
         firstname:   	user.firstname,
         lastname:   	user.lastname,
 		role:			user.Role.dataValues.displayName,
-		accessValue:	user.Role.dataValues.accessValue
+		accessLevel:	user.Role.dataValues.accessLevel
     }, config.get('jwtPrivateKey'));
 
 	return token;
@@ -76,21 +80,3 @@ User.sync()
 	.catch((error) => { console.log('Error syncing users table', error) });
 
 module.exports	= User;
-
-/*
-const User = require('./models/model_user');
-User.create({
-        firstname:  'Pablin',
-        lastname:   'Camardelli',
-        email:      'pecamardelli@gmail.com',
-        role:       'developer',
-        username:   'elmaspablin',
-        password:   'Pablin324'
-    })
-    .then(console.log('Usuario creado...'))
-    .catch(err => console.log(err.errors.map(e => e.message)));
-
-
-User.findOne({ where: { username: 'elmaspablin' }})
-.then(user => console.log(user.username))
-*/

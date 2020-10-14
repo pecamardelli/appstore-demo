@@ -8,7 +8,7 @@ const Role	= sequelize.define('Role', {
 		primaryKey:		true,
 		allowNull:      false
 	},
-	accessValue: {
+	accessLevel: {
 		type:			Sequelize.INTEGER.UNSIGNED,
 		unique: 		true
 	},

@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
 		include:	[
 			{
 				model:		Role,
-				attributes:	[ 'accessValue', 'displayName' ]
+				attributes:	[ 'accessLevel', 'displayName' ]
 			}
 		],
 		attributes:	[

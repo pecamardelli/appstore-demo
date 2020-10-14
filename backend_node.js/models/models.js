@@ -7,9 +7,10 @@ const Product	    = require('./product');
 const Sale		    = require('./sale');
 
 // Model relations
-User.hasOne(Role);
+//User.hasOne(Role);
 User.hasMany(Sale);
 User.belongsTo(Role, { foreignKey: 'roleId' });
+Role.hasMany(User);
 Section.hasMany(Category);
 Category.belongsTo(Section, { foreignKey: 'sectionId' });
 Category.hasMany(Product);

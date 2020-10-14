@@ -70,6 +70,12 @@ export default class Form extends Component {
 		this.setState({ data, errors });
 	};
 	
+	handleImageUpdate = (imageObject) => {
+		const photo	= imageObject ? imageObject.data_url : null;
+		const data	= { ...this.state.data, photo };
+		this.setState({ data });
+	};
+	
 	renderButton	= label => {
 		return (
 			<div className='row'>

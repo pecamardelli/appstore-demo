@@ -4,15 +4,15 @@ import userObject		from '../includes/userObject';
 const userUrl	= '/users';
 
 export function register(user) {
-	const newUser	= {};
+	/*const newUser	= {};
 
 	for(const key in userObject) {
 		newUser[key] = user[key];
 	}
-
-	return http.post(userUrl, newUser);
+*/
+	return http.post(userUrl, user);
 }
 
-export function getRoles() {
+export function getSignupRoles() {
 	return http.get(`${userUrl}/signuproles`);
 }
