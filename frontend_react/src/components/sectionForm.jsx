@@ -1,5 +1,6 @@
 import React, { Fragment }	from 'react';
 import { submitSection }	from '../services/sectionService';
+import ImageUpload		from './common/forms/imageUpload';
 import { toast }		from 'react-toastify';
 import Form 			from './common/forms/form';
 import Joi				from 'joi-browser';
@@ -11,9 +12,17 @@ class SectionForm extends Form {
 	};
 
 	schema	= {
+		id:				Joi.any().label('Id'),
 		displayName:   	Joi.string().min(1).max(255).required().label('Name'),
-		description:   	Joi.string().min(5).max(255).required().label('Description')
+		description:   	Joi.string().min(5).max(255).required().label('Description'),
+		photo:   		Joi.any().label('Photo')
 	};
+	
+	handleImageUpdate = (imageObject) => {
+		const photo	= imageObject ? imageObject.data_url : null;
+		const data	= { ...this.state.data, photo };
+		this.setState({ data });
+	}
 	
 	doSubmit = async () => {
 		try {
@@ -35,16 +44,33 @@ class SectionForm extends Form {
 	render() {
 		return (
 			<Fragment>
-				<div className='row' style={{ marginTop: '5%' }}>
-					<div className="card bg-light border-secondary mb-2 mx-auto" style={{ width: '35rem' }}>
-						<div className="card-header">
-							<h4 className="card-title">Add new section</h4>
+				<div>
+					<h2><strong>{ this.state.data.id ? 'Update section' : 'Add new section' }</strong></h2>
+					<hr />
+				</div>
+				<div className="card border-dark mb-3" style={{width: '100%'}}>
+					<div className="row no-gutters">
+						<div className="col-md-4">
+							<ImageUpload
+								onImageUpdate={this.handleImageUpdate}
+								imageId={ this.state.data ? this.state.data.id : null }
+								title='Section pic'
+								path='/sections'
+							/>
 						</div>
-						<div className="card-body">
-							<form onSubmit={this.handleSubmit} >
-								{ this.renderInput('displayName', 'Name') }
-								{ this.renderTextArea('description', 'Description') }
-								{ this.renderButton('Add') }
+						<div className="col-md-8" style={{height: '90%'}}>
+							<div className="card-header">
+								<strong>Section data</strong>
+							</div>
+							<form onSubmit={this.handleSubmit}>
+								<div className="card-body">
+									
+									{ this.renderInput('displayName', 'Name') }
+									{ this.renderTextArea('description', 'Description') }
+								</div>
+								<div className="card-footer text-muted bg-transparent">
+									{ this.state.data.id ? this.renderButton('Update') : this.renderButton('Submit') }
+								</div>
 							</form>
 						</div>
 					</div>
