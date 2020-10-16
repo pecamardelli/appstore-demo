@@ -1,4 +1,4 @@
-const { User, Sale, Product: Item, Category }	= require('../models/models');
+const { User, Sale, Product, Category }	= require('../models/models');
 const express		= require('express');
 const JwtDecode 	= require('jwt-decode');
 
@@ -9,14 +9,22 @@ router.get('/', async (req, res) => {
 	res.send(user);
 });
 
-router.get('/cart', async (req, res) => {
+router.get('/wishlist', async (req, res) => {
     const user	= JwtDecode(req.header('x-auth-token'));
 
 	const cart	= await Sale.findAll({
 		where: {
             userId: user.id,
             status: 'pending'
-        }
+		},
+		include:	{
+			model:	Product,
+			attributes:	[ 'displayName' ],
+			include:	{
+				model:	Category,
+				attributes:	[ 'displayName' ]
+			}
+		}
 	});
 
 	res.send(cart);
@@ -33,7 +41,7 @@ router.get('/products', async (req, res) => {
 	}
 
 	try {
-		const items	= await Item.findAll({
+		const products	= await Product.findAll({
 			where: { authorId: user.id },
 			include: [{
 				model: Category,
@@ -42,11 +50,10 @@ router.get('/products', async (req, res) => {
             attributes: [
                 'id',
                 'displayName',
-                'photo',
                 'updatedAt'
 			]
 		});
-		return res.send(items);
+		return res.send(products);
 	}
 	catch (ex) {
 		return res.status(500).send(`Internal server error: ${ex}`);
@@ -65,7 +72,7 @@ router.get('/products/:id', async (req, res) => {
 	}
 
 	try {
-		const items	= await Item.findOne({
+		const items	= await Product.findOne({
 			where: { authorId: user.id },
 			include: [{
 				model: Category,
@@ -74,7 +81,6 @@ router.get('/products/:id', async (req, res) => {
             attributes: [
                 'id',
                 'displayName',
-                'photo',
                 'updatedAt'
 			]
 		});

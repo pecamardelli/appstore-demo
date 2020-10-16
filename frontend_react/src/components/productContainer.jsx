@@ -87,7 +87,7 @@ function ProductContainer(props) {
                                 // several data about it is needed to add to cart.
                                 // I didn't feel like using a context for this.
                             }
-                            <ProductOptions item={product} />
+                            <ProductOptions product={product} />
                         </span>
                     </div>
                 </div>

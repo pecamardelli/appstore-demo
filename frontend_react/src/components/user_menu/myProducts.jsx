@@ -3,6 +3,7 @@ import { getMyProducts }    from './../../services/myService';
 import { toast }            from 'react-toastify';
 import CardDeck             from '../common/cardDeck';
 import ProductCard          from './productCard';
+import EmptyCard            from './../common/emptyCard';
 
 function MyProducts(props) {
     const [ content, setContent ]   = useState([]);
@@ -14,7 +15,7 @@ function MyProducts(props) {
                 const result    = await getMyProducts();
                 
                 if(result) setContent(result.data);
-                else setContent([]);
+                //else setContent([]);
             }
             catch(ex) {
                 toast.error(ex.response.data);
@@ -24,9 +25,18 @@ function MyProducts(props) {
         call();
     }, [ setContent, match ]);
 
-    return (
-        <CardDeck cards={ content } cardComponent={ ProductCard }  cols={5}/>
-    );
+    if (content.length > 0)
+        return (
+            <CardDeck
+                cards={ content }
+                cardComponent={ ProductCard } 
+                cols={5}
+            />
+        );
+    else return <EmptyCard
+                    title="No products to show"
+                    text="You have not created any products yet. Look at the user menu! Click on the box and create!"
+                />;
 }
 
 export default MyProducts;

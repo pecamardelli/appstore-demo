@@ -8,6 +8,7 @@ import ProfileMenu      from './profileMenu';
 function UserMenu(props) {
     return (
         <div className="form-inline my-2 my-lg-1">
+            Hello, { `${props.user.firstname} ${props.user.lastname}` }!&nbsp;&nbsp;&nbsp;
             <Link to='/sections'>
                 <ToolTipEntry icon={icons.sectionIcon()} tip='Add section' />
             </Link>

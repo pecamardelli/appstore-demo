@@ -10,7 +10,7 @@ import CategoryForm   from './components/categoryForm';
 import SectionForm    from './components/sectionForm';
 import ProductForm    from './components/productForm';
 import LoginForm      from './components/loginForm';
-import WishList       from './components/user_menu/wishList';
+import WishList       from './components/user_menu/myWishList';
 import MyProducts     from './components/user_menu/myProducts';
 import MyProfile      from './components/user_menu/myProfile';
 import NotFound       from './components/common/not-found';
@@ -65,6 +65,11 @@ function App() {
             component={SectionForm}
           />
           <ProtectedRoute
+            path='/me'
+            exact
+            component={MyProfile}
+          />
+          <ProtectedRoute
             path='/me/wishlist'
             component={WishList}
           />
@@ -80,10 +85,6 @@ function App() {
           <ProtectedRoute
             path='/me/products/edit/:id'
             component={ProductForm}
-          />
-          <ProtectedRoute
-            path='/me/profile'
-            component={MyProfile}
           />
           <Route path='/logout'     component={Logout} />
           <Route path='/not-found'	component={NotFound} />

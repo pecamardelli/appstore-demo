@@ -24,7 +24,6 @@ const NavBar	= (props) => {
 		}
 
 	call();
-		
 	}, [ setSections, setUser ]);
 
 	return (
@@ -63,7 +62,7 @@ const NavBar	= (props) => {
 					)}
 				</ul>
 			</div>
-			{ currentUser ? <UserMenu username={ currentUser.username } /> : <SignMenu /> }
+			{ currentUser ? <UserMenu user={ currentUser } /> : <SignMenu /> }
 		</nav>
 	);
 }

@@ -1,12 +1,12 @@
 import React, { useState, useEffect }   from 'react';
-import { getSale, submitSale }          from '../services/saleService';
-import { Link }         from 'react-router-dom';
-import { toast }        from 'react-toastify';
-import JwtDecode        from 'jwt-decode';
-import ToolTipEntry     from './user_menu/toolTip';
-import Icons            from './user_menu/userIcons';
+import { getSale, addToCart }           from '../services/saleService';
+import { getCurrentUser }   from './../services/authService';
+import { Link }             from 'react-router-dom';
+import { toast }            from 'react-toastify';
+import ToolTipEntry         from './user_menu/toolTip';
+import Icons                from './user_menu/userIcons';
 
-function ProductOptions({ item }) {
+function ProductOptions({ product }) {
     const [ saleState, setSaleState ]   = useState('');
     const [ isMine, setIsMine]          = useState(false);
 
@@ -14,7 +14,7 @@ function ProductOptions({ item }) {
         async function getSaleData() {
             try {
                 //const { data } = await http.get(`/sales/${item.id}`);
-                const { data } = await getSale(item.id);
+                const { data } = await getSale(product.id);
                 setSaleState(data.status);
             }
             catch (ex) {
@@ -23,47 +23,41 @@ function ProductOptions({ item }) {
             }
         }
 
-        async function checkOwnership() {
-            try {
-                return await JwtDecode(localStorage.getItem('token'));
-            }
-            catch (ex) {
-                toast.error(`Could not decode token from storage: ${ex.message}`);
-            }
-        }
+        const me = getCurrentUser();
 
-        const me = checkOwnership();
-
-        if (me.id === item.authorId) setIsMine(true);
+        if (product.User && me.id === product.User.id) setIsMine(true);
         else getSaleData();
 
-    }, [ setSaleState, item.id, item.authorId ]);
+    }, [ setSaleState, product.id, product.id ]);
 
-    const handleClick = async () => {
+    const handleAddToCart = async () => {
         try {
-            await submitSale({ itemId: item.id, salePrice: item.price });
+            await addToCart({ productId: product.id, salePrice: product.price });
             setSaleState('pending');
-            toast.success('Item successfully added to cart!');
+            toast.success('Product successfully added to cart!');
         }
         catch (ex) {
             toast.error(ex);
         }
     }
 
-    // I know this may be a little unclean but it's a nice way to do
+    // I know this might be a little unclean but it's a nice way to do
     // conditional rendering.
     if (isMine)
-        return  <Link to={`/me/products/edit/${item.id}`}>
+        return  <Link to={`/me/products/edit/${product.id}`}>
                     <ToolTipEntry icon={Icons.editIcon('2em')} tip='Edit product' />
                 </Link>
 
     if (!saleState)
-        return  <span onClick={handleClick} role='button' >
+        return  <span onClick={handleAddToCart} role='button' >
                     <ToolTipEntry icon={Icons.addToCartIcon('2em')} tip='Add to cart' />
                 </span>;
 
     if (saleState === 'pending') 
-        return <ToolTipEntry icon={Icons.addedToCartIcon('2em')} tip='In your cart' />
+        return (<span>
+                <ToolTipEntry icon={Icons.addedToCartIcon('2em')} tip='In your cart' />
+            </span>
+        );
 
     if (saleState === 'completed')
         return <ToolTipEntry icon={Icons.buyedIcon('2em')} tip='Buyed' />

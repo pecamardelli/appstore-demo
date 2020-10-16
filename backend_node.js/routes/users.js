@@ -38,7 +38,6 @@ router.post('/', async (req, res) => {
 	}
 	
 	let user;
-	
 	try {
 		user	= await User.create(req.body);
 	}

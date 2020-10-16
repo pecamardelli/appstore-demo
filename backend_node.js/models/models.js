@@ -107,7 +107,9 @@ const productAttributes	= [
 	'price',
 	'rating',
 	'downloads',
-	'alias'
+	'alias',
+	'createdAt',
+	'updatedAt'
 ];
 
 Product.prototype.findAllByPath = async function(sectionAlias, categoryAlias) {

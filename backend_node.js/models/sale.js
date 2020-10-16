@@ -12,21 +12,21 @@ const Sale	= sequelize.define('Sale', {
 		primaryKey:		true,
 		allowNull:      false
 	},
-	itemId: {
-		type:			Sequelize.UUID,
-		validate:       {
+	productId: {
+		type:		Sequelize.UUID,
+		validate:   {
             async function (value) {
-                const catId = await Product.findOne({ where: { id: value }});
-                if(!catId) throw new Error('Invalid item ID!');
+                const product = await Product.findOne({ where: { id: value }});
+                if(!product) throw new Error('Invalid product ID!');
             }
         }
 	},
 	userId: {
-		type:			Sequelize.UUID,
+		type:		Sequelize.UUID,
 		validate:   {
 			async function (value) {
-				const userId = await User.findOne({ where: { id: value }});
-				if(!userId) throw new Error('Invalid user ID!');
+				const user = await User.findOne({ where: { id: value }});
+				if(!user) throw new Error('Invalid user ID!');
 			}
 		}
 	},
