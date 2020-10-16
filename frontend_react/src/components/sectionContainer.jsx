@@ -3,6 +3,7 @@ import { toast }    from 'react-toastify';
 import http         from '../services/httpService';
 import CardDeck     from './common/cardDeck';
 import CategoryCard from './common/categoryCard';
+import EmptyCard    from './common/emptyCard';
 
 function SectionContainer(props) {
     const [ content, setContent ]   = useState([]);
@@ -25,9 +26,18 @@ function SectionContainer(props) {
         call();
     }, [ setContent, match ]);
 
-    return (
-        <CardDeck cards={ content } cardComponent={ CategoryCard } cols={4} />
-    );
+    if (content.length > 0)
+        return (
+            <CardDeck
+                cards={ content }
+                cardComponent={ CategoryCard } 
+                cols={4}
+            />
+        );
+    else return <EmptyCard
+                    title="No categories to show"
+                    text="There are no categories in this section. Try again later!"
+                />;
 }
 
 export default SectionContainer;

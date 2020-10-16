@@ -3,6 +3,7 @@ import { getProductsByCategory }        from './../services/productService';
 import { toast }    from 'react-toastify';
 import CardDeck     from './common/cardDeck';
 import ProductCard  from './common/productCard';
+import EmptyCard    from './common/emptyCard';
 
 function CategoryContainer(props) {
     const [ content, setContent ]   = useState([]);
@@ -24,9 +25,18 @@ function CategoryContainer(props) {
         call();
     }, [ setContent, match ]);
 
-    return (
-        <CardDeck cards={ content } cardComponent={ ProductCard } cols={4}/>
-    );
+    if (content.length > 0)
+        return (
+            <CardDeck
+                cards={ content }
+                cardComponent={ ProductCard } 
+                cols={4}
+            />
+        );
+    else return <EmptyCard
+                    title="No products to show"
+                    text="There are no products in this category. Try again later!"
+                />;
 }
 
 export default CategoryContainer;
