@@ -43,16 +43,6 @@ NODE_ENV=development
 
 If you need to install MySQL server on your machine, check [this reference](https://dev.mysql.com/doc/refman/8.0/en/installing.html). If you have a remote host, provide all information in the `.env` file.
 
-Next, move to root folder and run the database setup script located at the `db` folder.
+Once MySQL is installed and accessible, create the database and a user and reflect this data with your `.env` file.
 
-```sh
-node db/db-setup.js
-```
-
-This script will do the following:
-
-- Create a database with the name specified in the `.env` file.
-- Create the `users` table and populate it with several developer and client role entries.
-- Create the `categories` table and populate it with some entries.
-- Create the `apps` table and populate it with entries linked to a user.
-- Create the `purchases` table and populate it with some sales linked to a client user.
+To be continued...
