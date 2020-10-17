@@ -75,6 +75,7 @@ class CategoryForm extends Form {
 	render() {
 		return (
 			<Fragment>
+				<br />
 				<div>
 					<h2><strong>{ this.state.data.id ? 'Update category' : 'Add new category' }</strong></h2>
 					<hr />

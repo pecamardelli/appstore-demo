@@ -38,6 +38,7 @@ class SectionForm extends Form {
 	render() {
 		return (
 			<Fragment>
+				<br />
 				<div>
 					<h2><strong>{ this.state.data.id ? 'Update section' : 'Add new section' }</strong></h2>
 					<hr />

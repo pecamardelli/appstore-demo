@@ -1,9 +1,10 @@
-import React, { useEffect, useState }   from 'react';
+import React, { Fragment, useEffect, useState }   from 'react';
 import { getProductsByCategory }        from './../services/productService';
 import { toast }    from 'react-toastify';
 import CardDeck     from './common/cardDeck';
 import ProductCard  from './common/productCard';
 import EmptyCard    from './common/emptyCard';
+import BreadCrumbs from './common/breadcrumbs';
 
 function CategoryContainer(props) {
     const [ content, setContent ]   = useState([]);
@@ -27,16 +28,24 @@ function CategoryContainer(props) {
 
     if (content.length > 0)
         return (
-            <CardDeck
-                cards={ content }
-                cardComponent={ ProductCard } 
-                cols={4}
-            />
+            <Fragment>
+                <BreadCrumbs />
+                <CardDeck
+                    cards={ content }
+                    cardComponent={ ProductCard } 
+                    cols={4}
+                />
+            </Fragment>
         );
-    else return <EmptyCard
+        else return (
+            <Fragment>
+                <BreadCrumbs />
+                <EmptyCard
                     title="No products to show"
                     text="There are no products in this category. Try again later!"
-                />;
+                />
+            </Fragment>
+        );
 }
 
 export default CategoryContainer;

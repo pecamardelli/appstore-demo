@@ -30,11 +30,15 @@ function App() {
     <Fragment>
       <ToastContainer />
       <NavBar />
-      <br />
       <main className='container'>
         <Switch>
           <Route path='/register'   component={RegisterForm} />
           <Route path='/login'		  component={LoginForm} />
+          <Route
+            path='/store'
+            exact
+            component={Home}
+          />
           <Route
             path='/store/:section'
             exact

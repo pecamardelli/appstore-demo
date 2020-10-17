@@ -1,10 +1,11 @@
-import React, { useEffect, useState }    from 'react';
+import React, { Fragment, useEffect, useState }    from 'react';
 import { getMyWishlist }    from './../../services/myService';
 import { toast }            from 'react-toastify';
 import CardDeck             from '../common/cardDeck';
 import EmptyCard            from './../common/emptyCard';
 import WishListEntryCard    from './../common/wishListEntryCard';
-import WishListContext from './../../context/wishListContext';
+import WishListContext      from './../../context/wishListContext';
+import BreadCrumbs          from '../common/breadcrumbs';
 
 function MyWishList(props) {
     const [ content, setContent ]   = useState([]);
@@ -39,6 +40,7 @@ function MyWishList(props) {
     if (content.length > 0)
         return (
             <WishListContext.Provider value={{ onDelete: handleDelete }}>
+                <BreadCrumbs />
                 <CardDeck
                     cards={content}
                     cardComponent={WishListEntryCard}
@@ -46,10 +48,15 @@ function MyWishList(props) {
                 />
             </WishListContext.Provider>
         );
-    else return <EmptyCard
+    else return (
+            <Fragment>
+                <BreadCrumbs />
+                <EmptyCard
                     title="No wishes in your list!"
                     text="You have not added any products to your wishlist. Navigate through all sections and find all the stuff you love!"
-                />;
+                />
+            </Fragment>
+        );
 }
 
 export default MyWishList;

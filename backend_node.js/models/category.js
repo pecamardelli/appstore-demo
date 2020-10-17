@@ -26,7 +26,7 @@ const Category	= sequelize.define('Category', {
 	},
 	alias: {
         type:		Sequelize.STRING,
-        unique:     true,
+        unique:     'uniqueFlag',
         validate:	{ max: 255 }
 	},
 	description: {
@@ -54,7 +54,7 @@ const Category	= sequelize.define('Category', {
 }, {
     uniqueKeys: {
         uniqueFlag: {
-            fields: [ 'displayName', 'sectionId' ]
+            fields: [ 'displayName', 'sectionId', 'alias' ]
         }
     }
 });

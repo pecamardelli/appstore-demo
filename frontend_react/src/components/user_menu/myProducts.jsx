@@ -1,9 +1,10 @@
-import React, { useEffect, useState }    from 'react';
+import React, { Fragment, useEffect, useState }    from 'react';
 import { getMyProducts }    from './../../services/myService';
 import { toast }            from 'react-toastify';
 import CardDeck             from '../common/cardDeck';
 import ProductCard          from './productCard';
 import EmptyCard            from './../common/emptyCard';
+import BreadCrumbs          from '../common/breadcrumbs';
 
 function MyProducts(props) {
     const [ content, setContent ]   = useState([]);
@@ -27,11 +28,14 @@ function MyProducts(props) {
 
     if (content.length > 0)
         return (
-            <CardDeck
-                cards={ content }
-                cardComponent={ ProductCard } 
-                cols={5}
-            />
+            <Fragment>
+                <BreadCrumbs />
+                <CardDeck
+                    cards={ content }
+                    cardComponent={ ProductCard } 
+                    cols={5}
+                />
+            </Fragment>
         );
     else return <EmptyCard
                     title="No products to show"

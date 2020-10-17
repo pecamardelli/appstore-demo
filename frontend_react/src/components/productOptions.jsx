@@ -28,7 +28,7 @@ function ProductOptions({ product }) {
         if (product.User && me.id === product.User.id) setIsMine(true);
         else getSaleData();
 
-    }, [ setSaleState, product.id, product.id ]);
+    }, [ setSaleState, product.User, product.id ]);
 
     const handleAddToCart = async () => {
         try {
