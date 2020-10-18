@@ -1,4 +1,4 @@
-const { User, Sale, Product, Category }	= require('../models/models');
+const { User, Wish, Product, Category }	= require('../models/models');
 const express		= require('express');
 const JwtDecode 	= require('jwt-decode');
 
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 router.get('/wishlist', async (req, res) => {
     const user	= JwtDecode(req.header('x-auth-token'));
 
-	const cart	= await Sale.findAll({
+	const cart	= await Wish.findAll({
 		where: {
             userId: user.id,
             status: 'pending'

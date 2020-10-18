@@ -4,7 +4,7 @@ import { toast }            from 'react-toastify';
 import ProductOptions       from './productOptions';
 import ReactStars           from 'react-rating-stars-component';
 import noImage              from '../assets/images/image_not_found.png';
-import BreadCrumbs from './common/breadcrumbs';
+import BreadCrumbs          from './common/breadcrumbs';
 
 function ProductContainer(props) {
     const [ product, setProduct ]   = useState({});

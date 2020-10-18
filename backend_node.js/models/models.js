@@ -4,11 +4,11 @@ const User		    = require('./user');
 const Section	    = require('./section');
 const Category	    = require('./category');
 const Product	    = require('./product');
-const Sale		    = require('./sale');
+const Wish		    = require('./wish');
 
 // Model relations
 //User.hasOne(Role);
-User.hasMany(Sale);
+User.hasMany(Wish);
 User.belongsTo(Role, { foreignKey: 'roleId' });
 Role.hasMany(User);
 Section.hasMany(Category);
@@ -16,9 +16,9 @@ Category.belongsTo(Section, { foreignKey: 'sectionId' });
 Category.hasMany(Product);
 Product.belongsTo(User, { foreignKey: 'authorId' });
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
-Product.hasMany(Sale);
-Sale.belongsTo(Product, { foreignKey: 'productId' });
-Sale.belongsTo(User, { foreignKey: 'userId' });
+Product.hasMany(Wish);
+Wish.belongsTo(Product, { foreignKey: 'productId' });
+Wish.belongsTo(User, { foreignKey: 'userId' });
 
 // Model custom functions
 Section.prototype.findByAlias	=  function(alias) {
@@ -146,4 +146,4 @@ module.exports.Role     = Role;
 module.exports.Section  = Section;
 module.exports.Category = Category;
 module.exports.Product  = Product;
-module.exports.Sale     = Sale;
+module.exports.Wish     = Wish;

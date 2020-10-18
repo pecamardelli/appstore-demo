@@ -1,5 +1,5 @@
 import { Popover, OverlayTrigger } from 'react-bootstrap';
-import React    from 'react';
+import React   from 'react';
 
 const PopOverEntry = ({ icon, title, content: Component }) => {
     const popover = (
@@ -17,10 +17,9 @@ const PopOverEntry = ({ icon, title, content: Component }) => {
             transition={true}
             rootClose={true}
             placement="bottom"
-            overlay={popover}>
-
+            overlay={popover}
+        >
             { icon }
-
         </OverlayTrigger>
     );
 }

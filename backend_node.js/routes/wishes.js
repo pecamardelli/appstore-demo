@@ -1,5 +1,5 @@
 const express	= require('express');
-const { Sale }  = require('../models/models');
+const { Wish }  = require('../models/models');
 const JwtDecode = require('jwt-decode');
 
 const router	= express.Router();
@@ -20,7 +20,7 @@ router.get('/:productId', async (req, res) => {
     }
     
     try {
-        sale	= await Sale.findOne({
+        sale	= await Wish.findOne({
             where: {
                 productId:  req.params.productId,
                 userId:     user.id,
@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
 
     const sale  = { ...req.body, userId: user.id };
     try {
-		await Sale.create(sale);
+		await Wish.create(sale);
 		res.send('Sale saved!');
 	}
 	catch (ex) {
@@ -61,7 +61,39 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.delete('/:saleId/', async (req, res) => {
+router.put('/:wishId/', async (req, res) => {
+    // No need to implement validation here.
+    // It's already done in the model.
+    let user;
+    try {
+        user	= await JwtDecode(req.header('x-auth-token'));
+        if(!user) return res.status(400).send('Invalid token.');
+    }
+    catch (ex) {
+        console.log(ex);
+        return res.status(500).send('Internal Server Error.');
+    }
+    console.log(req.body)
+    /*
+    try {
+		const deleted = await Sale.findOne({
+            where:  {
+                id:         req.params.wishId,
+                userId:     user.id,
+                status:     'pending'
+            }
+        });
+        if(deleted) return res.send('Product removed from cart!');
+        return res.status(404).send('Nothing deleted!');
+	}
+	catch (ex) {
+		console.log(ex);
+		res.status(500).send('Internal Server Error.');
+    }
+    */
+});
+
+router.delete('/:wishId/', async (req, res) => {
     // No need to implement validation here.
     // It's already done in the model.
     let user;
@@ -75,9 +107,9 @@ router.delete('/:saleId/', async (req, res) => {
     }
     
     try {
-		const deleted = await Sale.destroy({
+		const deleted = await Wish.destroy({
             where:  {
-                id:         req.params.saleId,
+                id:         req.params.wishId,
                 userId:     user.id,
                 status:     'pending'
             }

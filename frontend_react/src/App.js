@@ -10,9 +10,10 @@ import CategoryForm   from './components/categoryForm';
 import SectionForm    from './components/sectionForm';
 import ProductForm    from './components/productForm';
 import LoginForm      from './components/loginForm';
-import WishList       from './components/user_menu/myWishList';
+import MyPurchases    from './components/user_menu/myPurchases';
 import MyProducts     from './components/user_menu/myProducts';
 import MyProfile      from './components/user_menu/myProfile';
+import WishList       from './components/user_menu/myWishList';
 import NotFound       from './components/common/not-found';
 import NavBar         from './components/common/navBar';
 import Logout			    from './components/user_menu/logout';
@@ -76,6 +77,10 @@ function App() {
           <ProtectedRoute
             path='/me/wishlist'
             component={WishList}
+          />
+          <ProtectedRoute
+            path='/me/purchases'
+            component={MyPurchases}
           />
           <ProtectedRoute
             path='/me/products'

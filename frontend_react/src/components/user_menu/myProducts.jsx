@@ -8,7 +8,6 @@ import BreadCrumbs          from '../common/breadcrumbs';
 
 function MyProducts(props) {
     const [ content, setContent ]   = useState([]);
-    const { match } = props;
 
     useEffect(() => {
         async function call() {
@@ -16,7 +15,6 @@ function MyProducts(props) {
                 const result    = await getMyProducts();
                 
                 if(result) setContent(result.data);
-                //else setContent([]);
             }
             catch(ex) {
                 toast.error(ex.response.data);
@@ -24,7 +22,7 @@ function MyProducts(props) {
         }
 
         call();
-    }, [ setContent, match ]);
+    }, [ setContent ]);
 
     if (content.length > 0)
         return (

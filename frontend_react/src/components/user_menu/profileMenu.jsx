@@ -7,7 +7,7 @@ import icons        from './userIcons';
 
 function ProfileMenu(props) {
     const [ user, setUser ] = useState(auth.getCurrentUser());
-
+    
     return (
         <Table hover size="sm" style={{ marginTop: '15px'}}>
             <thead className='text-center'>
@@ -37,6 +37,16 @@ function ProfileMenu(props) {
                             </h6>
                         </td>
                         <td style={{ width: '20%'}}>{ icons.cartIcon() }</td>
+                    </Link>
+                </tr>
+                <tr>
+                    <Link to='/me/purchases'>
+                        <td style={{ textAlign: "right"}}>
+                            <h6 style={{ marginTop: '3px'}} className='text-secondary'>
+                                My purchases
+                            </h6>
+                        </td>
+                        <td style={{ width: '20%'}}>{ icons.buyedIcon() }</td>
                     </Link>
                 </tr>
                 <tr>

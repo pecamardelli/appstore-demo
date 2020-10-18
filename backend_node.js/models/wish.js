@@ -5,7 +5,7 @@ const Product	    = require('./product');
 
 const statuses		= [ 'pending', 'onCart', 'canceled', 'completed' ];
 
-const Sale	= sequelize.define('Sale', {
+const Wish	= sequelize.define('Wish', {
 	id: {
 		type:			Sequelize.UUID,
 		defaultValue:	Sequelize.UUIDV4,
@@ -48,8 +48,8 @@ const Sale	= sequelize.define('Sale', {
     }
 });
 
-Sale.sync()
+Wish.sync()
 	.then(() => { /* Do nothing for now */ })
-    .catch((error) => { console.log('Error syncing sales table', error) });
+    .catch((error) => { console.log('Error syncing wishes table', error) });
 
-module.exports  = Sale;
+module.exports  = Wish;

@@ -6,26 +6,38 @@ import EmptyCard            from './../common/emptyCard';
 import WishListEntryCard    from './../common/wishListEntryCard';
 import WishListContext      from './../../context/wishListContext';
 import BreadCrumbs          from '../common/breadcrumbs';
+import ToolTipEntry         from './toolTip';
+import Icons                from './userIcons';
 
 function MyWishList(props) {
-    const [ content, setContent ]   = useState([]);
-    const { match } = props;
+    const [ content, setContent ]                   = useState([]);
+    const [ wishesRetrieved, setWishesRetrieved ]   = useState(false);
+    const [ saleTotal, setSaleTotal ]               = useState(0);
 
     useEffect(() => {
-        async function call() {
+        async function getWishes() {
             try {
                 const result    = await getMyWishlist();
-                
-                if(result) setContent(result.data);
-                //else setContent([]);
+                //return result.data;
+                setContent(result.data);
             }
             catch(ex) {
                 toast.error(ex);
             }
         }
 
-        call();
-    }, [ setContent, match ]);
+        if (!wishesRetrieved) {
+            getWishes();
+            setWishesRetrieved(true);
+        }
+
+        let total = 0;
+        for (let w of content) {
+            total += w.salePrice;
+        }
+
+        setSaleTotal(total);
+    }, [ setContent, setSaleTotal, wishesRetrieved, content ]);
 
     const handleDelete  = (itemId) => {
         const index = content.findIndex(e => e.id === itemId);
@@ -37,6 +49,10 @@ function MyWishList(props) {
         }
     };
 
+    const handleCheckOut    = () => {
+        console.log(content)
+    };
+
     if (content.length > 0)
         return (
             <WishListContext.Provider value={{ onDelete: handleDelete }}>
@@ -46,6 +62,18 @@ function MyWishList(props) {
                     cardComponent={WishListEntryCard}
                     cols={1}
                 />
+                <center>
+                    <div className="card w-75">
+                        <div className="d-flex flex-row-reverse bd-highlight">
+                            <div className="p-2 bd-highlight" onClick={handleCheckOut} role='button'>
+                                <ToolTipEntry icon={Icons.buyedIcon()} tip='Checkout!' />
+                            </div>
+                            <div className="p-2 bd-highlight" style={{ marginTop: '4px'}}>
+                                <h5><strong>Total: ${saleTotal}</strong></h5>
+                            </div>
+                        </div>
+                    </div>
+                </center>
             </WishListContext.Provider>
         );
     else return (

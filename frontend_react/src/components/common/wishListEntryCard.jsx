@@ -1,23 +1,25 @@
 import React, { useState, useContext }  from 'react';
-import { removeFromCart }   from '../../services/saleService';
+import { removeFromCart }   from '../../services/wishService';
 import ToolTipEntry         from '../user_menu/toolTip';
 import { toast }            from 'react-toastify';
 import Icons                from '../user_menu/userIcons';
 import noImage              from '../../assets/images/image_not_found.png';
-import WishListContext from './../../context/wishListContext';
+import WishListContext      from './../../context/wishListContext';
 
 function WishListEntryCard({ data: sale }) {
     const [ entryDate, setEntryDate ]   = useState(new Date(sale.createdAt).toDateString())
-    const wishListContext   = useContext(WishListContext);
-    console.log(wishListContext)
+    const wishListContext               = useContext(WishListContext);
+
     const handleRemoveFromCart = async () => {
-        try {
-            const result    = await removeFromCart(sale.id);
-            if(result.status === 200) wishListContext.onDelete(sale.id);
-            toast.success(result.data);
-        }
-        catch (ex) {
-            toast.error(ex);
+        if (window.confirm('Remove this item from your list?')) {
+            try {
+                const result    = await removeFromCart(sale.id);
+                if(result.status === 200) wishListContext.onDelete(sale.id);
+                toast.success(result.data);
+            }
+            catch (ex) {
+                toast.error(ex);
+            }
         }
     }
 
