@@ -5,21 +5,20 @@ import { toast }            from 'react-toastify';
 import Icons                from '../user_menu/userIcons';
 import noImage              from '../../assets/images/image_not_found.png';
 import WishListContext      from './../../context/wishListContext';
+import ModalBox             from './modal';
 
 function WishListEntryCard({ data: sale }) {
     const [ entryDate, setEntryDate ]   = useState(new Date(sale.createdAt).toDateString())
     const wishListContext               = useContext(WishListContext);
 
     const handleRemoveFromCart = async () => {
-        if (window.confirm('Remove this item from your list?')) {
-            try {
-                const result    = await removeFromCart(sale.id);
-                if(result.status === 200) wishListContext.onDelete(sale.id);
-                toast.success(result.data);
-            }
-            catch (ex) {
-                toast.error(ex);
-            }
+        try {
+            const result    = await removeFromCart(sale.id);
+            if(result.status === 200) wishListContext.onDelete(sale.id);
+            toast.success(result.data);
+        }
+        catch (ex) {
+            toast.error(ex);
         }
     }
 
@@ -31,6 +30,8 @@ function WishListEntryCard({ data: sale }) {
                         src={`${process.env.REACT_APP_API_URL}/images/products/${sale.ProductId}.png`}
                         onError={(e) => {
                             e.target.onerror = null;
+                            // This conditional prevents an infinite fallback loop
+                            // when noImage is not available or undefined
                             if(noImage) e.target.src=noImage;
                             else e.target.src=''
                         }}
@@ -50,8 +51,15 @@ function WishListEntryCard({ data: sale }) {
                     <h5 style={{ margin: '2px 0 0 0'}}>
                         ${sale.salePrice}
                     </h5>
-                    <span onClick={handleRemoveFromCart} role='button' >
-                        <ToolTipEntry icon={Icons.trashIcon()} tip='Remove from cart' />
+                    <span role='button' >
+                        <ModalBox
+                            buttonComponent={() => <ToolTipEntry icon={Icons.trashIcon()} tip='Remove from cart' />}
+                            heading='Please confirm...'
+                            body={`Remove ${sale.Product.displayName} from the cart?`}
+                            closeCaption='Cancel'
+                            confirmCaption='Accept'
+                            confirmAction={handleRemoveFromCart}
+                        />
                     </span>
                 </div>
             </div>

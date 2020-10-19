@@ -27,6 +27,7 @@
     "react-star-rating-component": "^1.4.1",
     "react-toastify": "^6.0.8",
     "slick-carousel": "^1.8.1",
+    "styled-react-modal": "^2.0.1",
     "tsutils": "^3.17.1"
   },
   "scripts": {

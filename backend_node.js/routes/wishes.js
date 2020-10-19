@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:wishId/', async (req, res) => {
+router.put('/checkout', async (req, res) => {
     // No need to implement validation here.
     // It's already done in the model.
     let user;

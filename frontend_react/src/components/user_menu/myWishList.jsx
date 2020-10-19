@@ -8,6 +8,7 @@ import WishListContext      from './../../context/wishListContext';
 import BreadCrumbs          from '../common/breadcrumbs';
 import ToolTipEntry         from './toolTip';
 import Icons                from './userIcons';
+import ModalBox             from '../common/modal';
 
 function MyWishList(props) {
     const [ content, setContent ]                   = useState([]);
@@ -65,10 +66,20 @@ function MyWishList(props) {
                 <center>
                     <div className="card w-75">
                         <div className="d-flex flex-row-reverse bd-highlight">
-                            <div className="p-2 bd-highlight" onClick={handleCheckOut} role='button'>
-                                <ToolTipEntry icon={Icons.buyedIcon()} tip='Checkout!' />
+                            <div className="p-2 bd-highlight" role='button'>
+                            <ModalBox
+                                buttonComponent={() => <ToolTipEntry icon={Icons.buyedIcon()} tip='Checkout!' />}
+                                heading='Please confirm...'
+                                body={`Buy the item(s) for a total of $${saleTotal}?`}
+                                closeCaption='Cancel'
+                                confirmCaption='Yeah!'
+                                confirmAction={handleCheckOut}
+                            />
                             </div>
-                            <div className="p-2 bd-highlight" style={{ marginTop: '4px'}}>
+                            <div
+                                className="p-2 bd-highlight"
+                                style={{ marginTop: '4px'}}
+                            >
                                 <h5><strong>Total: ${saleTotal}</strong></h5>
                             </div>
                         </div>
@@ -81,7 +92,7 @@ function MyWishList(props) {
                 <BreadCrumbs />
                 <EmptyCard
                     title="No wishes in your list!"
-                    text="You have not added any products to your wishlist. Navigate through all sections and find all the stuff you love!"
+                    text="You have not added any products to your wishlist. Navigate through all sections and find the stuff you love!"
                 />
             </Fragment>
         );

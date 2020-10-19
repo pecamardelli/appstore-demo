@@ -5,6 +5,7 @@ import { Link }             from 'react-router-dom';
 import { toast }            from 'react-toastify';
 import ToolTipEntry         from './user_menu/toolTip';
 import Icons                from './user_menu/userIcons';
+import ModalBox             from './common/modal';
 
 function ProductOptions({ product }) {
     const [ wishState, setWishState ]   = useState('');
@@ -49,9 +50,16 @@ function ProductOptions({ product }) {
                 </Link>
 
     if (!wishState)
-        return  <span onClick={handleAddToCart} role='button' >
-                    <ToolTipEntry icon={Icons.addToCartIcon('2em')} tip='Add to cart' />
-                </span>;
+        return  <span role='button' >
+                    <ModalBox
+                        buttonComponent={() => <ToolTipEntry icon={Icons.addToCartIcon('2em')} tip='Add to cart' />}
+                        heading='Please confirm...'
+                        body={`add ${product.displayName} to the cart?`}
+                        closeCaption='Cancel'
+                        confirmCaption='Accept'
+                        confirmAction={handleAddToCart}
+                    />
+                </span>
 
     if (wishState === 'pending') 
         return (<span>

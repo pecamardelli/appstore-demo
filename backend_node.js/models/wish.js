@@ -45,7 +45,14 @@ const Wish	= sequelize.define('Wish', {
         type:       	Sequelize.ENUM,
         values:     	statuses,
         defaultValue:	statuses[0]
-    }
+	},
+	saleId: {
+		type:			Sequelize.UUID,
+		defaultValue:	Sequelize.UUIDV4,
+		allowNull:		true,
+		defaultValue:	null,
+		validate:		{ isUUID: 4 }
+	},
 });
 
 Wish.sync()
