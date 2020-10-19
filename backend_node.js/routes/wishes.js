@@ -1,6 +1,6 @@
-const express	= require('express');
-const { Wish }  = require('../models/models');
-const JwtDecode = require('jwt-decode');
+const express	        = require('express');
+const { Wish, Sale }    = require('../models/models');
+const JwtDecode         = require('jwt-decode');
 
 const router	= express.Router();
 
@@ -74,7 +74,17 @@ router.put('/checkout', async (req, res) => {
         return res.status(500).send('Internal Server Error.');
     }
     console.log(req.body)
-    /*
+    let newSale;
+
+    try {
+        newSale = await Sale.create({
+
+        });
+    }
+    catch (ex) {
+
+    }
+
     try {
 		const deleted = await Sale.findOne({
             where:  {
@@ -90,7 +100,7 @@ router.put('/checkout', async (req, res) => {
 		console.log(ex);
 		res.status(500).send('Internal Server Error.');
     }
-    */
+    
 });
 
 router.delete('/:wishId/', async (req, res) => {

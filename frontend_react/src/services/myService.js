@@ -9,3 +9,7 @@ export function getMyProducts() {
 export function getMyWishlist() {
 	return http.get(`${meUrl}/wishlist`);
 }
+
+export function submitPurchase(items) {
+	return http.post(`${meUrl}/checkout`, items);
+}

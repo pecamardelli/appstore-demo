@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState }    from 'react';
-import { getMyWishlist }    from './../../services/myService';
+import React, { Fragment, useEffect, useState } from 'react';
+import { getMyWishlist, submitPurchase }        from './../../services/myService';
 import { toast }            from 'react-toastify';
 import CardDeck             from '../common/cardDeck';
 import EmptyCard            from './../common/emptyCard';
@@ -50,8 +50,17 @@ function MyWishList(props) {
         }
     };
 
-    const handleCheckOut    = () => {
-        console.log(content)
+    const handleCheckOut    = async () => {
+        // Send only the wish id... The backend doesn't need the rest.
+        const itemsId   = [ content.map(i => i.id ) ];
+        try {
+            await submitPurchase(content.map(i => i.id ));
+            toast.success('Items purchased!');
+        }
+        catch (ex) {
+            console.log(ex);
+            toast.error('Error submitting purchase!');
+        }
     };
 
     if (content.length > 0)

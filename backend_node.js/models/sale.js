@@ -2,7 +2,7 @@ const { Sequelize }	= require('sequelize');
 const sequelize		= require('../startup/dbConfig');
 const User		    = require('./user');
 
-const statuses		= [ 'completed', 'challenged', 'canceled', 'payment_pending' ];
+const statuses		= [ 'completed', 'challenged', 'canceled', 'payment_pending', 'in_process' ];
 
 const Sale	= sequelize.define('Sale', {
 	id: {
@@ -20,10 +20,15 @@ const Sale	= sequelize.define('Sale', {
 			}
 		}
 	},
+	total: {
+		type:		Sequelize.FLOAT,
+		allowNull:	false,
+		validate:	{ min: 0 }
+	},
     status: {
         type:       	Sequelize.ENUM,
         values:     	statuses,
-        defaultValue:	statuses[0]
+        defaultValue:	statuses[4]
     }
 });
 
