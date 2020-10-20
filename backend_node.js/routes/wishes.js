@@ -61,48 +61,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/checkout', async (req, res) => {
-    // No need to implement validation here.
-    // It's already done in the model.
-    let user;
-    try {
-        user	= await JwtDecode(req.header('x-auth-token'));
-        if(!user) return res.status(400).send('Invalid token.');
-    }
-    catch (ex) {
-        console.log(ex);
-        return res.status(500).send('Internal Server Error.');
-    }
-    console.log(req.body)
-    let newSale;
-
-    try {
-        newSale = await Sale.create({
-
-        });
-    }
-    catch (ex) {
-
-    }
-
-    try {
-		const deleted = await Sale.findOne({
-            where:  {
-                id:         req.params.wishId,
-                userId:     user.id,
-                status:     'pending'
-            }
-        });
-        if(deleted) return res.send('Product removed from cart!');
-        return res.status(404).send('Nothing deleted!');
-	}
-	catch (ex) {
-		console.log(ex);
-		res.status(500).send('Internal Server Error.');
-    }
-    
-});
-
 router.delete('/:wishId/', async (req, res) => {
     // No need to implement validation here.
     // It's already done in the model.
@@ -124,6 +82,7 @@ router.delete('/:wishId/', async (req, res) => {
                 status:     'pending'
             }
         });
+        
         if(deleted) return res.send('Product removed from cart!');
         return res.status(404).send('Nothing deleted!');
 	}

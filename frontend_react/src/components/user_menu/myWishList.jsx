@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { getMyWishlist, submitPurchase }        from './../../services/myService';
+import { removeFromCart }   from '../../services/wishService';
+import noImage              from '../../assets/images/image_not_found.png';
 import { toast }            from 'react-toastify';
-import CardDeck             from '../common/cardDeck';
 import EmptyCard            from './../common/emptyCard';
-import WishListEntryCard    from './../common/wishListEntryCard';
-import WishListContext      from './../../context/wishListContext';
 import BreadCrumbs          from '../common/breadcrumbs';
 import ToolTipEntry         from './toolTip';
 import Icons                from './userIcons';
@@ -40,7 +39,7 @@ function MyWishList(props) {
         setSaleTotal(total);
     }, [ setContent, setSaleTotal, wishesRetrieved, content ]);
 
-    const handleDelete  = (itemId) => {
+    const deleteItem  = (itemId) => {
         const index = content.findIndex(e => e.id === itemId);
         
         if (index !== undefined) {
@@ -50,12 +49,26 @@ function MyWishList(props) {
         }
     };
 
-    const handleCheckOut    = async () => {
-        // Send only the wish id... The backend doesn't need the rest.
-        const itemsId   = [ content.map(i => i.id ) ];
+    const handleRemoveFromCart = async (e) => {
+        const wishId    = e.target.id;
         try {
-            await submitPurchase(content.map(i => i.id ));
-            toast.success('Items purchased!');
+            const result    = await removeFromCart(wishId);
+            deleteItem(wishId);
+            toast.success(result.data);
+        }
+        catch (ex) {
+            toast.error(ex);
+        }
+    };
+
+    const handleCheckOut    = async () => {
+        // Send only the wishId property... The backend doesn't need anything else.
+        try {
+            const result    = await submitPurchase(content.map(i => i.id ));
+            if(result.status === 200) {
+                toast.success('Items purchased!');
+                setContent([]);
+            }
         }
         catch (ex) {
             console.log(ex);
@@ -65,36 +78,89 @@ function MyWishList(props) {
 
     if (content.length > 0)
         return (
-            <WishListContext.Provider value={{ onDelete: handleDelete }}>
+            <>
                 <BreadCrumbs />
-                <CardDeck
-                    cards={content}
-                    cardComponent={WishListEntryCard}
-                    cols={1}
-                />
-                <center>
-                    <div className="card w-75">
-                        <div className="d-flex flex-row-reverse bd-highlight">
-                            <div className="p-2 bd-highlight" role='button'>
-                            <ModalBox
-                                buttonComponent={() => <ToolTipEntry icon={Icons.buyedIcon()} tip='Checkout!' />}
-                                heading='Please confirm...'
-                                body={`Buy the item(s) for a total of $${saleTotal}?`}
-                                closeCaption='Cancel'
-                                confirmCaption='Yeah!'
-                                confirmAction={handleCheckOut}
-                            />
-                            </div>
-                            <div
-                                className="p-2 bd-highlight"
-                                style={{ marginTop: '4px'}}
-                            >
-                                <h5><strong>Total: ${saleTotal}</strong></h5>
-                            </div>
-                        </div>
-                    </div>
-                </center>
-            </WishListContext.Provider>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Added on</th>
+                            <th scope="col">Base price</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {content.map(item =>
+                            <tr key={item.id}>
+                                <td style={{ width: '7%' }}>
+                                    <img
+                                        className="card-img"
+                                        src={`${process.env.REACT_APP_API_URL}/images/products/${item.ProductId}.png`}
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            // This conditional prevents an infinite fallback loop
+                                            // when noImage is not available or undefined
+                                            if(noImage) e.target.src=noImage;
+                                            else e.target.src=''
+                                        }}
+                                        alt={item.Product.displayName}
+                                    />
+                                </td>
+                                <td>
+                                    <h6 style={{ margin: '2px 0 0 0'}}>
+                                        <strong>{item.Product.displayName}</strong>
+                                    </h6>
+                                </td>
+                                <td>
+                                    {item.Product.Category.displayName}
+                                </td>
+                                <td>
+                                    {new Date(item.createdAt).toDateString()}
+                                </td>
+                                <td>
+                                    <h5 style={{ margin: '2px 0 0 0'}}>
+                                        ${item.salePrice}
+                                    </h5>
+                                </td>
+                                <td>
+                                    <span role='button' >
+                                        <ModalBox
+                                            itemId={item.id}
+                                            buttonComponent={() => <ToolTipEntry icon={Icons.trashIcon()} tip='Remove from cart' />}
+                                            heading='Please confirm...'
+                                            body={`Remove ${item.Product.displayName} from the cart?`}
+                                            closeCaption='Cancel'
+                                            confirmCaption='Accept'
+                                            confirmAction={handleRemoveFromCart}
+                                        />
+                                    </span>
+                                </td>
+                            </tr>
+                        )}
+                        <tr>
+                            <td colSpan='3'></td>
+                            <td className='text-right'>
+                                <h5><strong>Total</strong></h5>
+                            </td>
+                            <td>
+                                <h5><strong>${saleTotal}</strong></h5>
+                            </td>
+                            <td>
+                                <ModalBox
+                                    buttonComponent={() => <ToolTipEntry icon={Icons.buyedIcon()} tip='Checkout!' />}
+                                    heading='Please confirm...'
+                                    body={`Buy the item(s) for a total of $${saleTotal}?`}
+                                    closeCaption='Cancel'
+                                    confirmCaption='Yeah!'
+                                    confirmAction={handleCheckOut}
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </>
         );
     else return (
             <Fragment>

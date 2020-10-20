@@ -26,10 +26,10 @@ function ModalBox(props) {
         <Modal.Body><h5>{props.body}</h5></Modal.Body>
         <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-            {props.closeCaption}
+                {props.closeCaption}
             </Button>
-            <Button variant="primary" onClick={props.confirmAction ? props.confirmAction : handleClose}>
-            {props.confirmCaption}
+            <Button id={props.itemId} variant="primary" onClick={props.confirmAction ? props.confirmAction : handleClose}>
+                {props.confirmCaption}
             </Button>
         </Modal.Footer>
         </Modal>

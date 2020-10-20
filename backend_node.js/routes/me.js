@@ -61,6 +61,83 @@ router.get('/products', async (req, res) => {
 
 });
 
+router.get('/purchases', async (req, res) => {
+	let user;
+
+	try {
+		user	= JwtDecode(req.header('x-auth-token'));
+	}
+	catch (ex) {
+		return res.status(400).send(ex);
+	}
+
+	try {
+		const purchases	= await Sale.findAll({
+			where: { userId: user.id },
+			include: [{
+				model: Wish,
+				attributes:	[ 'productId', 'salePrice' ],
+				include:	[{
+					model:	Product,
+					attributes:	[ 'displayName' ],
+					include:	[{
+						model:		Category,
+						attributes:	[ 'displayName' ]
+					}]
+				}]
+			}],
+            attributes: [
+                'id',
+                'total',
+                'updatedAt'
+			]
+		});
+		return res.send(purchases);
+	}
+	catch (ex) {
+		return res.status(500).send(`Internal server error: ${ex}`);
+	}
+
+});
+
+router.get('/purchases/:invoiceId', async (req, res) => {
+	let user;
+
+	try {
+		user	= JwtDecode(req.header('x-auth-token'));
+	}
+	catch (ex) {
+		return res.status(400).send(ex);
+	}
+
+	try {
+		const details	= await Wish.findAll({
+			where: {
+				saleId:	req.params.invoiceId,
+				userId: user.id,
+			},
+			include: [{
+				model:	Product,
+				attributes:	[ 'id', 'displayName' ],
+				include:	[{
+					model:		Category,
+					attributes:	[ 'displayName' ]
+				}]
+			}],
+            attributes: [
+                'salePrice',
+                'updatedAt'
+			]
+		});
+		return res.send(details);
+	}
+	catch (ex) {
+		console.log(ex);
+		return res.status(500).send('Internal Server Error.');
+	}
+
+});
+
 router.get('/products/:id', async (req, res) => {
 	let user;
 
