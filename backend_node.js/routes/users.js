@@ -1,7 +1,7 @@
 const { User, Role }	= require('../models/models');
-const { Sequelize } = require('../startup/dbConfig');
-const express		= require('express');
-const fs            = require('fs');
+const { Sequelize } 	= require('../startup/dbConfig');
+const express			= require('express');
+const fs            	= require('fs');
 
 const router	= express.Router();
 const Op		= Sequelize.Op;
@@ -21,22 +21,17 @@ router.get('/signuproles', async (req, res) => {
 
 router.post('/', async (req, res) => {
 	// First, check if the roleId is valid.
-	let role;
-	try {
-		role	= await Role.findOne({
-			where: { id: req.body.roleId },
-			attributes:	[ 'displayName', 'accessLevel' ]
-		})
+	const role	= await Role.findOne({
+		where: { id: req.body.roleId },
+		attributes:	[ 'displayName', 'accessLevel' ]
+	})
 
-		// Since we are registering a new user, it's a good idea to check
-		// if the roleId passed in the body corresponds to a developer or a client.
-		if (role.dataValues.accessLevel < 4) return res.status(400).send('Invalid role!');
-	}
-	catch (ex) {
-		console.log(ex);
-		return res.status(500).send('Internal Server Error.');
-	}
+	// Since we are registering a new user, it's a good idea to check
+	// if the roleId passed in the body corresponds to a developer or a client.
+	if (role.dataValues.accessLevel < 4) return res.status(400).send('Invalid role!');
 	
+	// We're gonna override the exception handling implemented by express-async-errors.
+	// We wanna send a custom message.
 	let user;
 	try {
 		user	= await User.create(req.body);
@@ -53,10 +48,10 @@ router.post('/', async (req, res) => {
 		const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
 		
 		fs.open(`${avatarDir}/${user.dataValues.id}.png`, 'w', (err, fd) => {
-			if (err) return console.log(err);
+			if (err) throw err;
 			
 			fs.writeFile(fd, base64Data, "base64", (err) => {
-				console.log(err);
+				throw err;
 			});
 		});
 	}

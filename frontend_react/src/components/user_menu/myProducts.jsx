@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState }    from 'react';
 import { getMyProducts }    from './../../services/myService';
 import { toast }            from 'react-toastify';
 import CardDeck             from '../common/cardDeck';
-import ProductCard          from './productCard';
+import MyProductCard        from './myProductCard';
 import EmptyCard            from './../common/emptyCard';
 import BreadCrumbs          from '../common/breadcrumbs';
 
@@ -13,7 +13,6 @@ function MyProducts(props) {
         async function call() {
             try {
                 const result    = await getMyProducts();
-                
                 if(result) setContent(result.data);
             }
             catch(ex) {
@@ -30,7 +29,7 @@ function MyProducts(props) {
                 <BreadCrumbs />
                 <CardDeck
                     cards={ content }
-                    cardComponent={ ProductCard } 
+                    cardComponent={ MyProductCard } 
                     cols={5}
                 />
             </Fragment>

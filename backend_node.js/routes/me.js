@@ -1,21 +1,14 @@
-const { User, Wish, Product, Category, Sale }	= require('../models/models');
-const express		= require('express');
-const JwtDecode 	= require('jwt-decode');
+const { Wish, Product, Category, Sale }	= require('../models/models');
+const express	= require('express');
+const auth		= require('../middleware/mwAuth');
 
 const router	= express.Router();
 
-router.get('/', async (req, res) => {
-	const user	= await User.findById(req.body.id).select('-password');
-	res.send(user);
-});
-
-router.get('/wishlist', async (req, res) => {
-    const user	= JwtDecode(req.header('x-auth-token'));
-
+router.get('/wishlist', auth, async (req, res) => {
 	const cart	= await Wish.findAll({
 		where: {
-            userId: user.id,
-            status: 'pending'
+			userId: req.user.id,
+			status: 'pending'
 		},
 		include:	{
 			model:	Product,
@@ -26,164 +19,95 @@ router.get('/wishlist', async (req, res) => {
 			}
 		}
 	});
-
-	res.send(cart);
+	
+	return res.send(cart);
 });
 
-router.get('/products', async (req, res) => {
-	let user;
-
-	try {
-		user	= JwtDecode(req.header('x-auth-token'));
-	}
-	catch (ex) {
-		return res.status(400).send(ex);
-	}
-
-	try {
-		const products	= await Product.findAll({
-			where: { authorId: user.id },
-			include: [{
-				model: Category,
-				attributes:	[ 'displayName' ]
-			}],
-            attributes: [
-                'id',
-                'displayName',
-                'updatedAt'
-			]
-		});
-		return res.send(products);
-	}
-	catch (ex) {
-		return res.status(500).send(`Internal server error: ${ex}`);
-	}
-
+router.get('/products', auth, async (req, res) => {
+	const products	= await Product.findAll({
+		where: { authorId: req.user.id },
+		include: [{
+			model: Category,
+			attributes:	[ 'displayName' ]
+		}],
+		attributes: [
+			'id',
+			'displayName',
+			'updatedAt'
+		]
+	});
+	
+	return res.send(products);
 });
 
-router.get('/purchases', async (req, res) => {
-	let user;
-
-	try {
-		user	= JwtDecode(req.header('x-auth-token'));
-	}
-	catch (ex) {
-		return res.status(400).send(ex);
-	}
-
-	try {
-		const purchases	= await Sale.findAll({
-			where: { userId: user.id },
-			include: [{
-				model: Wish,
-				attributes:	[ 'productId', 'salePrice' ],
-				include:	[{
-					model:	Product,
-					attributes:	[ 'displayName' ],
-					include:	[{
-						model:		Category,
-						attributes:	[ 'displayName' ]
-					}]
-				}]
-			}],
-            attributes: [
-                'id',
-                'total',
-                'updatedAt'
-			]
-		});
-		return res.send(purchases);
-	}
-	catch (ex) {
-		return res.status(500).send(`Internal server error: ${ex}`);
-	}
-
-});
-
-router.get('/purchases/:invoiceId', async (req, res) => {
-	let user;
-
-	try {
-		user	= JwtDecode(req.header('x-auth-token'));
-	}
-	catch (ex) {
-		return res.status(400).send(ex);
-	}
-
-	try {
-		const details	= await Wish.findAll({
-			where: {
-				saleId:	req.params.invoiceId,
-				userId: user.id,
-			},
-			include: [{
+router.get('/purchases', auth, async (req, res) => {
+	const purchases	= await Sale.findAll({
+		where: { userId: req.user.id },
+		include: [{
+			model: Wish,
+			attributes:	[ 'productId', 'salePrice' ],
+			include:	[{
 				model:	Product,
-				attributes:	[ 'id', 'displayName' ],
+				attributes:	[ 'displayName' ],
 				include:	[{
 					model:		Category,
 					attributes:	[ 'displayName' ]
 				}]
-			}],
-            attributes: [
-                'salePrice',
-                'updatedAt'
-			]
-		});
-		return res.send(details);
-	}
-	catch (ex) {
-		console.log(ex);
-		return res.status(500).send('Internal Server Error.');
-	}
-
+			}]
+		}],
+		attributes: [
+			'id',
+			'total',
+			'updatedAt'
+		]
+	});
+	return res.send(purchases);
 });
 
-router.get('/products/:id', async (req, res) => {
-	let user;
-
-	try {
-		user	= JwtDecode(req.header('x-auth-token'));
-	}
-	catch (ex) {
-		return res.status(400).send(ex);
-	}
-
-	try {
-		const items	= await Product.findOne({
-			where: { authorId: user.id },
-			include: [{
-				model: Category,
+router.get('/purchases/:invoiceId', auth, async (req, res) => {
+	const details	= await Wish.findAll({
+		where: {
+			saleId:	req.params.invoiceId,
+			userId: req.user.id,
+		},
+		include: [{
+			model:	Product,
+			attributes:	[ 'id', 'displayName' ],
+			include:	[{
+				model:		Category,
 				attributes:	[ 'displayName' ]
-			}],
-            attributes: [
-                'id',
-                'displayName',
-                'updatedAt'
-			]
-		});
-		return res.send(items);
-	}
-	catch (ex) {
-		return res.status(500).send(`Internal server error: ${ex}`);
-	}
+			}]
+		}],
+		attributes: [
+			'salePrice',
+			'updatedAt'
+		]
+	});
+	return res.send(details);
 });
 
-router.post('/checkout', async (req, res) => {
-    let user;
-    try {
-        user	= await JwtDecode(req.header('x-auth-token'));
-        if(!user) return res.status(400).send('Invalid token.');
-    }
-    catch (ex) {
-        console.log(ex);
-        return res.status(500).send('Internal Server Error.');
-	}
+router.get('/products/:id', auth, async (req, res) => {
+	const items	= await Product.findOne({
+		where: { authorId: req.user.id },
+		include: [{
+			model: Category,
+			attributes:	[ 'displayName' ]
+		}],
+		attributes: [
+			'id',
+			'displayName',
+			'updatedAt'
+		]
+	});
+	return res.send(items);
+});
 
+router.post('/checkout', auth, async (req, res) => {
 	// Build a new sale first in order to get the ID
 	// Not using Sale.create here because we need to calculate
 	// the sale total before inserting it into the DB.
 	const newSale = Sale.build({
-		userId: user.id,
+		userId: req.user.id,
 		total:	0,
 		status:	'completed'
 	});
@@ -193,47 +117,29 @@ router.post('/checkout', async (req, res) => {
 	// are valid user wishlist items.
 	let	saleTotal	= 0;
 	for (let wishId of req.body) {
-		try {
-			const wishListItem	= await Wish.findOne({
-				where: {
-					id:		wishId,
-					userId:	user.id,
-					status:	'pending'
+		const wishListItem	= await Wish.findOne({
+			where: {
+				id:		wishId,
+				userId:	req.user.id,
+				status:	'pending'
 
-				}
-			});
+			}
+		});
 
-			if (!wishListItem) return res.status(400).send('Invalid wishlist.');
-			saleTotal	+= wishListItem.dataValues.salePrice;
-			
-			try {
-				await wishListItem.update({
-					status: 'completed',
-					saleId:	newSale.getDataValue('id')
-				});
-			}
-			catch (ex) {
-				console.log(ex);
-				return res.status(500).send('Internal Server Error.');
-			}
-		}
-		catch (ex) {
-			console.log(ex);
-			return res.status(500).send('Internal Server Error.');
-		}
+		if (!wishListItem) return res.status(400).send('Invalid wishlist.');
+		saleTotal	+= wishListItem.dataValues.salePrice;
+		
+		await wishListItem.update({
+			status: 'completed',
+			saleId:	newSale.getDataValue('id')
+		});
 	}
 
 	// We should have the sale total by now.
 	newSale.setDataValue('total', saleTotal);
-	try {
-		await newSale.save();
-	}
-	catch (ex) {
-		console.log(ex);
-		return res.status(500).send('Internal Server Error.');
-	}
+	await newSale.save();
 
-	res.send('Sale successfully submited!');
+	return res.send('Sale successfully submited!');
 });
 
 module.exports	= router;

@@ -1,104 +1,77 @@
-const express		= require('express');
-const Category   	= require('../models/category');
-const fs            = require('fs');
+const express	= require('express');
+const Category  = require('../models/category');
+const authorize	= require('../middleware/mwAccessLevel');
+const auth		= require('../middleware/mwAuth');
+const fs        = require('fs');
 
-const router	= express.Router();
-const imageDir  = './assets/images/categories';
+const router		= express.Router();
+const imageDir  	= './assets/images/categories';
+const accessLevel	= 2;
 
-router.get('/one/:categoryId', async (req, res) => {
-	try {
-		const category	= await Category.findOne({
-			where:	{ id: req.params.categoryId },
-			attributes: [ 'displayName', 'id', 'sectionId', 'description' ]
-		});
-		res.send(category);
-	}
-	catch (ex) {
-		res.status(500).send(ex.errors[0].message);
-	}
+// There's no need to implement try/catch blocks in here because
+// the module express-async-errors along with the error middleware
+// will wrap all the routers callback functions in a template function
+// that catches any async error that may occur in the route handlers.
+
+router.get('/one/:categoryId', [auth, authorize(accessLevel)], async (req, res) => {
+	const category	= await Category.findOne({
+		where:	{ id: req.params.categoryId },
+		attributes: [ 'displayName', 'id', 'sectionId', 'description' ]
+	});
+	res.send(category);
 });
 
 router.get('/:sectionId', async (req, res) => {
-	try {
-		const categories	= await Category.findAll({
-			where:	{ sectionId: req.params.sectionId },
-			attributes: [ 'displayName', 'id', 'alias', 'description' ]
-		});
-		res.send(categories);
-	}
-	catch (ex) {
-		res.status(500).send(ex.errors[0].message);
-	}
+	const categories	= await Category.findAll({
+		where:	{ sectionId: req.params.sectionId },
+		attributes: [ 'displayName', 'id', 'alias', 'description' ]
+	});
+	res.send(categories);
 });
 
-router.post('/', async (req, res) => {
-	// No need to implement validation here.
-	// It's already done in the model.
-	let result;
-
-	try {
-		result = await Category.create(req.body);
-	}
-	catch (ex) {
-		console.log(ex)
-		return res.status(400).send(ex.errors[0].message);
-	}
+router.post('/', [auth, authorize(accessLevel)], async (req, res) => {
+	await Category.create(req.body);
 
 	if (req.body.photo) {
-		try {
-			// Save the image file received.
-			// Remove the header from the base64 data chunk.
-			const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
+		// Save the image file received.
+		// Remove the header from the base64 data chunk.
+		const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
 
-			fs.open(`${imageDir}/${result.dataValues.id}.png`, 'w', (err, fd) => {
-				if (err) throw err;
-
-				fs.writeFile(fd, base64Data, "base64", (err) => {
-					console.log(err);
-				});
+		fs.open(`${imageDir}/${result.dataValues.id}.png`, 'w', (err, fd) => {
+			if (err) throw err;
+			fs.writeFile(fd, base64Data, "base64", (err) => {
+				throw err;
 			});
-		}
-		catch (ex) {
-			return res.status(500).send(ex.errors[0].message);
-		}
+		});
 	}
 	
 	res.send('Category saved!');
 });
 
-router.put('/', async (req, res) => {
-    console.log(req.body);
-    
-    try {
-        const result = await Category.update({
-            displayName:    req.body.displayName,
-            sectionId:     	req.body.sectionId,
-            description:    req.body.description
-        },
-        {
-            where: { id: req.body.id }
-        });
+router.put('/', [auth, authorize(accessLevel)], async (req, res) => {
+	const result = await Category.update({
+		displayName:    req.body.displayName,
+		sectionId:     	req.body.sectionId,
+		description:    req.body.description
+	},
+	{
+		where: { id: req.body.id }
+	});
 
-        if (req.body.photo) {
-        // Save the image file received, if any.
-        // Remove the header from the base64 data chunk.
-            const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
-    
-            fs.open(`${imageDir}/${req.body.id}.png`, 'w', (err, fd) => {
-                if (err) return;
-    
-                fs.writeFile(fd, base64Data, "base64", (err) => {
-                    console.log(err);
-                });
-            });
-        }
+	if (req.body.photo) {
+	// Save the image file received, if any.
+	// Remove the header from the base64 data chunk.
+		const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
 
-		res.send('Category updated!');
+		fs.open(`${imageDir}/${req.body.id}.png`, 'w', (err, fd) => {
+			if (err) throw err;
+			fs.writeFile(fd, base64Data, "base64", (err) => {
+				throw err;
+			});
+		});
 	}
-	catch (ex) {
-		console.log(ex);
-		res.status(500).send(ex.errors);
-    }
+
+	res.send('Category updated!');
 });
 
 module.exports	= router;

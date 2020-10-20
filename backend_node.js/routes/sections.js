@@ -1,7 +1,10 @@
 const express		= require('express');
 const { Section }   = require('../models/models');
+const authorize		= require('../middleware/mwAccessLevel');
+const auth			= require('../middleware/mwAuth');
 
-const router	= express.Router();
+const router		= express.Router();
+const accessLevel	= 2;
 
 router.get('/', async (req, res) => {
 	const sections	= await Section.findAll({
@@ -10,16 +13,11 @@ router.get('/', async (req, res) => {
 	res.send(sections);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', [auth, authorize(accessLevel)], async (req, res) => {
 	// No need to implement validation here.
     // It's already done in the model.
-	try {
-		await Section.create(req.body);
-		res.send('Section saved!');
-	}
-	catch (ex) {
-		res.status(500).send(ex.errors[0].message);
-    }
+	await Section.create(req.body);
+	res.send('Section saved!');
 });
 
 module.exports	= router;

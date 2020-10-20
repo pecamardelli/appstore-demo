@@ -1,6 +1,6 @@
 import React        from 'react';
 import { Link }     from 'react-router-dom';
-import Icons        from '../user_menu/userIcons';
+import Icons        from './userIcons';
 import ToolTipEntry from './toolTip';
 
 function ProductCard({ data }) {
@@ -16,7 +16,7 @@ function ProductCard({ data }) {
                 <span className="d-flex justify-content-between align-items-center">
                     <h6>{ data.Category.displayName }</h6>
                     <span style={{ margin: '-10px 0 0 0' }}>
-                        <Link to={ `/me/products/${data.id}` }>
+                        <Link to={ `/me/products/edit/${data.id}` }>
                             <ToolTipEntry icon={Icons.editIcon()} tip='Edit' />
                         </Link>
                     </span>

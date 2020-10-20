@@ -43,7 +43,7 @@ function ImageUpload(props) {
                         {imageList.map((image, index) => (
                         <div key={index} className="image-item">
                             <img
-                                src={image['data_url'] ? image['data_url'] : `${process.env.REACT_APP_API_URL}${props.path}/${props.imageId}.png`}
+                                src={image['data_url'] ? image['data_url'] : `${process.env.REACT_APP_API_URL}/images/${props.path}/${props.imageId}.png`}
                                 alt=''
                                 width='300'
                             />

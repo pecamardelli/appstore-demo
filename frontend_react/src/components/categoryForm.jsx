@@ -61,14 +61,11 @@ class CategoryForm extends Form {
 			toast.success(`Category '${this.state.data.name}' succesfully submitted!`);
 		}
 		catch (ex) {
-			if(ex.response && ex.response.status === 400) {
-				const errors	= { ...this.state.errors };
-				errors.category	= ex.response.data;
-				this.setState({ errors });	
-				console.log(ex.response)
-				return toast.error(`Error: ${ex.response.data}`);
-			}
-			else return toast.error(`Error: ${ex}`);
+			const errors	= { ...this.state.errors };
+			errors.category	= ex.response.data;
+			this.setState({ errors });	
+			console.log(ex.response)
+			return toast.error(`Error: ${ex.response.data}`);
 		}
 	};
 	

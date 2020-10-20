@@ -1,7 +1,6 @@
 /*
  *	Check config parameters
 */
-
 const	config		= require('config');
 
 module.exports	= () => {
