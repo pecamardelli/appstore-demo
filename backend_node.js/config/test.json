@@ -1,3 +1,8 @@
 {
-	"name": "App Store Demo - Testing"
+	"name": 		"App Store Demo - Testing",
+	"db_name":		"appstore_test",
+	"db_host":		"localhost",
+	"db_port":		"3306",
+	"db_user":		"test",
+	"db_password":	"test"
 }
