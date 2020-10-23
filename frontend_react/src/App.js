@@ -16,6 +16,7 @@ import MyProfile      from './components/user_menu/myProfile';
 import WishList       from './components/user_menu/myWishList';
 import NotFound       from './components/common/not-found';
 import NavBar         from './components/common/navBar';
+import Footer         from './components/common/footer';
 import Logout			    from './components/user_menu/logout';
 import Home           from './components/home';
 
@@ -101,6 +102,7 @@ function App() {
           <Redirect to='/not-found' />
         </Switch>
       </main>
+      <Footer />
     </Fragment>
   );
 }

@@ -2,6 +2,7 @@
  *	App Store Demo
  *
 */
+
 require('express-async-errors');
 require('dotenv').config();				// Load sensitive values and store them in environment variables.
 const config    = require('config');
@@ -14,9 +15,10 @@ const	app		= express();
 require('./startup/routes')(app);
 require('./startup/config')();
 require('./startup/logging')();
-require('./startup/prod')(app);
+
+if (process.env.NODE_ENV === 'production') require('./startup/prod')(app);
 
 const port  	= process.env.PORT || 3900;
 const server    = app.listen(port, () => logger.log('info', `Listening on port ${port}...`));
 
-if(process.env.NODE_ENV === 'test') module.exports  = server;
+if (process.env.NODE_ENV === 'test') module.exports  = server;

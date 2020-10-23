@@ -1,6 +1,6 @@
 const express		= require('express');
 const { Section }   = require('../models/models');
-const authorize		= require('../middleware/mwAccessLevel');
+const authorize		= require('../middleware/mwAuthorize');
 const auth			= require('../middleware/mwAuth');
 
 const router		= express.Router();

@@ -64,3 +64,13 @@
 .table>thead>tr>th {
       vertical-align: middle;
  }
+
+ .navbar, .footer {
+   background-color: #ffddbb;
+ }
+
+ .container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}

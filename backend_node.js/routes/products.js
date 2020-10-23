@@ -2,7 +2,7 @@ const { Product, Category, Section }   = require('../models/models');
 const express	= require('express');
 const JwtDecode = require('jwt-decode');
 const fs        = require('fs');
-const authorize	= require('../middleware/mwAccessLevel');
+const authorize	= require('../middleware/mwAuthorize');
 const auth		= require('../middleware/mwAuth');
 
 const router	    = express.Router();

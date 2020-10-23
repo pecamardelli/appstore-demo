@@ -1,6 +1,6 @@
 const express	= require('express');
 const Category  = require('../models/category');
-const authorize	= require('../middleware/mwAccessLevel');
+const authorize	= require('../middleware/mwAuthorize');
 const auth		= require('../middleware/mwAuth');
 const fs        = require('fs');
 
@@ -11,7 +11,7 @@ const accessLevel	= 2;
 // There's no need to implement try/catch blocks in here because
 // the module express-async-errors along with the error middleware
 // will wrap all the routers callback functions in a template function
-// that catches any async error that may occur in the route handlers.
+// that catches any async error that may occur.
 
 router.get('/one/:categoryId', [auth, authorize(accessLevel)], async (req, res) => {
 	const category	= await Category.findOne({
