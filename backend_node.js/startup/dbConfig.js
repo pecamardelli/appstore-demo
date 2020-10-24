@@ -5,8 +5,6 @@
  *	See README.md for more info.
  *
 */
-
-const dbDebugger	= require('debug')('app:db');	// Definnig the database debug namespace.
 const { Sequelize }	= require('sequelize');
 const config		= require('config');
 

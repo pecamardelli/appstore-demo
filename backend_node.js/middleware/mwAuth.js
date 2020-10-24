@@ -1,5 +1,6 @@
 const jwt		= require('jsonwebtoken');
 const config	= require('config');
+const logger	= require('../lib/logger');
 
 function auth(req, res, next) {
 	const token	= req.header('x-auth-token');
@@ -11,6 +12,7 @@ function auth(req, res, next) {
 		next();
 	}
 	catch (ex) {
+		logger.log('error', ex);
 		res.status(400).send('Invalid token.');
 	}
 }

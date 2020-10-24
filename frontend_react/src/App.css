@@ -62,15 +62,24 @@
 .table>tfoot>tr>th, 
 .table>thead>tr>td, 
 .table>thead>tr>th {
-      vertical-align: middle;
- }
+    vertical-align: middle;
+}
 
- .navbar, .footer {
-   background-color: #ffddbb;
- }
+.navbar, .footer {
+  background-color: #ffddbb;
+}
 
- .container {
+main {
+  min-height: 79vh;
+}
+
+.container {
   width: auto;
   max-width: 680px;
   padding: 0 15px;
+}
+
+.four-o-four {
+  font-size: 15ch;
+  color: #CC3300;
 }

@@ -62,7 +62,7 @@ const NavBar	= (props) => {
 					)}
 				</ul>
 			</div>
-			{ currentUser ? <UserMenu user={ currentUser } /> : <SignMenu /> }
+			{ currentUser ? <UserMenu /> : <SignMenu /> }
 		</nav>
 	);
 }

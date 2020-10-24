@@ -19,16 +19,22 @@ function ProfileMenu(props) {
                 />
             </thead>
             <tbody>
-                <tr>
-                    <Link to='/me/products'>
-                        <td style={{ textAlign: "right"}}>
-                            <h6 style={{ marginTop: '3px'}} className='text-secondary'>
-                                My products
-                            </h6>
-                        </td>
-                        <td style={{ width: '20%'}}>{ icons.productIcon() }</td>
-                    </Link>
-                </tr>
+                {
+                    () => {
+                        if (user.accessLevel <= 4) {
+                            return <tr>
+                                <Link to='/me/products'>
+                                    <td style={{ textAlign: "right"}}>
+                                        <h6 style={{ marginTop: '3px'}} className='text-secondary'>
+                                            My products
+                                        </h6>
+                                    </td>
+                                    <td style={{ width: '20%'}}>{ icons.productIcon() }</td>
+                                </Link>
+                            </tr>;
+                        }
+                    }
+                }
                 <tr>
                     <Link to='/me/wishlist'>
                         <td style={{ textAlign: "right"}}>

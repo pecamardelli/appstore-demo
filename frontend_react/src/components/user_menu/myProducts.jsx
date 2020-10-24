@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState }    from 'react';
+import React, { useEffect, useState }    from 'react';
 import { getMyProducts }    from './../../services/myService';
 import { toast }            from 'react-toastify';
 import CardDeck             from '../common/cardDeck';
@@ -24,20 +24,21 @@ function MyProducts(props) {
     }, [ setContent ]);
 
     if (content.length > 0)
-        return (
-            <Fragment>
+        return <>
                 <BreadCrumbs />
                 <CardDeck
                     cards={ content }
                     cardComponent={ MyProductCard } 
                     cols={5}
                 />
-            </Fragment>
-        );
-    else return <EmptyCard
-                    title="No products to show"
-                    text="You have not created any products yet. Look at the user menu! Click on the box and create!"
-                />;
+            </>;
+    else return <>
+                    <BreadCrumbs />
+                    <EmptyCard
+                        title="No products to show"
+                        text="You have not created any products yet. Look at the user menu! Click on the box and create!"
+                    />
+                </>;
 }
 
 export default MyProducts;

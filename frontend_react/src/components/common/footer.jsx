@@ -1,8 +1,12 @@
 import React from 'react';
 
 function Footer(props) {
+    const digApony = (e) => {
+        console.log(e.target)
+    }
+
     return (
-        <footer className="footer mt-auto py-3 text-center">
+        <footer className="footer mt-auto py-3 text-center" onClick={digApony}>
             <div className="container">
                 <span className="text-muted">
                     AppStore © 2020 |

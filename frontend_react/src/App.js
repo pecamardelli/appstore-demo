@@ -14,7 +14,7 @@ import MyPurchases    from './components/user_menu/myPurchases';
 import MyProducts     from './components/user_menu/myProducts';
 import MyProfile      from './components/user_menu/myProfile';
 import WishList       from './components/user_menu/myWishList';
-import NotFound       from './components/common/not-found';
+import NotFound       from './components/common/notFound';
 import NavBar         from './components/common/navBar';
 import Footer         from './components/common/footer';
 import Logout			    from './components/user_menu/logout';
@@ -29,7 +29,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   return (
-    <Fragment>
+    <>
       <ToastContainer />
       <NavBar />
       <main className='container'>
@@ -77,10 +77,12 @@ function App() {
           />
           <ProtectedRoute
             path='/me/wishlist'
+            exact
             component={WishList}
           />
           <ProtectedRoute
             path='/me/purchases'
+            exact
             component={MyPurchases}
           />
           <ProtectedRoute
@@ -90,20 +92,22 @@ function App() {
           />
           <ProtectedRoute
             path='/me/products/new'
+            exact
             component={ProductForm}
           />
           <ProtectedRoute
             path='/me/products/edit/:id'
+            exact
             component={ProductForm}
           />
-          <Route path='/logout'     component={Logout} />
-          <Route path='/not-found'	component={NotFound} />
-          <Route path='/' exact     component={Home} />
+          <Route path='/logout'     exact component={Logout} />
+          <Route path='/not-found'	exact component={NotFound} />
+          <Route path='/'           exact component={Home} />
           <Redirect to='/not-found' />
         </Switch>
       </main>
       <Footer />
-    </Fragment>
+    </>
   );
 }
 
