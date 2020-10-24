@@ -12,7 +12,6 @@ function PurchaseEntryCard({ data: purchase }) {
         async function call() {
             try {
                 const result    = await getPurchaseDetail(purchase.id);
-                console.log(result)
                 setContent(result.data);
             }
             catch(ex) {
@@ -21,12 +20,12 @@ function PurchaseEntryCard({ data: purchase }) {
         }
 
         call();
-    }, [ setContent ]);
+    }, [ setContent, purchase.id ]);
     return (
         <center>
             <div className="card w-90">
                 <div className="card-body">
-                    <table class="table table-borderless">
+                    <table className="table table-borderless">
                         <thead>
                             <tr>
                                 <th scope="col" colSpan='2'>Invoice <strong>#{purchase.id}</strong></th>

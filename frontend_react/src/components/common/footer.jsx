@@ -10,8 +10,8 @@ function Footer(props) {
             <div className="container">
                 <span className="text-muted">
                     AppStore © 2020 |
-                    &nbsp;<a href='https://github.com/pecamardelli/appstore-demo/blob/master/LICENSE' target='_blank'>License</a>
-                    &nbsp;| <a href='https://github.com/pecamardelli/appstore-demo' target='_blank'>Get the repo</a>
+                    &nbsp;<a href='https://github.com/pecamardelli/appstore-demo/blob/master/LICENSE' target='_blank' rel="noopener noreferrer">License</a>
+                    &nbsp;| <a href='https://github.com/pecamardelli/appstore-demo' target='_blank' rel="noopener noreferrer">Get the repo</a>
                 </span>
             </div>
         </footer>
