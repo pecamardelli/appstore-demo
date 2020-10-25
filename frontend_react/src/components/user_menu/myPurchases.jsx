@@ -4,6 +4,7 @@ import CardDeck             from './../common/cardDeck';
 import { getMyPurchases }   from './../../services/myService';
 import { toast }            from 'react-toastify';
 import PurchaseEntryCard    from './../common/purchaseEntryCard';
+import EmptyCard            from './../common/emptyCard';
 
 function MyPurchases(props) {
     const [ content, setContent ]   = useState([]);
@@ -22,8 +23,8 @@ function MyPurchases(props) {
         call();
     }, [ setContent ]);
 
-    return (
-        <>
+    if (content.length > 0) {
+        return (<>
             <BreadCrumbs />
             <h3>My purchases</h3><hr />
             <CardDeck
@@ -31,8 +32,15 @@ function MyPurchases(props) {
                 cardComponent={PurchaseEntryCard}
                 cols={1}
             />
-        </>
-    );
+        </>);
+    }
+    else return (<>
+            <BreadCrumbs />
+            <EmptyCard
+                title="No purchases to show!"
+                text="You have not buyed anything yet. There is really amazing stuff in our store! Check it out!"
+            />
+        </>);
 }
 
 export default MyPurchases;

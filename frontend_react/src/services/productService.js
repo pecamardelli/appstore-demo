@@ -2,9 +2,15 @@ import http 		from './httpService';
 
 const productsUrl	= '/products';
 const storeUrl		= '/store';
+const searchUrl		= '/search';
 
 export function getProductById(productId = '') {
 	return http.get(`${productsUrl}/${productId}`);
+}
+
+// We'll using POST here because we're sending a string, probably with spaces and other stuff.
+export function searchProducts(keywords) {
+	return http.post(`${searchUrl}`, { keywords });
 }
 
 // In theese cases, we'll use the store endpoint.

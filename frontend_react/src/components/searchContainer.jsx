@@ -1,19 +1,18 @@
 import React, {  useEffect, useState }  from 'react';
-import { getProductsByCategory }        from './../services/productService';
+import { searchProducts }   from './../services/productService';
 import { toast }    from 'react-toastify';
 import CardDeck     from './common/cardDeck';
 import ProductCard  from './common/productCard';
 import EmptyCard    from './common/emptyCard';
-import BreadCrumbs from './common/breadcrumbs';
+import BreadCrumbs  from './common/breadcrumbs';
 
-function CategoryContainer(props) {
+function SearchContainer(props) {
     const [ content, setContent ]   = useState([]);
-    const { match } = props;
 
     useEffect(() => {
         async function call() {
             try {
-                const result    = await getProductsByCategory(match.params.section, match.params.category);
+                const result    = await searchProducts(props.keywords);
                 
                 if(result) setContent(result.data);
                 else setContent([]);
@@ -23,8 +22,8 @@ function CategoryContainer(props) {
             }
         }
 
-        call();
-    }, [ setContent, match ]);
+        if(props.keywords) call();
+    }, [ setContent, props.keywords ]);
 
     if (content.length > 0)
         return (<>
@@ -39,9 +38,9 @@ function CategoryContainer(props) {
                 <BreadCrumbs />
                 <EmptyCard
                     title="No products to show"
-                    text="There are no products in this category. Try again later!"
+                    text="Write some keywords in the search bar!"
                 />
             </>);
 }
 
-export default CategoryContainer;
+export default SearchContainer;

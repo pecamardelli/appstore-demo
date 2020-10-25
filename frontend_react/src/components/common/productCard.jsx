@@ -7,7 +7,7 @@ import noImage      from '../../assets/images/image_not_found.png';
 function ProductCard({ data }) {
     return (
         <div className="card border-dark mb-4" >
-            <Link to={`${data.Category.alias}/${data.alias}`}>
+            <Link to={{ pathname: `/store/${data.Category.Section.alias}/${data.Category.alias}/${data.alias}`}}>
                 <img
                     src={`${process.env.REACT_APP_API_URL}/images/products/${data.id}.png`}
                     onError={(e) => {e.target.onerror = null; e.target.src=noImage}}

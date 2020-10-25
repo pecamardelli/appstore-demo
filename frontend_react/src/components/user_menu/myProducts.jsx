@@ -24,21 +24,21 @@ function MyProducts(props) {
     }, [ setContent ]);
 
     if (content.length > 0)
-        return <>
+        return (<>
                 <BreadCrumbs />
                 <CardDeck
                     cards={ content }
                     cardComponent={ MyProductCard } 
                     cols={5}
                 />
-            </>;
-    else return <>
-                    <BreadCrumbs />
-                    <EmptyCard
-                        title="No products to show"
-                        text="You have not created any products yet. Look at the user menu! Click on the box and create!"
-                    />
-                </>;
+            </>);
+    else return (<>
+                <BreadCrumbs />
+                <EmptyCard
+                    title="No products to show"
+                    text="You have not created any products yet. Look at the user menu! Click on the box and create!"
+                />
+            </>);
 }
 
 export default MyProducts;

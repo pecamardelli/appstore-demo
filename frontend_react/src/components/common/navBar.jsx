@@ -1,15 +1,20 @@
-import React, { useState, useEffect }	from 'react';
-import { Link, NavLink }	from 'react-router-dom';
+import React, { useState, useEffect, useContext }	from 'react';
+import { Link, NavLink, useHistory }	from 'react-router-dom';
 import { getSections }		from '../../services/sectionService';
+import SearchContext		from './../../context/searchContext';
 import { toast }	from 'react-toastify';
 import logo			from '../../assets/images/logo100.png';
 import auth			from '../../services/authService';
 import UserMenu 	from '../user_menu/userMenu';
 import SignMenu 	from './signMenu';
+import userIcons	from '../user_menu/userIcons';
 
-const NavBar	= (props) => {
-	const [ currentUser, setUser ]	= useState(auth.getCurrentUser());
-	const [ sections, setSections ] = useState([]);
+function NavBar(props) {
+	const [ sections, setSections ]			= useState([]);
+	const [ searchValue, setSearchValue]	= useState('');
+	const currentUser	= useState(auth.getCurrentUser());
+	const history		= useHistory();
+	const searchContext	= useContext(SearchContext);
 
 	useEffect(() => {
 		async function call() {
@@ -18,13 +23,27 @@ const NavBar	= (props) => {
 				setSections(sections);
 			}
 			catch(ex) {
-				console.log(ex)
-				toast.error('Could not retrieve sections from backend.', ex);
+				console.log(ex);
+				toast.error('Could not retrieve sections from backend.');
 			}
 		}
 
 	call();
-	}, [ setSections, setUser ]);
+	}, [ setSections ]);
+
+	const handleChange	= ({ currentTarget: input }) => {
+		setSearchValue(input.value);
+	};
+
+	const handleSearchClick	= () => {
+		if(!searchValue) return toast.error('Enter some keywords and then search...');
+
+		searchContext.setSearchKeywords(searchValue);
+
+		if(window.location.pathname !== '/search'){
+			return history.push('/search');
+		}
+	};
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light">
@@ -38,31 +57,35 @@ const NavBar	= (props) => {
 					loading="lazy"
 				/>
 			</Link>
-			<button
-				className="navbar-toggler"
-				type="button"
-				data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent"
-				aria-expanded="false"
-				aria-label="Toggle navigation"
-			>
-				<span className="navbar-toggler-icon"></span>
-			</button>
-		
+
 			<div className="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul className="navbar-nav mr-auto">
 					{ sections.map(
 						p => <NavLink
-								key={ p.id }
-								className='nav-item nav-link'
-								to={`/store/${p.displayName.toLowerCase()}`}>
-									{ p.displayName }
-								</NavLink>
+							key={ p.id }
+							className='nav-item nav-link'
+							to={`/store/${p.displayName.toLowerCase()}`}>
+								{ p.displayName }
+							</NavLink>
 					)}
 				</ul>
+
+				<form className="form-inline mx-auto" style={{ width: '40%'}}>
+					<input
+						className="form-control mr-sm-2"
+						type="search"
+						placeholder="Search"
+						aria-label="Search"
+						onChange={handleChange}
+						style={{ width: '80%'}}
+					/>
+					<span className='' role='button' onClick={handleSearchClick}>
+						{ userIcons.searchIcon() }
+					</span>
+				</form>
+
+				{ currentUser ? <UserMenu /> : <SignMenu /> }
 			</div>
-			{ currentUser ? <UserMenu /> : <SignMenu /> }
 		</nav>
 	);
 }

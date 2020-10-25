@@ -1,9 +1,10 @@
 import { Route, Switch, Redirect }  from 'react-router-dom';
-import React, { Fragment }  from 'react';
+import React, { useState }  from 'react';
 import { ToastContainer }   from 'react-toastify';
 import SectionContainer     from './components/sectionContainer';
 import CategoryContainer    from './components/categoryContainer';
 import ProductContainer     from './components/productContainer';
+import SearchContainer      from './components/searchContainer';
 import ProtectedRoute	from './components/common/protectedRoute';
 import RegisterForm   from './components/registerForm';
 import CategoryForm   from './components/categoryForm';
@@ -19,6 +20,7 @@ import NavBar         from './components/common/navBar';
 import Footer         from './components/common/footer';
 import Logout			    from './components/user_menu/logout';
 import Home           from './components/home';
+import SearchContext  from './context/searchContext';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,8 +30,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function App() {
+  const [ searchKeywords, setSearchKeywords ] = useState('');
+
   return (
-    <>
+    <SearchContext.Provider value={{ setSearchKeywords }}>
       <ToastContainer />
       <NavBar />
       <main className='container'>
@@ -44,31 +48,39 @@ function App() {
           <Route
             path='/store/:section'
             exact
-            render={ props => <SectionContainer { ...props } /> }
+            component={SectionContainer}
           />
           <Route
             path='/store/:section/:category'
             exact
-            render={ props => <CategoryContainer { ...props } /> }
+            component={CategoryContainer}
           />
           <Route
             path='/store/:section/:category/:product'
             exact
-            render={ props => <ProductContainer { ...props } /> }
+            component={ProductContainer}
+          />
+          <Route
+            path='/search'
+            exact
+            render={ props => <SearchContainer { ...props } keywords={searchKeywords} /> }
           />
           <ProtectedRoute
             path='/categories'
             exact
             component={CategoryForm}
+            accessLevel='2'
           />
           <ProtectedRoute
             path='/categories/:id'
             exact
             component={CategoryForm}
+            accessLevel='2'
           />
           <ProtectedRoute
             path='/sections'
             component={SectionForm}
+            accessLevel='2'
           />
           <ProtectedRoute
             path='/me'
@@ -89,16 +101,19 @@ function App() {
             path='/me/products'
             exact
             component={MyProducts}
+            accessLevel='4'
           />
           <ProtectedRoute
             path='/me/products/new'
             exact
             component={ProductForm}
+            accessLevel='4'
           />
           <ProtectedRoute
             path='/me/products/edit/:id'
             exact
             component={ProductForm}
+            accessLevel='4'
           />
           <Route path='/logout'     exact component={Logout} />
           <Route path='/not-found'	exact component={NotFound} />
@@ -107,7 +122,7 @@ function App() {
         </Switch>
       </main>
       <Footer />
-    </>
+    </SearchContext.Provider>
   );
 }
 
