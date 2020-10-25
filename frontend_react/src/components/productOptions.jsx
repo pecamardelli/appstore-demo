@@ -10,6 +10,7 @@ import ModalBox             from './common/modal';
 function ProductOptions({ product }) {
     const [ wishState, setWishState ]   = useState('');
     const [ isMine, setIsMine]          = useState(false);
+    const me = getCurrentUser();
 
     useEffect(() => {
         async function getWishData() {
@@ -24,7 +25,7 @@ function ProductOptions({ product }) {
             }
         }
 
-        const me = getCurrentUser();
+        if(!me) return;
 
         if (product.User && me.id === product.User.id) setIsMine(true);
         else getWishData();
@@ -49,7 +50,7 @@ function ProductOptions({ product }) {
                     <ToolTipEntry icon={Icons.editIcon('2em')} tip='Edit product' />
                 </Link>
 
-    if (!wishState)
+    if (me && !wishState)
         return  <span role='button' >
                     <ModalBox
                         buttonComponent={() => <ToolTipEntry icon={Icons.addToCartIcon('2em')} tip='Add to cart' />}
@@ -69,6 +70,8 @@ function ProductOptions({ product }) {
 
     if (wishState === 'completed')
         return <ToolTipEntry icon={Icons.buyedIcon('2em')} tip='Buyed' />
+
+    if(!me) return <Link to='/login'>Login to add to cart!</Link>;
 }
 
 export default ProductOptions;

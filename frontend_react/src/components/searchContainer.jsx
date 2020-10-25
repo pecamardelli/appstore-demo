@@ -28,6 +28,7 @@ function SearchContainer(props) {
     if (content.length > 0)
         return (<>
                 <BreadCrumbs />
+                <h5>Found {content.length} item(s) matching <strong>'{props.keywords}'</strong></h5><hr />
                 <CardDeck
                     cards={ content }
                     cardComponent={ ProductCard } 

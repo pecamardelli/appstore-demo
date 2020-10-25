@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext }	from 'react';
+import React, { useState, useEffect, useContext, useRef }	from 'react';
 import { Link, NavLink, useHistory }	from 'react-router-dom';
 import { getSections }		from '../../services/sectionService';
 import SearchContext		from './../../context/searchContext';
@@ -15,6 +15,7 @@ function NavBar(props) {
 	const currentUser	= useState(auth.getCurrentUser());
 	const history		= useHistory();
 	const searchContext	= useContext(SearchContext);
+	const searchRef		= useRef(null);
 
 	useEffect(() => {
 		async function call() {
@@ -39,6 +40,7 @@ function NavBar(props) {
 		if(!searchValue) return toast.error('Enter some keywords and then search...');
 
 		searchContext.setSearchKeywords(searchValue);
+		searchRef.current.value	= '';
 
 		if(window.location.pathname !== '/search'){
 			return history.push('/search');
@@ -78,6 +80,7 @@ function NavBar(props) {
 						aria-label="Search"
 						onChange={handleChange}
 						style={{ width: '80%'}}
+						ref={searchRef}
 					/>
 					<span className='' role='button' onClick={handleSearchClick}>
 						{ userIcons.searchIcon() }

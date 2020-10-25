@@ -9,6 +9,9 @@ import { getCurrentUser }   from './../../services/authService';
 
 function UserMenu(props) {
     const me    = getCurrentUser();
+
+    if(!me) return null;
+    
     let buttons;
 
     if (me.accessLevel <= 2) {
