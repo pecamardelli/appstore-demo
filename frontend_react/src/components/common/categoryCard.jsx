@@ -35,7 +35,7 @@ function CategoryCard(props) {
                 </div>
             </Link>
             <div className="card-footer d-flex justify-content-between align-items-center">
-                Total apps
+                Total items
                 <span className="badge badge-danger badge-pill">{props.data.total}</span>
                 { renderEditIcon() }
             </div>

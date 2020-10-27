@@ -1,9 +1,9 @@
 import { getProductById, submitProduct }	from '../services/productService';
-import React, { Fragment }  from 'react';
 import { getCategories }	from '../services/categoryService';
 import { updateProduct }	from '../services/productService';
 import { getSections }		from '../services/sectionService';
 import { toast }	from 'react-toastify';
+import React		from 'react';
 import Joi			from 'joi-browser';
 import Form 		from './common/forms/form';
 import ImageUpload	from './common/forms/imageUpload';
@@ -86,7 +86,7 @@ class ProductForm extends Form {
 	
 	render() {
 		return (
-			<Fragment>
+			<>
 				<br />
 				<div>
 					<h2><strong>{ this.state.data.id ? 'Update product' : 'Add new product' }</strong></h2>
@@ -121,7 +121,7 @@ class ProductForm extends Form {
 						</div>
 					</div>
 				</div>
-			</Fragment>
+			</>
 		);
 	}
 }

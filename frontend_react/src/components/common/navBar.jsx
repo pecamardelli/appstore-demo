@@ -12,7 +12,7 @@ import userIcons	from '../user_menu/userIcons';
 function NavBar(props) {
 	const [ sections, setSections ]			= useState([]);
 	const [ searchValue, setSearchValue]	= useState('');
-	const currentUser	= useState(auth.getCurrentUser());
+	const [ currentUser, setCurrentUser ]	= useState(auth.getCurrentUser());
 	const history		= useHistory();
 	const searchContext	= useContext(SearchContext);
 	const searchRef		= useRef(null);

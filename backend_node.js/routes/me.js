@@ -1,4 +1,4 @@
-const { Wish, Product, Category, Sale }	= require('../models/models');
+const { Wish, Product, Category, Sale, User }	= require('../models/models');
 const express	= require('express');
 const auth		= require('../middleware/mwAuth');
 
@@ -140,6 +140,22 @@ router.post('/checkout', auth, async (req, res) => {
 	await newSale.save();
 
 	return res.send('Sale successfully submited!');
+});
+
+router.post('/profile', auth, async (req, res) => {
+	if (req.body.password && req.body.confirmPassword) {
+		const user	= await User.findOne({
+			where: { id: req.user.id }
+		});
+		
+		if(!user) return res.status(400).send('Invalid token!');
+
+		user.password	= req.body.password;
+		await user.save();
+		return res.send('Password successfuly changed.');
+	}
+
+	return res.status(400).send('No action performed.');
 });
 
 module.exports	= router;

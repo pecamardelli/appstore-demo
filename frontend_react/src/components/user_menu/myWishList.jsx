@@ -160,15 +160,13 @@ function MyWishList(props) {
                 </tbody>
             </table>
         </>);
-    else return (
-            <>
-                <BreadCrumbs />
-                <EmptyCard
-                    title="No wishes in your list!"
-                    text="You have not added any products to your wishlist. Navigate the site and find the stuff you love!"
-                />
-            </>
-        );
+    else return (<>
+            <BreadCrumbs />
+            <EmptyCard
+                title="No wishes in your list!"
+                text="You have not added any products to your wishlist. Navigate the site and find the stuff you love!"
+            />
+        </>);
 }
 
 export default MyWishList;

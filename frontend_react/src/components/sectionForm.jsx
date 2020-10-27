@@ -49,7 +49,7 @@ class SectionForm extends Form {
 							<ImageUpload
 								onImageUpdate={this.handleImageUpdate}
 								imageId={ this.state.data ? this.state.data.id : null }
-								title='Section pic'
+								title='Section background'
 								path='/sections'
 							/>
 						</div>

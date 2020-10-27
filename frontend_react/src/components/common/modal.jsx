@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button }    from 'react-bootstrap';
+import ModalContext from '../../context/modalContext';
 
 function ModalBox(props) {
     const [show, setShow]   = useState(false);
@@ -13,27 +14,32 @@ function ModalBox(props) {
         </Button>);
 
     const ButtonComponent   = props.buttonComponent ? props.buttonComponent : defaultRender;
-
-    return (
-    <>
-        <span onClick={handleShow}>
-            <ButtonComponent />
-        </span>
-        <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-            <Modal.Title>{props.heading}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><h5>{props.body}</h5></Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-                {props.closeCaption}
-            </Button>
-            <Button id={props.itemId} variant="primary" onClick={props.confirmAction ? props.confirmAction : handleClose}>
-                {props.confirmCaption}
-            </Button>
-        </Modal.Footer>
-        </Modal>
-    </>
+    
+    //props.body.props.closeModal    = {handleClose};
+    return ( 
+        <ModalContext.Provider value={handleClose}>
+            <span onClick={handleShow}>
+                <ButtonComponent />
+            </span>
+            <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>{props.heading}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{props.body}</Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    {props.closeCaption}
+                </Button>
+                {
+                    props.confirmCaption ? 
+                    <Button id={props.itemId} variant="primary" onClick={props.confirmAction ? props.confirmAction : handleClose}>
+                        {props.confirmCaption}
+                    </Button>
+                    : ''
+                }
+            </Modal.Footer>
+            </Modal>
+        </ModalContext.Provider>
     );
 }
 

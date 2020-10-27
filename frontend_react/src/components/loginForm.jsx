@@ -41,7 +41,7 @@ class LoginForm extends Form {
 	
 	render() {
 		return (
-			<React.Fragment>
+			<>
 				<div className='row' style={{ marginTop: '10%' }}>
 					<div className="card bg-light border-secondary mb-3 mx-auto" style={{ width: '25rem' }}>
 						<div className="card-header">
@@ -59,7 +59,7 @@ class LoginForm extends Form {
 						</div>
 					</div>
 				</div>
-			</React.Fragment>
+			</>
 		);
 	}
 }

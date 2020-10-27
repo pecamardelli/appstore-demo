@@ -82,7 +82,8 @@ class RegisterForm extends Form {
 			return null;
 		}
 		
-		return (
+		return (<>
+			<br /><h3>Sign up to the AppStore!</h3><hr />
 			<div className="card border-dark mb-3" style={{width: '100%'}}>
 				<div className="row no-gutters">
 					<div className="col-md-4">
@@ -116,6 +117,7 @@ class RegisterForm extends Form {
 					</div>
 				</div>
 			</div>
+			</>
 		);
 	}
 }

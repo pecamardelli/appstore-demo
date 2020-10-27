@@ -30,7 +30,7 @@ function ProductOptions({ product }) {
         if (product.User && me.id === product.User.id) setIsMine(true);
         else getWishData();
 
-    }, [ setWishState, product.User, product.id ]);
+    }, [ setWishState, product.User, product.id, me ]);
 
     const handleAddToCart = async () => {
         try {
@@ -41,7 +41,7 @@ function ProductOptions({ product }) {
         catch (ex) {
             toast.error(ex);
         }
-    }
+    };
 
     // I know this might be a little unclean but it's a nice way to do
     // conditional rendering.
@@ -55,7 +55,7 @@ function ProductOptions({ product }) {
                     <ModalBox
                         buttonComponent={() => <ToolTipEntry icon={Icons.addToCartIcon('2em')} tip='Add to cart' />}
                         heading='Please confirm...'
-                        body={`add ${product.displayName} to the cart?`}
+                        body={<h5>{`Add ${product.displayName} to cart?`}</h5>}
                         closeCaption='Cancel'
                         confirmCaption='Accept'
                         confirmAction={handleAddToCart}

@@ -1,7 +1,8 @@
 /*	
- *	This component implements a prtected route.
+ *	Protecting routes...
  *
- *	Unauthenticated users cannot access the component passed as an argument.
+ *	Unauthenticated users will be redirected to the login page.
+ *	Unauthorized users will be redirected to the not-found page.
  *
 */
 

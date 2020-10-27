@@ -52,14 +52,18 @@ const User	= sequelize.define('User', {
 	}
 }, {
 	hooks: {
-		beforeCreate: async function(user) {
-            const salt		= await bcrypt.genSalt(10);
-            const hashed	= await bcrypt.hash(user.password, salt);
-            user.setDataValue('password', hashed);
-            
-		}
+		beforeCreate: hashPassword,
+		beforeSave: hashPassword
 	}
 });
+
+async function hashPassword(user) {
+	if (user.password) {
+		const salt		= await bcrypt.genSalt(10);
+		const hashed	= await bcrypt.hash(user.password, salt);
+		user.setDataValue('password', hashed);
+	}
+}
 
 User.prototype.generateAuthToken =  function(user) {
 	console.log(user)
@@ -67,7 +71,8 @@ User.prototype.generateAuthToken =  function(user) {
         id:        		user.id,
         username:   	user.username,
         firstname:   	user.firstname,
-        lastname:   	user.lastname,
+		lastname:   	user.lastname,
+		email:			user.email,
 		role:			user.Role.dataValues.displayName,
 		accessLevel:	user.Role.dataValues.accessLevel
     }, config.get('jwtPrivateKey'));

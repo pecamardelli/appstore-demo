@@ -21,3 +21,7 @@ export function getPurchaseDetail(invoiceId) {
 export function submitPurchase(items) {
 	return http.post(`${meUrl}/checkout`, items);
 }
+
+export function submitPassword(profile) {
+	return http.post(`${meUrl}/profile`, profile);
+}
