@@ -1,8 +1,5 @@
 {
 	"jwtPrivateKey":    "APP_STORE_JWT_PRIV_KEY",
-	"db_name":			"APP_STORE_DB_NAME",
-	"db_host":			"APP_STORE_DB_HOST",
-	"db_port":			"APP_STORE_DB_PORT",
 	"db_user":			"APP_STORE_DB_USER",
 	"db_password":		"APP_STORE_DB_PASSWORD"
 }

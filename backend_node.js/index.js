@@ -5,12 +5,13 @@
 
 require('express-async-errors');
 require('dotenv').config();				// Load sensitive values and store them in environment variables.
+
 const config    = require('config');
-const	Joi		= require('joi');
+const Joi		= require('joi');
+const logger	= require('./lib/logger');
+const express	= require('express');
+const app		= express();
 Joi.objectId    = require('joi-objectid')(Joi);
-const	logger	= require('./lib/logger');
-const	express	= require('express');
-const	app		= express();
 
 require('./startup/routes')(app);
 require('./startup/config')();

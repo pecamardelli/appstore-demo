@@ -1,4 +1,5 @@
 {
-	"name": "App Store Demo - Development",
-	"db":	"appstore_dev"
+	"jwtPrivateKey":    "1234",
+	"name": 			"App Store Demo - Development",
+	"db_name":			"appstore_dev"
 }

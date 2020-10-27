@@ -1,10 +1,8 @@
 /*
- *	All sensitive data must be defined at the .env file
- *	(which is gitignored and must be created at the root directory of the app).
- *
- *	See README.md for more info.
+ *	DB config settings.
  *
 */
+
 const { Sequelize }	= require('sequelize');
 const config		= require('config');
 
