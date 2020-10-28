@@ -49,7 +49,7 @@ router.post('/', [auth, authorize(accessLevel)], async (req, res) => {
         if (err) throw err;
 
         fs.writeFile(fd, base64Data, "base64", (err) => {
-            throw err;
+            if (err) throw err;
         });
     });
 

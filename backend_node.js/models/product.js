@@ -65,7 +65,7 @@ const Product	= sequelize.define('Product', {
 	}
 }, {
 	hooks: {
-		afterValidate: (product, options) => {
+		afterValidate: (product) => {
 		  // In here we'll generate the alias based on the displayName attribute.
 		  // Let's eliminate all characters except lowercase letters and hyphens
 		  const regexp    = new RegExp('[^a-z -]', 'g');
@@ -88,6 +88,6 @@ const Product	= sequelize.define('Product', {
 
 Product.sync()
 	.then(() => { /* Do nothing for now */ })
-    .catch((error) => { console.log('Error syncing items table', error) });
+    .catch((error) => { console.log('Error syncing products table', error) });
 
 module.exports  = Product;

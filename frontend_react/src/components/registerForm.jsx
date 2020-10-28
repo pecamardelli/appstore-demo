@@ -35,7 +35,7 @@ class RegisterForm extends Form {
 			}
 		}).required().label('Email'),
 		roleId:		Joi.string().min(1).max(255).required().label('Role'),
-		username:	Joi.string().min(1).max(255).required().label('Username'),
+		username:	Joi.string().min(1).max(32).required().label('Username'),
 		password:	Joi.string().min(8).max(64).required().label('Password'),
 		confirmPassword: Joi.string().equal(Joi.ref('password')).min(8).max(64).required().options({
 			language:{
@@ -61,7 +61,7 @@ class RegisterForm extends Form {
 			auth.loginWithJwt(response.data);
 			toast.success(`User '${this.state.data.name}' succesfully registered!`);
 			// Using the history object to move to the home page will not re-render the app component
-			// We need to do a full page reload to update the navbar with the name of the logged in user
+			// We need to do a full page reload in order to update the navbar with the name of the logged in user
 			// as well as the user menu.
 			window.location	= '/';
 		}

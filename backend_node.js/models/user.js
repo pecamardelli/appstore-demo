@@ -5,6 +5,14 @@ const config		= require('config');
 const bcrypt		= require('bcryptjs');
 const Role			= require('./role');
 
+const userStatuses	= [
+	'enabled',
+	'disabled',
+	'suspended',
+	'pending_activation',
+	'deleted'
+];
+
 const User	= sequelize.define('User', {
 	id: {
 		type:			Sequelize.UUID,
@@ -39,22 +47,33 @@ const User	= sequelize.define('User', {
 	email: {
 		type:		Sequelize.STRING,
 		unique:		true,
-		validate:	{ max: 255, notEmpty: true, isEmail: true }
+		validate:	{ max: 64, notEmpty: true, isEmail: true }
 	},
 	username: {
 		type:		Sequelize.STRING,
 		unique:		true,
-		validate:	{ max: 255, notEmpty: true }
+		validate:	{ max: 32, notEmpty: true }
 	},
 	password: {
 		type:		Sequelize.STRING,
-		validate:	{ min: 8, max: 255 }
+		validate:	{ min: 8, max: 512, notEmpty: true }
+	},
+	status: {
+		type:		Sequelize.ENUM,
+		values:		userStatuses,
+		defaultValue:	userStatuses[0],
+		validate:	{ isIn: userStatuses }
 	}
 }, {
 	hooks: {
-		beforeCreate: hashPassword,
-		beforeSave: hashPassword
-	}
+		beforeBulkCreate: function(instances, options) {
+			options.individualHooks = true;
+			options.validate		= true;
+		},
+		beforeCreate:		hashPassword,
+		beforeSave:			hashPassword
+	},
+	sequelize
 });
 
 async function hashPassword(user) {
@@ -66,7 +85,6 @@ async function hashPassword(user) {
 }
 
 User.prototype.generateAuthToken =  function(user) {
-	console.log(user)
 	const token	= jwt.sign({
         id:        		user.id,
         username:   	user.username,
