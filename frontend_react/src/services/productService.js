@@ -4,8 +4,8 @@ const productsUrl	= '/products';
 const storeUrl		= '/store';
 const searchUrl		= '/search';
 
-export function getProductById(productId = '') {
-	return http.get(`${productsUrl}/${productId}`);
+export function getProductById(ProductId = '') {
+	return http.get(`${productsUrl}/${ProductId}`);
 }
 
 // We'll using POST here because we're sending a string, probably with spaces and other stuff.

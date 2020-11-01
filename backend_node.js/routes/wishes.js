@@ -1,7 +1,5 @@
 const express	= require('express');
-const { Wish }  = require('../models/models');
-const JwtDecode = require('jwt-decode');
-const authorize	= require('../middleware/mwAuthorize');
+const Wish      = require('../models/wish');
 const auth		= require('../middleware/mwAuth');
 
 const router	= express.Router();

@@ -4,6 +4,7 @@ const authorize		= require('../middleware/mwAuthorize');
 const auth			= require('../middleware/mwAuth');
 
 const router		= express.Router();
+const imageDir      = './assets/images/sections';
 const accessLevel	= 2;
 
 router.get('/', async (req, res) => {
@@ -16,7 +17,8 @@ router.get('/', async (req, res) => {
 router.post('/', [auth, authorize(accessLevel)], async (req, res) => {
 	// No need to implement validation here.
     // It's already done in the model.
-	await Section.create(req.body);
+	const result	= await Section.create(req.body);
+	if (req.body.photo) saveImage(req.body.photo, `${imageDir}/${result.dataValues.id}.png`);
 	res.send('Section saved!');
 });
 

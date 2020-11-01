@@ -3,6 +3,7 @@ const Category  = require('../models/category');
 const authorize	= require('../middleware/mwAuthorize');
 const auth		= require('../middleware/mwAuth');
 const fs        = require('fs');
+const saveImage = require('../utils/saveImage');
 
 const router		= express.Router();
 const imageDir  	= './assets/images/categories';
@@ -30,21 +31,8 @@ router.get('/:SectionId', async (req, res) => {
 });
 
 router.post('/', [auth, authorize(accessLevel)], async (req, res) => {
-	await Category.create(req.body);
-
-	if (req.body.photo) {
-		// Save the image file received.
-		// Remove the header from the base64 data chunk.
-		const base64Data = req.body.photo.replace(/^data:image\/png;base64,/,"");
-
-		fs.open(`${imageDir}/${result.dataValues.id}.png`, 'w', (err, fd) => {
-			if (err) throw err;
-			fs.writeFile(fd, base64Data, "base64", (err) => {
-				throw err;
-			});
-		});
-	}
-	
+	const result	= await Category.create(req.body);
+	if (req.body.photo) saveImage(req.body.photo, `${imageDir}/${result.dataValues.id}.png`);
 	res.send('Category saved!');
 });
 

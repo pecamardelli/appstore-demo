@@ -1,4 +1,9 @@
-const { Wish, Product, Category, Sale, User }	= require('../models/models');
+//const { Product, Category, Sale, User }	= require('../models/models');
+const Product	= require('../models/product');
+const Category	= require('../models/category');
+const Sale		= require('../models/sale');
+const User		= require('../models/user');
+const Wish		= require('../models/wish');
 const express	= require('express');
 const auth		= require('../middleware/mwAuth');
 

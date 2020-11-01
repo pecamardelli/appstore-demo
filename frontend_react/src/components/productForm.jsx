@@ -19,11 +19,11 @@ class ProductForm extends Form {
 	async componentDidMount() {
 		try {
 			const { data: sections }	= await getSections();
-			const productId				= this.props.match.params.id;
+			const ProductId				= this.props.match.params.id;
 			let	product	= {};
 
-			if (productId) {
-				const { data }    = await getProductById(productId);
+			if (ProductId) {
+				const { data }    = await getProductById(ProductId);
 				product = {
 					id:				data.id,
 					displayName:	data.displayName,

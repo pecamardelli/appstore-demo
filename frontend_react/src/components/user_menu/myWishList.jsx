@@ -19,6 +19,7 @@ function MyWishList(props) {
             try {
                 const result    = await getMyWishlist();
                 //return result.data;
+                console.log(result)
                 setContent(result.data);
             }
             catch(ex) {

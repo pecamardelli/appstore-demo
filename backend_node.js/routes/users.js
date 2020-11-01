@@ -22,7 +22,7 @@ router.get('/signuproles', async (req, res) => {
 router.post('/', async (req, res) => {
 	// First, check if the RoleId is valid.
 	const role	= await Role.findOne({
-		where: { id: req.body.RoleId },
+		where: { id: req.body.roleId },
 		attributes:	[ 'displayName', 'accessLevel' ]
 	})
 

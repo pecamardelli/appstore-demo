@@ -34,7 +34,7 @@ function ProductOptions({ product }) {
 
     const handleAddToCart = async () => {
         try {
-            await addToCart({ productId: product.id, salePrice: product.price });
+            await addToCart({ ProductId: product.id, salePrice: product.price });
             setWishState('pending');
             toast.success('Product successfully added to cart!');
         }
