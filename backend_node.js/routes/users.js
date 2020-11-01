@@ -20,14 +20,14 @@ router.get('/signuproles', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-	// First, check if the roleId is valid.
+	// First, check if the RoleId is valid.
 	const role	= await Role.findOne({
-		where: { id: req.body.roleId },
+		where: { id: req.body.RoleId },
 		attributes:	[ 'displayName', 'accessLevel' ]
 	})
 
 	// Since we are registering a new user, it's a good idea to check
-	// if the roleId passed in the body corresponds to a developer or a client.
+	// if the RoleId passed in the body corresponds to a developer or a client.
 	if (role.dataValues.accessLevel < 4) return res.status(400).send('Invalid role!');
 	
 	// We're gonna override the exception handling implemented by express-async-errors.

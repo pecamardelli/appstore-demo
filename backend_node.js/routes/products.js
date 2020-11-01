@@ -36,7 +36,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', [auth, authorize(accessLevel)], async (req, res) => {
     // No need to implement validation here.
     // It's already done in the model.
-    const product   = { ...req.body, userId: req.user.id };
+    const product   = { ...req.body, UserId: req.user.id };
     delete product.photo;
 
     const result = await Product.create(product);
@@ -59,7 +59,7 @@ router.post('/', [auth, authorize(accessLevel)], async (req, res) => {
 router.put('/', [auth, authorize(accessLevel)], async (req, res) => {
     const result = await Product.update({
         displayName:    req.body.displayName,
-        categoryId:     req.body.categoryId,
+        CategoryId:     req.body.CategoryId,
         description:    req.body.description,
         price:          req.body.price
     },

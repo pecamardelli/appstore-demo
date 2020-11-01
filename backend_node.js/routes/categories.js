@@ -13,17 +13,17 @@ const accessLevel	= 2;
 // will wrap all the routers callback functions in a template function
 // that catches any async error that may occur.
 
-router.get('/one/:categoryId', [auth, authorize(accessLevel)], async (req, res) => {
+router.get('/one/:CategoryId', [auth, authorize(accessLevel)], async (req, res) => {
 	const category	= await Category.findOne({
-		where:	{ id: req.params.categoryId },
-		attributes: [ 'displayName', 'id', 'sectionId', 'description' ]
+		where:	{ id: req.params.CategoryId },
+		attributes: [ 'displayName', 'id', 'SectionId', 'description' ]
 	});
 	res.send(category);
 });
 
-router.get('/:sectionId', async (req, res) => {
+router.get('/:SectionId', async (req, res) => {
 	const categories	= await Category.findAll({
-		where:	{ sectionId: req.params.sectionId },
+		where:	{ SectionId: req.params.SectionId },
 		attributes: [ 'displayName', 'id', 'alias', 'description' ]
 	});
 	res.send(categories);
@@ -51,7 +51,7 @@ router.post('/', [auth, authorize(accessLevel)], async (req, res) => {
 router.put('/', [auth, authorize(accessLevel)], async (req, res) => {
 	const result = await Category.update({
 		displayName:    req.body.displayName,
-		sectionId:     	req.body.sectionId,
+		SectionId:     	req.body.SectionId,
 		description:    req.body.description
 	},
 	{

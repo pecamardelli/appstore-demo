@@ -29,20 +29,8 @@ const User	= sequelize.define('User', {
 		validate:	{ notEmpty: true, max: 255 }
 	},
 	bio:	{
-		type:		Sequelize.STRING,
-		validate:	{ max: 4096 }
-	},
-	roleId: {
-		type:			Sequelize.UUID,
-		validate:	{
-            async function (value) {
-                const roleId = await Role.findOne({
-                    where:      { id: value },
-                    attributes: ['displayName']
-                });
-                if(!roleId) throw new Error('Invalid role ID!');
-			}
-		}
+		type:		Sequelize.STRING(4096),
+		validate:	{ max: 4092 }
 	},
 	email: {
 		type:		Sequelize.STRING,
@@ -97,9 +85,5 @@ User.prototype.generateAuthToken =  function(user) {
 
 	return token;
 }
-
-User.sync()
-	.then(() => { /* Do nothing for now */ })
-	.catch((error) => { console.log('Error syncing users table', error) });
 
 module.exports	= User;

@@ -10,17 +10,19 @@ const Sale			= require('./sale');
 // Model relations
 //User.hasOne(Role);
 User.hasMany(Wish);
-User.belongsTo(Role, { foreignKey: 'roleId' });
+User.hasMany(Sale);
+User.belongsTo(Role, { foreignKey: 'RoleId' });
 Role.hasMany(User);
 Section.hasMany(Category);
-Category.belongsTo(Section, { foreignKey: 'sectionId' });
+Category.belongsTo(Section, { foreignKey: 'SectionId' });
 Category.hasMany(Product);
-Product.belongsTo(User, { foreignKey: 'userId' });
-Product.belongsTo(Category, { foreignKey: 'categoryId' });
+Product.belongsTo(User, { foreignKey: 'UserId' });
+Product.belongsTo(Category, { foreignKey: 'CategoryId' });
 Product.hasMany(Wish);
-Wish.belongsTo(Product, { foreignKey: 'productId' });
-Wish.belongsTo(User, { foreignKey: 'userId' });
-Sale.belongsTo(User, { foreignKey: 'userId' });
+Wish.belongsTo(Product, { foreignKey: 'ProductId' });
+Wish.belongsTo(User, { foreignKey: 'UserId' });
+Wish.belongsTo(Sale, { foreignKey: 'SaleId' });
+Sale.belongsTo(User, { foreignKey: 'UserId' });
 Sale.hasMany(Wish);
 
 // Model custom functions
@@ -55,7 +57,6 @@ Category.prototype.findBySectionAlias = async function (sectionAlias) {
 	// the Section.prototype.findByAlias function declared above.
 
 	let section;
-
 	try {
 		section	= await Section.prototype.findByAlias(sectionAlias);
 	}
@@ -63,8 +64,10 @@ Category.prototype.findBySectionAlias = async function (sectionAlias) {
 		return Promise.reject(`Internal Server Error: ${ex}`);
 	}
 
+	if(!section) return Promise.reject('No data found');
+
     return Category.findAll({
-        where:      { sectionId: section.dataValues.id },
+        where:      { SectionId: section.dataValues.id },
         attributes: [
             ['displayName', 'displayName'],
             ['id', 'id'],
@@ -126,7 +129,7 @@ Product.prototype.findAllByPath = async function(sectionAlias, categoryAlias) {
 	}
 
 	return Product.findAll({
-		where: { categoryId: category.dataValues.id },
+		where: { CategoryId: category.dataValues.id },
 		include: productIncludes,
 		attributes: productAttributes
 	});

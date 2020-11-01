@@ -11,7 +11,7 @@ const Sale	= sequelize.define('Sale', {
 		primaryKey:		true,
 		allowNull:      false
 	},
-	userId: {
+	UserId: {
 		type:		Sequelize.UUID,
 		validate:   {
 			async function (value) {
@@ -31,9 +31,5 @@ const Sale	= sequelize.define('Sale', {
         defaultValue:	statuses[4]
     }
 });
-
-Sale.sync()
-	.then(() => { /* Do nothing for now */ })
-    .catch((error) => { console.log('Error syncing wishes table', error) });
 
 module.exports  = Sale;

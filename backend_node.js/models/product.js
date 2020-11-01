@@ -16,35 +16,16 @@ const Product	= sequelize.define('Product', {
 		unique:		'uniqueFlag',
 		validate:	{ notEmpty: true, max: 255 }
 	},
-	categoryId: {
-		type:		Sequelize.UUID,
-		unique:		'uniqueFlag',
-		validate:       {
-            async function (value) {
-                const catId = await Category.findOne({ where: { id: value }});
-                if(!catId) throw new Error('Invalid category ID!');
-            }
-        }
-	},
-	userId: {
-		type:		Sequelize.UUID,
-		validate:   {
-			async function (value) {
-				const userId = await User.findOne({ where: { id: value }});
-				if(!userId) throw new Error('Invalid author ID!');
-			}
-		}
-	},
 	alias: {
         type:		Sequelize.STRING,
 		unique:     true,
 		validate:	{ max: 255 }
 	},
 	description: {
-        type:		Sequelize.STRING(1024),
+        type:		Sequelize.STRING(4096),
 		validate:	{
             notEmpty:   true,
-            max:        1024
+            max:        4096
         }
 	},
 	price: {
@@ -85,14 +66,9 @@ const Product	= sequelize.define('Product', {
 }, {
     uniqueKeys: {
         uniqueFlag: {
-            fields: ['displayName', 'categoryId' ]
+            fields: ['displayName', 'CategoryId' ]
         }
     }
 });
-
-Product.sync()
-	.then(() => { /* Do nothing for now */ })
-    .catch((error) => { console.log('Error syncing products table', error) });
-
 
 module.exports  = Product;

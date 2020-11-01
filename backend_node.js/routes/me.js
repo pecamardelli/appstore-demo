@@ -7,7 +7,7 @@ const router	= express.Router();
 router.get('/wishlist', auth, async (req, res) => {
 	const cart	= await Wish.findAll({
 		where: {
-			userId: req.user.id,
+			UserId: req.user.id,
 			status: 'pending'
 		},
 		include:	{
@@ -25,7 +25,7 @@ router.get('/wishlist', auth, async (req, res) => {
 
 router.get('/products', auth, async (req, res) => {
 	const products	= await Product.findAll({
-		where: { userId: req.user.id },
+		where: { UserId: req.user.id },
 		include: [{
 			model: Category,
 			attributes:	[ 'displayName' ]
@@ -42,10 +42,10 @@ router.get('/products', auth, async (req, res) => {
 
 router.get('/purchases', auth, async (req, res) => {
 	const purchases	= await Sale.findAll({
-		where: { userId: req.user.id },
+		where: { UserId: req.user.id },
 		include: [{
 			model: Wish,
-			attributes:	[ 'productId', 'salePrice' ],
+			attributes:	[ 'ProductId', 'salePrice' ],
 			include:	[{
 				model:	Product,
 				attributes:	[ 'displayName' ],
@@ -67,8 +67,8 @@ router.get('/purchases', auth, async (req, res) => {
 router.get('/purchases/:invoiceId', auth, async (req, res) => {
 	const details	= await Wish.findAll({
 		where: {
-			saleId:	req.params.invoiceId,
-			userId: req.user.id,
+			SaleId:	req.params.invoiceId,
+			UserId: req.user.id,
 		},
 		include: [{
 			model:	Product,
@@ -88,7 +88,7 @@ router.get('/purchases/:invoiceId', auth, async (req, res) => {
 
 router.get('/products/:id', auth, async (req, res) => {
 	const items	= await Product.findOne({
-		where: { userId: req.user.id },
+		where: { UserId: req.user.id },
 		include: [{
 			model: Category,
 			attributes:	[ 'displayName' ]
@@ -107,7 +107,7 @@ router.post('/checkout', auth, async (req, res) => {
 	// Not using Sale.create here because we need to calculate
 	// the sale total before inserting it into the DB.
 	const newSale = Sale.build({
-		userId: req.user.id,
+		UserId: req.user.id,
 		total:	0,
 		status:	'completed'
 	});
@@ -120,7 +120,7 @@ router.post('/checkout', auth, async (req, res) => {
 		const wishListItem	= await Wish.findOne({
 			where: {
 				id:		wishId,
-				userId:	req.user.id,
+				UserId:	req.user.id,
 				status:	'pending'
 
 			}
@@ -131,7 +131,7 @@ router.post('/checkout', auth, async (req, res) => {
 		
 		await wishListItem.update({
 			status: 'completed',
-			saleId:	newSale.getDataValue('id')
+			SaleId:	newSale.getDataValue('id')
 		});
 	}
 

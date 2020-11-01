@@ -32,8 +32,8 @@ function getRandomPrice() {
     {
         id:             "${i.dataValues.id}",
         displayName:    "${i.dataValues.displayName}",
-        categoryId:     categories.find(s => s.displayName === "${i.dataValues.Category.displayName}").id,
-        userId:       getRandomUser(),
+        CategoryId:     categories.find(s => s.displayName === "${i.dataValues.Category.displayName}").id,
+        UserId:       getRandomUser(),
         description:    getRandomDescription(),
         price:          getRandomPrice(),
         downloads:      Math.round(Math.random()*1000),

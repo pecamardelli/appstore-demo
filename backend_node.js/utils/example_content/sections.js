@@ -1,4 +1,4 @@
-//const { Section }           = require('../../models/models');
+const { Section }           = require('../../models/models');
 const getRandomDescription  = require('./dummyText');
 const printErrorMessage     = require('./errorMessages');
 
@@ -29,9 +29,11 @@ async function setSections() {
     // ---------- Create Sections ---------- //
     try {
         await Section.bulkCreate(sections);
+        return true;
     }
     catch (ex) {
         printErrorMessage('Creating sections:', ex);
+        return false;
     }
 }
 

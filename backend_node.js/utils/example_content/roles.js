@@ -33,9 +33,11 @@ async function setRoles() {
     // ---------- Set user roles ---------- //
     try {
         await Role.bulkCreate(roles);
+        return true;
     }
     catch (ex) {
         printErrorMessage('Creating roles:', ex);
+        return false;
     }
 }
 

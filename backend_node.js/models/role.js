@@ -15,13 +15,8 @@ const Role	= sequelize.define('Role', {
 	displayName: {
         type:		Sequelize.STRING,
         unique:     true,
-		validate:	{ notEmpty: true, max: 64 }
+		validate:	{ notEmpty: true, max: 255 }
 	}
 });
-
-// Let's sync to create the table if it doesn't exists
-Role.sync()
-	.then(() => { /* Do nothing for now */ })
-    .catch((error) => { console.log('Error syncing roles table', error) });
     
 module.exports  = Role;

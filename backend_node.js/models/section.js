@@ -20,10 +20,10 @@ const Section	= sequelize.define('Section', {
 		validate:	{ notEmpty: true, max: 255 }
 	},
 	description: {
-        type:		Sequelize.STRING,
+        type:		Sequelize.STRING(4096),
 		validate:	{
             notEmpty:   true,
-            max:        1024
+            max:        4096
         }
 	},
 	alias: {
@@ -57,10 +57,5 @@ const Section	= sequelize.define('Section', {
     },
     sequelize
 });
-
-// Let's sync to create the table if doesn't exists
-Section.sync()
-	.then(() => { /* Do nothing for now */ })
-    .catch((error) => { console.log('Error syncing sections table', error) });
     
 module.exports  = Section;

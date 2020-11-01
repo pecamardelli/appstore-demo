@@ -9,7 +9,7 @@ const users = [
         firstname:  'Pablo',
         lastname:   'Camardelli',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 1).id,
+        RoleId:     roles.find(r => r.accessLevel === 1).id,
         email:      'pecamardelli@gmail.com',
         username:   'elmaspablin',
         password:   'SuperPassword2020'
@@ -19,17 +19,17 @@ const users = [
         firstname:  'John',
         lastname:   'Lennon',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 3).id,
+        RoleId:     roles.find(r => r.accessLevel === 3).id,
         email:      'twist&shout@gmail.com',
-        username:   'johnny286',
-        password:   'WinstonOno1968'
+        username:   'winstonOno',
+        password:   'Allyouneedislove1968'
     },
     {
         id:         'cd9cb188-db83-4106-a4b9-f3d565df0c04',
         firstname:  'Marie',
         lastname:   'Flynn',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 2).id,
+        RoleId:     roles.find(r => r.accessLevel === 2).id,
         email:      'marie3977@gmail.com',
         username:   'marief',
         password:   'SuperPassword2020'
@@ -39,7 +39,7 @@ const users = [
         firstname:  'Vasily',
         lastname:   'Petrov',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 4).id,
+        RoleId:     roles.find(r => r.accessLevel === 4).id,
         email:      'vasipet@gmail.com',
         username:   'vasily22',
         password:   'SuperPassword2020'
@@ -49,7 +49,7 @@ const users = [
         firstname:  'Jean',
         lastname:   'Valjean',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 4).id,
+        RoleId:     roles.find(r => r.accessLevel === 4).id,
         email:      'jeanny53@gmail.com',
         username:   'valjean',
         password:   'StoleBread3277'
@@ -59,7 +59,7 @@ const users = [
         firstname:  'Marty',
         lastname:   'McFly',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 2).id,
+        RoleId:     roles.find(r => r.accessLevel === 2).id,
         email:      'irishguy@gmail.com',
         username:   'eastwood',
         password:   'outtatime1985'
@@ -69,7 +69,7 @@ const users = [
         firstname:  'Jean Luc',
         lastname:   'Picard',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 3).id,
+        RoleId:     roles.find(r => r.accessLevel === 3).id,
         email:      'the_capn@gmail.com',
         username:   'captain1701',
         password:   'EnterpriseD1701'
@@ -79,7 +79,7 @@ const users = [
         firstname:  'Arnie',
         lastname:   'Cunningham',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 4).id,
+        RoleId:     roles.find(r => r.accessLevel === 4).id,
         email:      'cuntface1983@gmail.com',
         username:   'arniec',
         password:   'Christine1958'
@@ -89,7 +89,7 @@ const users = [
         firstname:  'Sarah',
         lastname:   'Connor',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 4).id,
+        RoleId:     roles.find(r => r.accessLevel === 4).id,
         email:      'sarah_connor@gmail.com',
         username:   'live4war',
         password:   'NoFate2029'
@@ -99,7 +99,7 @@ const users = [
         firstname:  'David',
         lastname:   'Aames',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 4).id,
+        RoleId:     roles.find(r => r.accessLevel === 4).id,
         email:      'pretty_boy@gmail.com',
         username:   'citizen_dildo',
         password:   'WakeUpMan1997'
@@ -109,7 +109,7 @@ const users = [
         firstname:  'Walter',
         lastname:   'White',
         bio:        getRandomDescription(),
-        roleId:     roles.find(r => r.accessLevel === 3).id,
+        RoleId:     roles.find(r => r.accessLevel === 3).id,
         email:      'heisenberg@gmail.com',
         username:   'heisenberg',
         password:   'IamTheDanger2014'
@@ -120,9 +120,11 @@ async function setUsers() {
     // ---------- Create Users ---------- //
     try {
         await User.bulkCreate(users);
+        return true;
     }
     catch (ex) {
         printErrorMessage('Creating users:', ex);
+        return false;
     }
 }
 

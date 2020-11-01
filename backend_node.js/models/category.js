@@ -15,16 +15,6 @@ const Category	= sequelize.define('Category', {
 		primaryKey:		true,
 		allowNull:      false
     },
-    sectionId: {
-        type:			Sequelize.UUID,
-        unique:         'uniqueFlag',
-        validate:       {
-            async function (value) {
-                const sectionId = await Section.findOne({ where: { id: value }});
-                if(!sectionId) throw new Error('Invalid section ID!');
-            }
-        }
-    },
 	displayName: {
         type:		Sequelize.STRING,
         unique:     'uniqueFlag',
@@ -36,10 +26,10 @@ const Category	= sequelize.define('Category', {
         validate:	{ max: 255 }
 	},
 	description: {
-        type:		Sequelize.STRING,
+        type:		Sequelize.STRING(4096),
 		validate:	{
             notEmpty:   true,
-            max:        1024
+            max:        4096
         }
     },
     status: {
@@ -70,14 +60,9 @@ const Category	= sequelize.define('Category', {
 }, {
     uniqueKeys: {
         uniqueFlag: {
-            fields: [ 'displayName', 'sectionId', 'alias' ]
+            fields: [ 'displayName', 'SectionId', 'alias' ]
         }
     }
 });
-
-// Let's sync to create the table if doesn't exists
-Category.sync()
-	.then(() => { /* Do nothing for now */ })
-	.catch((error) => { console.log('Error syncing categories table', error) });
 
 module.exports  = Category;

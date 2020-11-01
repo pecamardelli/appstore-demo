@@ -10,11 +10,11 @@ router.get('/', async (req, res) => {
 	res.send('It works!');
 });
 
-router.get('/:productId', auth, async (req, res) => {
+router.get('/:ProductId', auth, async (req, res) => {
     const sale	= await Wish.findOne({
         where: {
-            productId:  req.params.productId,
-            userId:     req.user.id,
+            ProductId:  req.params.ProductId,
+            UserId:     req.user.id,
             status:     'pending'
         }
     });
@@ -25,7 +25,7 @@ router.get('/:productId', auth, async (req, res) => {
 });
 
 router.post('/', auth, async (req, res) => {
-    const wish  = { ...req.body, userId: req.user.id };
+    const wish  = { ...req.body, UserId: req.user.id };
     await Wish.create(wish);
     res.send('Wish saved!');
 });
@@ -34,7 +34,7 @@ router.delete('/:wishId/', auth, async (req, res) => {
     const deleted = await Wish.destroy({
         where:  {
             id:         req.params.wishId,
-            userId:     req.user.id,
+            UserId:     req.user.id,
             status:     'pending'
         }
     });

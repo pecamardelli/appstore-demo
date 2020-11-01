@@ -1,0 +1,6 @@
+{
+	"jwtPrivateKey":    "1234",
+	"name": 			"App Store Demo - Sandbox",
+	"db_name":			"appstore_sandbox",
+	"db_host":			"localhost"
+}
