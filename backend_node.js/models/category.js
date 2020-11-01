@@ -1,5 +1,4 @@
 const { Sequelize }	= require('sequelize');
-const Section       = require('./section');
 const sequelize		= require('../startup/dbConfig');
 
 const categoryStatuses	= [

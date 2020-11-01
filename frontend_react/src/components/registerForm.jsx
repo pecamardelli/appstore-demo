@@ -34,7 +34,7 @@ class RegisterForm extends Form {
 				allow: [ 'com', 'net' ]
 			}
 		}).required().label('Email'),
-		roleId:		Joi.string().min(1).max(255).required().label('Role'),
+		RoleId:		Joi.string().min(1).max(255).required().label('Role'),
 		username:	Joi.string().min(1).max(32).required().label('Username'),
 		password:	Joi.string().min(8).max(64).required().label('Password'),
 		confirmPassword: Joi.string().equal(Joi.ref('password')).min(8).max(64).required().options({
@@ -51,7 +51,7 @@ class RegisterForm extends Form {
 		try {
 			const newUser	= {
 				...this.state.data,
-				role: this.state.roles.find(e => e.id === this.state.data.roleId)
+				role: this.state.roles.find(e => e.id === this.state.data.RoleId)
 			};
 			
 			const response	= await register(newUser);
@@ -103,7 +103,7 @@ class RegisterForm extends Form {
 								{ this.renderInput('firstname', 'First name') }
 								{ this.renderInput('lastname', 'Last name') }
 								{ this.renderInput('email', 'Email', 'email') }
-								{ this.renderSelect('roleId', 'Role', this.state.roles) }
+								{ this.renderSelect('RoleId', 'Role', this.state.roles) }
 								{ this.renderInput('username', 'Username') }
 								{ this.renderInput('password', 'Password', 'password')}
 								{ this.renderInput('confirmPassword', 'Confirm password', 'password')}

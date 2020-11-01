@@ -1,6 +1,5 @@
 const { Sequelize }	= require('sequelize');
 const sequelize		= require('../startup/dbConfig');
-const User		    = require('./user');
 
 const statuses		= [ 'completed', 'challenged', 'canceled', 'payment_pending', 'in_process' ];
 
@@ -10,15 +9,6 @@ const Sale	= sequelize.define('Sale', {
 		defaultValue:	Sequelize.UUIDV4,
 		primaryKey:		true,
 		allowNull:      false
-	},
-	UserId: {
-		type:		Sequelize.UUID,
-		validate:   {
-			async function (value) {
-				const user = await User.findOne({ where: { id: value }});
-				if(!user) throw new Error('Invalid user ID!');
-			}
-		}
 	},
 	total: {
 		type:		Sequelize.FLOAT,

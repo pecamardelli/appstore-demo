@@ -3,7 +3,7 @@ const sequelize		= require('../startup/dbConfig');
 const jwt			= require('jsonwebtoken');
 const config		= require('config');
 const bcrypt		= require('bcryptjs');
-const Role			= require('./role');
+const getRandomDescription = require('../utils/example_content/dummyText');
 
 const userStatuses	= [
 	'enabled',
@@ -29,8 +29,9 @@ const User	= sequelize.define('User', {
 		validate:	{ notEmpty: true, max: 255 }
 	},
 	bio:	{
-		type:		Sequelize.STRING(4096),
-		validate:	{ max: 4092 }
+		type:			Sequelize.STRING(4096),
+		defaultValue:	getRandomDescription(),
+		validate:		{ max: 4092 }
 	},
 	email: {
 		type:		Sequelize.STRING,
@@ -58,7 +59,6 @@ const User	= sequelize.define('User', {
 			options.individualHooks = true;
 			options.validate		= true;
 		},
-		beforeCreate:		hashPassword,
 		beforeSave:			hashPassword
 	},
 	sequelize

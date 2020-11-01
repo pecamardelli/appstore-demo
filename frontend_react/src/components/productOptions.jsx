@@ -9,7 +9,7 @@ import ModalBox             from './common/modal';
 
 function ProductOptions({ product }) {
     const [ wishState, setWishState ]   = useState('');
-    const [ isMine, setIsMine]          = useState(false);
+    const [ isMine, setIsMine ]         = useState(false);
     const me = getCurrentUser();
 
     useEffect(() => {

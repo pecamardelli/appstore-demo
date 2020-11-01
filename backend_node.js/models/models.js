@@ -11,6 +11,7 @@ const Sale			= require('./sale');
 //User.hasOne(Role);
 User.hasMany(Wish);
 User.hasMany(Sale);
+User.hasMany(Product);
 User.belongsTo(Role, { foreignKey: 'RoleId' });
 Role.hasMany(User);
 Section.hasMany(Category);

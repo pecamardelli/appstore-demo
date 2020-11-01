@@ -108,10 +108,11 @@ router.get('/products/:id', auth, async (req, res) => {
 });
 
 router.post('/checkout', auth, async (req, res) => {
-	// Build a new sale first in order to get the ID
-	// Not using Sale.create here because we need to calculate
-	// the sale total before inserting it into the DB.
-	const newSale = Sale.build({
+	// Create the sale and update the sale total next.
+	// We need the sale to be saved in the db to avoid a foreign key constraint error
+	// when saving the wishListItem.
+
+	const newSale = await Sale.create({
 		UserId: req.user.id,
 		total:	0,
 		status:	'completed'

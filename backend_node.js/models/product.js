@@ -1,8 +1,6 @@
 //const { Category, User }	= require('./models');
 const { Sequelize }	= require('sequelize');
 const sequelize		= require('../startup/dbConfig');
-const Category		= require('./category');
-const User			= require('./user');
 
 const Product	= sequelize.define('Product', {
 	id: {
