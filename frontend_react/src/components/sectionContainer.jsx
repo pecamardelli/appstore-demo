@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect, useState }    from 'react';
+import React, { useEffect, useState }    from 'react';
 import { toast }    from 'react-toastify';
 import http         from '../services/httpService';
-import BreadCrumbs from './common/breadcrumbs';
+import BreadCrumbs  from './common/breadcrumbs';
 import CardDeck     from './common/cardDeck';
 import CategoryCard from './common/categoryCard';
 import EmptyCard    from './common/emptyCard';
@@ -28,24 +28,22 @@ function SectionContainer(props) {
     }, [ setContent, match ]);
 
     if (content.length > 0)
-        return (
-            <Fragment>
+        return (<>
                 <BreadCrumbs />
                 <CardDeck
                     cards={ content }
                     cardComponent={ CategoryCard } 
                     cols={4}
                 />
-            </Fragment>
+            </>
         );
-    else return (
-            <Fragment>
+    else return (<>
                 <BreadCrumbs />
                 <EmptyCard
                     title="No categories to show"
                     text="There are no categories in this section. Try again later!"
                 />
-            </Fragment>
+            </>
         );
 }
 

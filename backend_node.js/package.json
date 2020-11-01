@@ -4,7 +4,11 @@
   "description": "Alkemy Challenge App Store Backend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "12.18.3"
   },
   "author": "Pablo Camardelli",
   "license": "ISC",

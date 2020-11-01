@@ -15,7 +15,7 @@ Role.hasMany(User);
 Section.hasMany(Category);
 Category.belongsTo(Section, { foreignKey: 'sectionId' });
 Category.hasMany(Product);
-Product.belongsTo(User, { foreignKey: 'authorId' });
+Product.belongsTo(User, { foreignKey: 'userId' });
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
 Product.hasMany(Wish);
 Wish.belongsTo(Product, { foreignKey: 'productId' });
@@ -70,7 +70,7 @@ Category.prototype.findBySectionAlias = async function (sectionAlias) {
             ['id', 'id'],
             ['alias', 'alias'],
             ['description', 'description'],
-            [Sequelize.fn("COUNT", Sequelize.col("products.id")), "total"]
+            [Sequelize.fn("COUNT", Sequelize.col("Products.id")), "total"]
         ],
         include: [
             { 

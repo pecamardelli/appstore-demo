@@ -126,5 +126,10 @@ async function setUsers() {
     }
 }
 
-module.exports.users    = users;
-module.exports.setUsers = setUsers;
+function getRandomUser() {
+    return users[Math.floor(Math.random()*users.length)].id;
+}
+
+module.exports.users            = users;
+module.exports.setUsers         = setUsers;
+module.exports.getRandomUser    = getRandomUser;

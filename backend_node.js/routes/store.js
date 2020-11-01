@@ -1,5 +1,7 @@
 const { Product, Category } = require('../models/models');
 const express	            = require('express');
+const config                = require('config');
+const setExampleContent     = require('../utils/exampleContent');
 
 const router	= express.Router();
 
@@ -27,6 +29,15 @@ router.get('/:sectionAlias/:categoryAlias/:productAlias', async (req, res) => {
     );
     if(product) return res.send(product);
     return res.status(404).send('Product not found.');
+});
+
+router.post('/loadcontent', async (req, res) => {
+	if (req.body.password && req.body.password === config.get('db_password')) {
+        await setExampleContent();
+        return res.send('Done...');
+	}
+
+	return res.status(400).send('No action performed.');
 });
 
 module.exports	= router;

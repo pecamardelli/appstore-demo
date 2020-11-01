@@ -1,5 +1,6 @@
 {
 	"jwtPrivateKey":    "1234",
 	"name": 			"App Store Demo",
-	"db_name":			"appstore"
+	"db_name":			"lacasona_appstore",
+	"db_host":			"mysql1008.mochahost.com"
 }

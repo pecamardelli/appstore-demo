@@ -1,5 +1,6 @@
 {
 	"jwtPrivateKey":    "1234",
 	"name": 			"App Store Demo - Testing",
-	"db_name":			"appstore_test"
+	"db_name":			"appstore_test",
+	"db_host":			"localhost"
 }

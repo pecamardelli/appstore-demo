@@ -36,7 +36,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', [auth, authorize(accessLevel)], async (req, res) => {
     // No need to implement validation here.
     // It's already done in the model.
-    const product   = { ...req.body, authorId: req.user.id };
+    const product   = { ...req.body, userId: req.user.id };
     delete product.photo;
 
     const result = await Product.create(product);

@@ -25,7 +25,7 @@ router.get('/wishlist', auth, async (req, res) => {
 
 router.get('/products', auth, async (req, res) => {
 	const products	= await Product.findAll({
-		where: { authorId: req.user.id },
+		where: { userId: req.user.id },
 		include: [{
 			model: Category,
 			attributes:	[ 'displayName' ]
@@ -88,7 +88,7 @@ router.get('/purchases/:invoiceId', auth, async (req, res) => {
 
 router.get('/products/:id', auth, async (req, res) => {
 	const items	= await Product.findOne({
-		where: { authorId: req.user.id },
+		where: { userId: req.user.id },
 		include: [{
 			model: Category,
 			attributes:	[ 'displayName' ]

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { getSections }  from './../services/sectionService';
 import { toast }        from 'react-toastify';
 import Slider           from "./common/slider"; 
@@ -21,10 +21,10 @@ function Home(props) {
     }, [ setSections ]);
 
     return (
-        <Fragment>
+        <>
             <br />
             <Slider items={sections} path='/images/sections'/>
-        </Fragment>
+        </>
     );
 }
 
