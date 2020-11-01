@@ -32,11 +32,8 @@ This file should look like this:
 APP_STORE_JWT_PRIV_KEY=yourjwtprivatekey
 
 // Database variables
-DB_HOST=yourmysqlhost
-DB_PORT=yourmysqlport
 DB_USER=yourmysqluser
 DB_PASSWORD=yourmysqlpassword
-DB_NAME=yourdbname
 
 // Debug messages.
 DEBUG=app:startup,app:db
@@ -51,4 +48,14 @@ If you need to install MySQL server on your machine, check [this reference](http
 
 Once MySQL is installed and accessible, create the database and a user and reflect this data with your `.env` file.
 
-To be continued...
+The app will load example content automatically at the first run, so make sure you have access and permissions to the database and everything will be set up magically.
+
+## Frontend Installation
+
+Same as with the backend, head over the frontend folder and run
+
+```sh
+$ npm i
+```
+
+Once all packages are downloaded and installed, you can run `npm start` and the app will be ready to use.
