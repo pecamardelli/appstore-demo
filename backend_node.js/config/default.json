@@ -1,5 +1,6 @@
 {
 	"jwtPrivateKey":    "1234",
 	"name": 			"App Store Demo",
-	"db_port":			"3306"
+	"db_port":			"3306",
+	"jwtLifeTime":		"84600"
 }

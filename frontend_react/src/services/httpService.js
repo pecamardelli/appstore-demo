@@ -9,11 +9,12 @@ axios.defaults.baseURL	= process.env.REACT_APP_API_URL;
 axios.interceptors.response.use(null, error => {
 	// Check if we are dealing with an expected error or not. 400 to 499 are expected error statuses.
 	const expectedError	= error.response && error.response.status >= 400 && error.response.status < 500;
-	
-	if(!expectedError) {
-		toast.error(` ${error.toString()}: Unable to complete request.`);
+
+	// Session timeout. Force logout.
+	if(error.response.status === 409) {
+		localStorage.removeItem('token');
+		window.location	= '/login';
 	}
-	
 	// Need to return a rejected promise to pass control to the catch block
 	return Promise.reject(error);
 });
