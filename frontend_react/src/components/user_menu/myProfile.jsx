@@ -16,7 +16,7 @@ function MyProfile() {
 
 	return (<>
         <br /><h3>My profile</h3><hr />
-        <div className="card border-dark mb-3" style={{width: '100%'}}>
+        <div className="card border-dark mb-3">
             <div className="row no-gutters">
                 <div className="col-md-4">
                     <img
@@ -26,7 +26,7 @@ function MyProfile() {
                         alt=''
                     />
                 </div>
-                <div className="col-md-8" style={{height: '90%'}}>
+                <div className="col-md-8">
                     <table className='table'>
                         <tbody>
                             <tr>

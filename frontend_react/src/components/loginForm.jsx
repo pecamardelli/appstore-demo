@@ -40,25 +40,24 @@ class LoginForm extends Form {
 	};
 	
 	render() {
-		return (
-			<>
-				<div className='row' style={{ marginTop: '10%' }}>
-					<div className="card bg-light border-secondary mb-3 mx-auto" style={{ width: '25rem' }}>
-						<div className="card-header">
-							<h4 className="card-title">LOGIN</h4>
-						</div>
-						<div className="card-body">
-							<form onSubmit={this.handleSubmit}>
-								{ this.renderInput('email', 'Email', null, null, true) }
-								{ this.renderInput('password', 'Password', 'password') }
-								{ this.renderButton('Login') }
-							</form>
-						</div>
-						<div className="card-footer bg-light border-secondary">
-							Don't have a user yet? <Link to='/register'>Sign up!</Link>
-						</div>
+		return (<>
+			<div className='row' style={{ marginTop: '10%' }}>
+				<div className="card bg-light border-secondary mb-3 mx-auto" style={{ width: '25rem' }}>
+					<div className="card-header">
+						<h4 className="card-title">LOGIN</h4>
+					</div>
+					<div className="card-body">
+						<form onSubmit={this.handleSubmit}>
+							{ this.renderInput('email', 'Email', null, null, true) }
+							{ this.renderInput('password', 'Password', 'password') }
+							{ this.renderButton('Login') }
+						</form>
+					</div>
+					<div className="card-footer bg-light border-secondary">
+						Don't have a user yet? <Link to='/register'>Sign up!</Link>
 					</div>
 				</div>
+			</div>
 			</>
 		);
 	}

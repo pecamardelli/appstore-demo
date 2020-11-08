@@ -5,7 +5,7 @@ import ToolTipEntry from './toolTip';
 
 function ProductCard({ data }) {
     return (
-        <div className="card border-dark mb-4" >
+        <div className="card border-dark mb-4 my-product-card" >
             <img
                 src={ `${process.env.REACT_APP_API_URL}/images/products/${data.id}.png` }
                 className="card-img-top"

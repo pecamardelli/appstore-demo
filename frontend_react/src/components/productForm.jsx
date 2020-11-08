@@ -92,7 +92,7 @@ class ProductForm extends Form {
 					<h2><strong>{ this.state.data.id ? 'Update product' : 'Add new product' }</strong></h2>
 					<hr />
 				</div>
-				<div className="card border-dark mb-3" style={{width: '100%'}}>
+				<div className="card border-dark mb-3">
 					<div className="row no-gutters">
 						<div className="col-md-4">
 							<ImageUpload
@@ -102,7 +102,7 @@ class ProductForm extends Form {
 								path='/products'
 							/>
 						</div>
-						<div className="col-md-8" style={{height: '90%'}}>
+						<div className="col-md-8">
 							<div className="card-header">
 								<strong>Product data</strong>
 							</div>

@@ -1,5 +1,5 @@
-import React, { Fragment }	from 'react';
 import { submitSection }	from '../services/sectionService';
+import React			from 'react';
 import ImageUpload		from './common/forms/imageUpload';
 import { toast }		from 'react-toastify';
 import Form 			from './common/forms/form';
@@ -7,8 +7,8 @@ import Joi				from 'joi-browser';
 
 class SectionForm extends Form {
 	state	= {
-		data: 		{},
-		errors:		{}
+		data: 	{},
+		errors:	{}
 	};
 
 	schema	= {
@@ -36,14 +36,13 @@ class SectionForm extends Form {
 	};
 	
 	render() {
-		return (
-			<Fragment>
+		return (<>
 				<br />
 				<div>
 					<h2><strong>{ this.state.data.id ? 'Update section' : 'Add new section' }</strong></h2>
 					<hr />
 				</div>
-				<div className="card border-dark mb-3" style={{width: '100%'}}>
+				<div className="card border-dark mb-3">
 					<div className="row no-gutters">
 						<div className="col-md-4">
 							<ImageUpload
@@ -53,7 +52,7 @@ class SectionForm extends Form {
 								path='/sections'
 							/>
 						</div>
-						<div className="col-md-8" style={{height: '90%'}}>
+						<div className="col-md-8">
 							<div className="card-header">
 								<strong>Section data</strong>
 							</div>
@@ -70,7 +69,7 @@ class SectionForm extends Form {
 						</div>
 					</div>
 				</div>
-			</Fragment>
+			</>
 		);
 	}
 }

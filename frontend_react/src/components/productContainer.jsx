@@ -47,7 +47,7 @@ function ProductContainer(props) {
     return (
         <div>
             <BreadCrumbs />
-            <div className="card border-dark mb-3" style={{width: '100%'}}>
+            <div className="card border-dark mb-3">
                 <div className="row no-gutters">
                     <div className="col-md-4">
                         <img
@@ -57,11 +57,11 @@ function ProductContainer(props) {
                             alt={product.displayName}
                         />
                     </div>
-                    <div className="col-md-8" style={{height: '90%'}}>
+                    <div className="col-md-8">
                         <div className="card-body">
                             <h3 className="card-title d-flex justify-content-between align-items-center">
                                 {product.displayName}
-                                <span><strong>${product ? product.price : '---'}</strong></span>
+                                <span class='product-price'><strong>${product ? product.price : '---'}</strong></span>
                                 
                             </h3>
                             <h5 className="card-text text-muted">

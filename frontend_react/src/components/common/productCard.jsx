@@ -7,7 +7,7 @@ import Price from './price';
 
 function ProductCard({ data }) {
     return (
-        <div className="card border-dark mb-4" style={{ height: '455px'}}>
+        <div className="card border-dark mb-4 product-card">
             <Link to={{ pathname: `/store/${data.Category.Section.alias}/${data.Category.alias}/${data.alias}`}}>
                 <img
                     src={`${process.env.REACT_APP_API_URL}/images/products/${data.id}.png`}

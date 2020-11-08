@@ -42,8 +42,14 @@
   margin-right: 10px;
 }
 
-.btn-outline-danger:hover {
+.btn-outline-danger:hover, .btn-primary {
   background-color: #cc3300 !important;
+  border: 1px solid #cc3300 !important;
+}
+
+.btn-primary:hover, :disabled {
+  background-color: #bb2200 !important;
+  border: 1px solid #bb2200 !important;
 }
 
 .bi {
@@ -76,4 +82,25 @@ main {
 .four-o-four {
   font-size: 15ch;
   color: #CC3300;
+}
+
+.product-card {
+  height: 455px;
+}
+
+.product-price {
+  color: #aa1100;
+}
+
+.my-product-card {
+  height: 380px;
+}
+
+.img-category-card {
+  max-height: 100px;
+  max-width : 160px;
+}
+
+.badge-danger.badge-pill {
+  background-color: #cc3300;
 }

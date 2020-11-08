@@ -1,5 +1,5 @@
 import { submitCategory, getCategory, updateCategory }	from './../services/categoryService';
-import React, { Fragment }	from 'react';
+import React			from 'react';
 import { getSections }	from '../services/sectionService';
 import { toast }		from 'react-toastify';
 import ImageUpload		from './common/forms/imageUpload';
@@ -70,41 +70,40 @@ class CategoryForm extends Form {
 	};
 	
 	render() {
-		return (
-			<Fragment>
-				<br />
-				<div>
-					<h2><strong>{ this.state.data.id ? 'Update category' : 'Add new category' }</strong></h2>
-					<hr />
-				</div>
-				<div className="card border-dark mb-3" style={{width: '100%'}}>
-					<div className="row no-gutters">
-						<div className="col-md-4">
-							<ImageUpload
-								onImageUpdate={this.handleImageUpdate}
-								imageId={ this.state.data ? this.state.data.id : null }
-								title='Category logo'
-								path='/categories'
-							/>
+		return (<>
+			<br />
+			<div>
+				<h2><strong>{ this.state.data.id ? 'Update category' : 'Add new category' }</strong></h2>
+				<hr />
+			</div>
+			<div className="card border-dark mb-3" style={{width: '100%'}}>
+				<div className="row no-gutters">
+					<div className="col-md-4">
+						<ImageUpload
+							onImageUpdate={this.handleImageUpdate}
+							imageId={ this.state.data ? this.state.data.id : null }
+							title='Category logo'
+							path='/categories'
+						/>
+					</div>
+					<div className="col-md-8" style={{height: '90%'}}>
+						<div className="card-header">
+							<strong>Category data</strong>
 						</div>
-						<div className="col-md-8" style={{height: '90%'}}>
-							<div className="card-header">
-								<strong>Category data</strong>
+						<form onSubmit={this.handleSubmit}>
+							<div className="card-body">
+								{ this.renderSelect('sectionId', 'Section', this.state.sections) }
+								{ this.renderInput('displayName', 'Name') }
+								{ this.renderTextArea('description', 'Description') }
 							</div>
-							<form onSubmit={this.handleSubmit}>
-								<div className="card-body">
-									{ this.renderSelect('sectionId', 'Section', this.state.sections) }
-									{ this.renderInput('displayName', 'Name') }
-									{ this.renderTextArea('description', 'Description') }
-								</div>
-								<div className="card-footer text-muted bg-transparent">
-									{ this.state.data.id ? this.renderButton('Update') : this.renderButton('Submit') }
-								</div>
-							</form>
-						</div>
+							<div className="card-footer text-muted bg-transparent">
+								{ this.state.data.id ? this.renderButton('Update') : this.renderButton('Submit') }
+							</div>
+						</form>
 					</div>
 				</div>
-			</Fragment>
+			</div>
+			</>
 		);
 	}
 }

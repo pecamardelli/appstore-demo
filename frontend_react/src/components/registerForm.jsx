@@ -84,7 +84,7 @@ class RegisterForm extends Form {
 		
 		return (<>
 			<br /><h3>Sign up to the AppStore!</h3><hr />
-			<div className="card border-dark mb-3" style={{width: '100%'}}>
+			<div className="card border-dark mb-3">
 				<div className="row no-gutters">
 					<div className="col-md-4">
 						<ImageUpload
@@ -94,7 +94,7 @@ class RegisterForm extends Form {
 							path='/users'
 						/>
 					</div>
-					<div className="col-md-8" style={{height: '90%'}}>
+					<div className="col-md-8">
 						<div className="card-header">
 							<strong>SIGN UP!</strong>
 						</div>
