@@ -12,16 +12,24 @@ function ProductCard({ data }) {
                 alt={ data.displayName }
             />
             <div className="card-body">
-                <h6 className="card-title"><strong>{ data.displayName }</strong></h6>
-                <span className="d-flex justify-content-between align-items-center">
+                <div className="card-title card-2-seg">
+                    <h6><strong>{ data.displayName }</strong></h6>
+                </div>
+                
+                <div className="d-flex justify-content-between align-items-center card-2-seg">
                     <h6>{ data.Category.displayName }</h6>
                     <span style={{ margin: '-10px 0 0 0' }}>
                         <Link to={ `/me/products/edit/${data.id}` }>
                             <ToolTipEntry icon={Icons.editIcon()} tip='Edit' />
                         </Link>
                     </span>
-                </span>
-                <small>Updated {new Date(data.updatedAt).toDateString()}</small>
+                </div>
+            </div>
+            <div className="card-footer">
+                <small>
+                    Updated on {new Date(data.updatedAt).toDateString()}
+                    &nbsp;{new Date(data.updatedAt).toLocaleTimeString()}
+                </small>
             </div>
         </div>
     );

@@ -20,6 +20,7 @@ function ProductContainer(props) {
                 if(result){
                     const createdAt         = new Date(result.data.createdAt);
                     result.data.createdAt   = createdAt.toDateString();
+                    //result.data.createdAt   = createdAt.toLocaleTimeString();
                     
                     setProduct(result.data);
                     setStars(<ReactStars

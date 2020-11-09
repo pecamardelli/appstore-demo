@@ -1,5 +1,6 @@
 //const { Product, Category, Sale, User }	= require('../models/models');
 const Product	= require('../models/product');
+const Section	= require('../models/section');
 const Category	= require('../models/category');
 const Sale		= require('../models/sale');
 const User		= require('../models/user');
@@ -20,7 +21,11 @@ router.get('/wishlist', auth, async (req, res) => {
 			attributes:	[ 'displayName' ],
 			include:	{
 				model:	Category,
-				attributes:	[ 'displayName' ]
+				attributes:	[ 'displayName' ],
+				include:	{
+					model: Section,
+					attributes: ['displayName']
+				}
 			}
 		}
 	});

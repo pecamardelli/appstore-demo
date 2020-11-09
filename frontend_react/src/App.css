@@ -88,6 +88,18 @@ main {
   height: 455px;
 }
 
+.card-2-seg {
+  height: 50%;
+}
+
+.h-25 {
+  height: 25%;
+}
+
+.h-40 {
+  height: 40%;
+}
+
 .product-price {
   color: #aa1100;
 }

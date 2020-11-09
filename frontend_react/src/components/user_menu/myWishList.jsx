@@ -114,7 +114,7 @@ function MyWishList(props) {
                                 </h6>
                             </td>
                             <td>
-                                {item.Product.Category.displayName}
+                                {`${item.Product.Category.displayName} ${item.Product.Category.Section.displayName}`}
                             </td>
                             <td>
                                 {new Date(item.createdAt).toDateString()}

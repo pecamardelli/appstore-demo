@@ -17,9 +17,16 @@ function ProductCard({ data }) {
                 />
             </Link>
             <div className="card-body">
-                <h5 className="card-title"><strong>{data.displayName}</strong></h5>
-                <span
-                    className="d-flex justify-content-between align-items-center"
+                <div className="card-title h-40">
+                    <h5>
+                        <strong>{data.displayName}</strong>
+                    </h5>
+                </div>
+                <div className="h-25">
+                    {`${data.Category.displayName} ${data.Category.Section.displayName}`}
+                </div>
+                <div
+                    className="d-flex justify-content-between align-items-center h-25"
                     style={{margin: '10px 0 -10px 0'}}
                 >
                     <ReactStars
@@ -29,7 +36,8 @@ function ProductCard({ data }) {
                         isHalf={true}
                     />
                     <h5 style={{margin: '4px 50px 0 0'}}>{data.rating}</h5>
-                </span>
+                    
+                </div>
             </div>
             <div className="card-footer d-flex justify-content-between align-items-center">
                 <h5>{userIcons.downloadIcon('2em')}{data.downloads}</h5>
