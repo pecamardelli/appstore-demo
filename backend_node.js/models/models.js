@@ -125,7 +125,7 @@ const productIncludes	= [
 	},
 	{
 		model:  Comment,
-		attributes: ['id', 'text'],
+		attributes: ['id', 'text', 'createdAt'],
 		include: [{
 			model:  User,
 			attributes: ['id', 'username']
@@ -170,7 +170,10 @@ Product.prototype.findOneByPath =  function(sectionAlias, categoryAlias, product
 			$and: Sequelize.literal(`Category.alias = '${categoryAlias}'`)
 		},
 		include: productIncludes,
-		attributes: productAttributes
+		attributes: productAttributes,
+		order: [
+			[ { model: Comment }, 'createdAt', 'DESC']
+		]
 	});
 };
 

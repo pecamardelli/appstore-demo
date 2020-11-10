@@ -33,18 +33,23 @@ function getRandomPrice() {
 
 `;
 
-    const array = `const products = [${extraction.map(i => (`
+    const array = `const products = [${extraction.map(i => {
+        const randomDate = new Date(Date.now() - Math.round(Math.random()*1000*84600*1875));
+        return (`
     {
         id:             "${i.dataValues.id}",
         displayName:    "${i.dataValues.displayName}",
         CategoryId:     categories.find(s => s.displayName === "${i.dataValues.Category.displayName}" && s.SectionId === "${i.dataValues.Category.Section.id}").id,
-        UserId:       getRandomUser(),
+        UserId:         getRandomUser(),
         description:    getRandomText(),
         price:          getRandomPrice(),
         downloads:      Math.round(Math.random()*1000),
-        rating:         Math.round(Math.random()*50)/10
+        rating:         Math.round(Math.random()*50)/10,
+        createdAt:      "${randomDate}",
+        updatedAt:      "${randomDate}"
 
-    }`)
+    }`
+    )}
 )}
 ];
 `;

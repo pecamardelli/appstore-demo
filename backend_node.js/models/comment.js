@@ -11,7 +11,12 @@ const Comment	= sequelize.define('Comment', {
 	text: {
 		type:		Sequelize.STRING(2048),
 		validate:	{ notEmpty: true, max: 2048 }
-    }
+    },
+	rating: {
+		type:			Sequelize.INTEGER,
+		defaultValue:	0,
+		validate:		{ min: 0, max: 5 }
+	}
 }, {
     uniqueKeys: {
         uniqueFlag: {

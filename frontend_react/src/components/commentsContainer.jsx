@@ -47,6 +47,7 @@ function CommentsContainer({comments}) {
                 </div>
                 <ul className="list-unstyled">
                     {commentList.map(comment => <>
+                        <hr />
                         <li key={comment.id} className="media">
                             <img
                                 src={`${process.env.REACT_APP_API_URL}/images/users/avatar/${comment.User.id}.png`}
@@ -58,11 +59,18 @@ function CommentsContainer({comments}) {
                                 alt=''
                             />
                             <div className="media-body">
-                                <h5 className="mt-0 mb-1">{comment.User.username}</h5>
+                                <div className="mt-0 mb-1 d-flex justify-content-between align-items-center">
+                                    <h5>
+                                        {comment.User.username}
+                                    </h5>
+                                    <small className='text-muted'>
+                                        {new Date(comment.createdAt).toDateString()}
+                                        &nbsp;{new Date(comment.createdAt).toLocaleTimeString()}
+                                    </small>
+                                </div>
                                 {comment.text}
                             </div>
-                        </li>
-                        <hr /></>
+                        </li></>
                     )}
                 </ul>
             </div>
