@@ -4,7 +4,7 @@ import { getCurrentUser }   from './../services/authService';
 import { Link }             from 'react-router-dom';
 import { toast }            from 'react-toastify';
 import ToolTipEntry         from './user_menu/toolTip';
-import Icons                from './user_menu/userIcons';
+import Icons                from '../assets/icons';
 import ModalBox             from './common/modal';
 
 function ProductOptions({ product }) {

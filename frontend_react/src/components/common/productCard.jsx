@@ -1,9 +1,9 @@
 import React        from 'react';
 import { Link }     from 'react-router-dom';
-import userIcons    from '../user_menu/userIcons';
 import ReactStars   from 'react-rating-stars-component';
 import noImage      from '../../assets/images/image_not_found.png';
-import Price from './price';
+import Icons        from '../../assets/icons';
+import Price        from './price';
 
 function ProductCard({ data }) {
     return (
@@ -39,7 +39,7 @@ function ProductCard({ data }) {
                 </div>
             </div>
             <div className="card-footer d-flex justify-content-between align-items-center">
-                <h5 style={{ marginTop: '5px'}}>{userIcons.downloadIcon('2em')}{data.downloads}</h5>
+                <h5 style={{ marginTop: '5px'}}>{Icons.downloadIcon('2em')}{data.downloads}</h5>
                 <Price price={data.price} />
             </div>
         </div>

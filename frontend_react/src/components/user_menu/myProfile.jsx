@@ -1,7 +1,7 @@
 import React		    from 'react';
 import auth 		    from '../../services/authService';
 import noImage          from '../../assets/images/image_not_found.png';
-import userIcons        from './userIcons';
+import Icons            from '../../assets/icons';
 import ModalBox         from './../common/modal';
 import ChangePassword   from '../common/changePassword';
 
@@ -31,7 +31,7 @@ function MyProfile() {
                         <tbody>
                             <tr>
                                 <td { ...iconColumnStyle }>
-                                    <span>{ userIcons.userIcon('2em') }</span>
+                                    <span>{ Icons.userIcon('2em') }</span>
                                 </td>
                                 <td>
                                     <h3>
@@ -41,7 +41,7 @@ function MyProfile() {
                             </tr>
                             <tr>
                                 <td { ...iconColumnStyle }>
-                                    { userIcons.atIcon('3em') }
+                                    { Icons.atIcon('3em') }
                                 </td>
                                 <td>
                                     <h4 style={{ marginTop: '5px'}}>{ user.username }</h4>
@@ -49,7 +49,7 @@ function MyProfile() {
                             </tr>
                             <tr>
                                 <td { ...iconColumnStyle }>
-                                    { userIcons.mailIcon('2em') }
+                                    { Icons.mailIcon('2em') }
                                 </td>
                                 <td>
                                     <h4>{ user.email }</h4>
@@ -57,7 +57,7 @@ function MyProfile() {
                             </tr>
                             <tr>
                                 <td { ...iconColumnStyle }>
-                                    { userIcons.roleIcon('2em') }
+                                    { Icons.roleIcon('2em') }
                                 </td>
                                 <td>
                                     <h4>{ user.role }</h4>
@@ -65,7 +65,7 @@ function MyProfile() {
                             </tr>
                             <tr>
                                 <td { ...iconColumnStyle }>
-                                    { userIcons.keyIcon('2.2em') }
+                                    { Icons.keyIcon('2.2em') }
                                 </td>
                                 <td>
                                     <ModalBox

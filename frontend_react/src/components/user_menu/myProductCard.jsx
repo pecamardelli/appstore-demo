@@ -1,6 +1,6 @@
 import React        from 'react';
 import { Link }     from 'react-router-dom';
-import Icons        from './userIcons';
+import Icons        from '../../assets/icons';
 import ToolTipEntry from './toolTip';
 
 function ProductCard({ data }) {

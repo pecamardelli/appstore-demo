@@ -7,7 +7,7 @@ import logo			from '../../assets/images/logo100.png';
 import auth			from '../../services/authService';
 import UserMenu 	from '../user_menu/userMenu';
 import SignMenu 	from './signMenu';
-import userIcons	from '../user_menu/userIcons';
+import Icons		from '../../assets/icons';
 
 function NavBar(props) {
 	const [ sections, setSections ]			= useState([]);
@@ -83,7 +83,7 @@ function NavBar(props) {
 						ref={searchRef}
 					/>
 					<span className='' role='button' onClick={handleSearchClick}>
-						{ userIcons.searchIcon() }
+						{ Icons.searchIcon() }
 					</span>
 				</form>
 

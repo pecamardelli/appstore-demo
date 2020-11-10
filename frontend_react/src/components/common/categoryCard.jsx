@@ -2,7 +2,7 @@ import React, { useState, useEffect }    from 'react';
 import { getCurrentUser }   from './../../services/authService';
 import { Link }             from 'react-router-dom';
 import ToolTipEntry         from '../user_menu/toolTip';
-import Icons                from '../user_menu/userIcons';
+import Icons                from '../../assets/icons';
 
 function CategoryCard(props) {
     const [ user, setUser ] = useState({});

@@ -1,7 +1,7 @@
 import { Link }             from 'react-router-dom';
 import React                from 'react';
 import ToolTipEntry         from './toolTip';
-import icons                from './userIcons';
+import Icons                from '../../assets/icons';
 import PopOverEntry         from './popOver';
 import ProfileMenu          from './profileMenu';
 import { getCurrentUser }   from './../../services/authService';
@@ -16,18 +16,18 @@ function UserMenu(props) {
 
     if (me.accessLevel <= 2) {
         buttons =  <><Link to='/sections'>
-                <ToolTipEntry icon={icons.sectionIcon()} tip='Add section' />
+                <ToolTipEntry icon={Icons.sectionIcon()} tip='Add section' />
             </Link>
             <Link to='/categories'>
-                <ToolTipEntry icon={icons.categoryIcon()} tip='Add category' />
+                <ToolTipEntry icon={Icons.categoryIcon()} tip='Add category' />
             </Link>
             <Link to='/me/products/new'>
-                <ToolTipEntry icon={icons.productIcon()} tip='Add product' />
+                <ToolTipEntry icon={Icons.productIcon()} tip='Add product' />
             </Link></>
     }
     else if (me.accessLevel <= 4){
         buttons     = <Link to='/me/products/new'>
-                <ToolTipEntry icon={icons.productIcon()} tip='Add product' />
+                <ToolTipEntry icon={Icons.productIcon()} tip='Add product' />
             </Link>
     }
 
@@ -36,7 +36,7 @@ function UserMenu(props) {
             Hello, { `${me.firstname} ${me.lastname}` }!&nbsp;&nbsp;&nbsp;
             { buttons }
             <div role='button' >
-                <PopOverEntry icon={icons.userIcon()} content={ProfileMenu} />
+                <PopOverEntry icon={Icons.userIcon()} content={ProfileMenu} />
             </div>
         </div>
     );

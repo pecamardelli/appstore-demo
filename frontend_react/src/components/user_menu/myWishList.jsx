@@ -6,7 +6,7 @@ import { toast }            from 'react-toastify';
 import EmptyCard            from './../common/emptyCard';
 import BreadCrumbs          from '../common/breadcrumbs';
 import ToolTipEntry         from './toolTip';
-import Icons                from './userIcons';
+import Icons                from '../../assets/icons';
 import ModalBox             from '../common/modal';
 
 function MyWishList(props) {

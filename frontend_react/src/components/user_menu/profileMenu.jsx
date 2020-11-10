@@ -3,7 +3,7 @@ import { Table }    from 'react-bootstrap';
 import { Link }     from 'react-router-dom';
 import noImage      from '../../assets/images/image_not_found.png';
 import auth			from '../../services/authService';
-import icons        from './userIcons';
+import Icons        from '../../assets/icons';
 
 function ProfileMenu(props) {
     const user  = auth.getCurrentUser();
@@ -18,7 +18,7 @@ function ProfileMenu(props) {
             </td>
             <td style={{ width: '20%'}}>
                 <Link to='/me/products'>
-                    { icons.productIcon() }
+                    { Icons.productIcon() }
                 </Link>
             </td>
         </tr>);
@@ -48,7 +48,7 @@ function ProfileMenu(props) {
                     </td>
                     <td style={{ width: '20%'}}>
                         <Link to='/me/wishlist'>
-                        { icons.cartIcon() }
+                        { Icons.cartIcon() }
                         </Link>
                     </td>
                 </tr>
@@ -60,7 +60,7 @@ function ProfileMenu(props) {
                     </td>
                     <td style={{ width: '20%'}}>
                         <Link to='/me/purchases'>
-                        { icons.buyedIcon() }
+                        { Icons.buyedIcon() }
                         </Link>
                     </td>
                 </tr>
@@ -72,7 +72,7 @@ function ProfileMenu(props) {
                     </td>
                     <td style={{ width: '20%'}}>
                         <Link to='/me'>
-                        { icons.profileIcon() }
+                        { Icons.profileIcon() }
                         </Link>
                     </td>
                 </tr>
@@ -84,7 +84,7 @@ function ProfileMenu(props) {
                     </td>
                     <td style={{ width: '20%'}}>
                         <Link to='/logout'>
-                        { icons.logoutIcon() }
+                        { Icons.logoutIcon() }
                         </Link>
                     </td>
                 </tr>

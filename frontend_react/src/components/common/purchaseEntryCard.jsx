@@ -1,8 +1,8 @@
 import React, { useState, useEffect }   from 'react';
 import { getPurchaseDetail }            from './../../services/myService';
 import ToolTipEntry from '../user_menu/toolTip';
-import Icons        from '../user_menu/userIcons';
 import noImage      from '../../assets/images/image_not_found.png';
+import Icons        from '../../assets/icons';
 import { toast }    from 'react-toastify';
 
 function PurchaseEntryCard({ data: purchase }) {
