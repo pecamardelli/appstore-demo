@@ -4,13 +4,14 @@
 const config	= require('config');
 const logger	= require('../lib/logger');
 const sequelize	= require('./dbConfig');
-const { Role, User, Section, Category, Product, Wish, Sale }  = require('../models/models');
+const { Role, User, Section, Category, Product, Wish, Sale, Comment }  = require('../models/models');
 
 const { setRoles }		= require('../utils/example_content/roles');
 const { setUsers }		= require('../utils/example_content/users');
 const { setSections }	= require('../utils/example_content/sections');
 const { setCategories } = require('../utils/example_content/categories');
 const { setProducts }	= require('../utils/example_content/products');
+const { setComments }	= require('../utils/example_content/comments');
 
 function throwError(errText) {
 	logger.log('error', errText)
@@ -39,6 +40,7 @@ module.exports	= async () => {
 	await Product.sync();
 	await Sale.sync();
 	await Wish.sync();
+	await Comment.sync();
 
 	// If the table is empty, populate it with some example content.
 	if(!await Role.findOne()) await setRoles();
@@ -46,4 +48,5 @@ module.exports	= async () => {
 	if(!await Section.findOne()) await setSections();
 	if(!await Category.findOne()) await setCategories();
 	if(!await Product.findOne()) await setProducts();
+	if(!await Comment.findOne()) await setComments();
 }

@@ -116,3 +116,11 @@ main {
 .badge-danger.badge-pill {
   background-color: #cc3300;
 }
+
+.comment-list {
+  margin-bottom: 20px;
+}
+
+.comment-image {
+  max-width: 5%;
+}

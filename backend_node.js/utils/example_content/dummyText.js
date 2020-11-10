@@ -20,11 +20,15 @@ const loremIpsum    = [
     'Maecenas ullamcorper fringilla iaculis. Integer rutrum egestas urna. Nullam semper porta leo, vel malesuada felis blandit sed. In interdum ante sit amet mauris aliquam, sit amet blandit lectus ultrices. Mauris velit lectus, imperdiet porta scelerisque non, elementum vitae quam. Nam erat nulla, lacinia at turpis in, iaculis posuere leo.',
     'Nam volutpat arcu malesuada quam faucibus iaculis. Nullam et purus sed sem convallis lobortis. Suspendisse nulla orci, elementum vel augue scelerisque, sodales facilisis magna. Sed iaculis mauris eget nisi varius, sit amet semper augue semper. Mauris rhoncus nisi lectus, at ornare lacus mattis et.',
     'Aenean non vehicula justo. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris neque purus, porttitor in pellentesque vel, sodales vel risus. In nibh mauris, gravida at rutrum eu, fermentum ut erat. Donec dignissim tincidunt turpis, at tempor ex. Morbi aliquet ornare nisl, eu eleifend risus tempus at.',
+    'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In ut odio congue, vulputate lacus eget, interdum dolor. Pellentesque accumsan ut lacus congue fermentum. Vivamus non leo eget nunc vehicula vestibulum vitae vitae augue.',
+    'Praesent suscipit lectus enim, vitae efficitur est malesuada eu. Nullam sagittis sapien orci, id hendrerit ex lobortis id. In euismod vel sem in mollis. Sed lacinia imperdiet enim, non molestie dui faucibus nec. Fusce ligula velit, scelerisque a gravida eget, luctus vitae nunc. Ut ornare et ipsum in suscipit. ',
+    'Mauris sagittis, nulla aliquet posuere lacinia, dolor neque volutpat ante, ac vehicula dui lorem non ante. Nunc varius neque augue, non tempus magna euismod at. Morbi facilisis, ligula sed congue fringilla, nisi lacus sodales dui, quis vulputate augue nisl ut elit. Quisque nec lorem hendrerit, imperdiet est non, pellentesque justo.',
+    'Quisque malesuada aliquet finibus. Duis non fringilla augue. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras porttitor lectus a dolor viverra convallis. Phasellus volutpat tellus et urna tempus volutpat. Aliquam vitae enim placerat, semper purus eu, maximus odio. Suspendisse potenti.',
     'Maecenas in dapibus eros, ut vulputate felis. Aliquam eget ante consequat, sodales risus quis, posuere massa. Cras gravida tempor leo vitae pharetra. Quisque eleifend justo nulla, at bibendum velit porttitor accumsan. Mauris ornare sodales nisl, vitae interdum ligula iaculis vel.'
 ];
 
-function getRandomDescription() {
+function getRandomText() {
     return loremIpsum[Math.floor(loremIpsum.length * Math.random())];
 }
 
-module.exports  = getRandomDescription;
+module.exports  = getRandomText;

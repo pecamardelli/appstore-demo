@@ -26,8 +26,7 @@ function CategoryCard(props) {
                 <div className="card-body" style={{marginTop: '10px'}}>
                     <img
                         src={`${process.env.REACT_APP_API_URL}/images/categories/${props.data.id}.png`}
-                        style={{maxHeight: '100px', maxWidth: '160px'}}
-                        className="card-img-top"
+                        className="card-img-top img-category-card"
                         alt={props.data.displayName}
                     />
                     <br /><br />

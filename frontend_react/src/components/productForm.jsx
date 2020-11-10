@@ -27,8 +27,8 @@ class ProductForm extends Form {
 				product = {
 					id:				data.id,
 					displayName:	data.displayName,
-					sectionId:		data.Category.Section.id,
-					categoryId:		data.Category.id,
+					SectionId:		data.Category.Section.id,
+					CategoryId:		data.Category.id,
 					description:	data.description,
 					price:			data.price
 				};
@@ -44,10 +44,10 @@ class ProductForm extends Form {
 	selectedSectionId = '';
 
 	async componentDidUpdate() {
-		if (this.selectedSectionId !== this.state.data.sectionId) {
+		if (this.selectedSectionId !== this.state.data.SectionId) {
 			try {
-				const { data: categories }	= await getCategories(this.state.data.sectionId);
-				this.selectedSectionId		= this.state.data.sectionId;
+				const { data: categories }	= await getCategories(this.state.data.SectionId);
+				this.selectedSectionId		= this.state.data.SectionId;
 				this.setState({ categories });
 			}
 			catch(ex) {
@@ -59,8 +59,8 @@ class ProductForm extends Form {
 	schema	= {
 		id:				Joi.any().label('Id'),
 		displayName:	Joi.string().min(1).max(255).required().label('Display name'),
-		sectionId:		Joi.string().min(1).max(255).required().label('Section'),
-		categoryId:		Joi.string().min(1).max(255).required().label('Category'),
+		SectionId:		Joi.string().min(1).max(255).required().label('Section'),
+		CategoryId:		Joi.string().min(1).max(255).required().label('Category'),
 		description:   	Joi.string().min(5).max(1024).required().label('Description'),
 		photo:   		Joi.any().label('Photo'),
 		price:			Joi.number().min(0).max(255).required().label('Price')
@@ -109,8 +109,8 @@ class ProductForm extends Form {
 							<form onSubmit={this.handleSubmit}>
 								<div className="card-body">
 									{ this.renderInput('displayName', 'Display name') }
-									{ this.renderSelect('sectionId', 'Section', this.state.sections) }
-									{ this.renderSelect('categoryId', 'Category', this.state.categories) }
+									{ this.renderSelect('SectionId', 'Section', this.state.sections) }
+									{ this.renderSelect('CategoryId', 'Category', this.state.categories) }
 									{ this.renderTextArea('description', 'Description') }
 									{ this.renderNumber('price', 'Price', '0.01') }
 								</div>

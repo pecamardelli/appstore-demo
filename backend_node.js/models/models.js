@@ -6,25 +6,45 @@ const Category	    = require('./category');
 const Product	    = require('./product');
 const Wish		    = require('./wish');
 const Sale			= require('./sale');
+const Comment		= require('./comment');
 
 // Model relations
 //User.hasOne(Role);
 User.hasMany(Wish);
 User.hasMany(Sale);
 User.hasMany(Product);
+User.hasMany(Comment);
 User.belongsTo(Role, { foreignKey: 'RoleId' });
 Role.hasMany(User);
 Section.hasMany(Category);
-Category.belongsTo(Section, { foreignKey: 'SectionId' });
+Category.belongsTo(Section, {
+	foreignKey: {
+		name: 'SectionId',
+		unique: 'uniqueFlag'
+	}
+});
 Category.hasMany(Product);
 Product.belongsTo(User, { foreignKey: 'UserId' });
 Product.belongsTo(Category, { foreignKey: 'CategoryId' });
 Product.hasMany(Wish);
+Product.hasMany(Comment);
 Wish.belongsTo(Product, { foreignKey: 'ProductId' });
 Wish.belongsTo(User, { foreignKey: 'UserId' });
 Wish.belongsTo(Sale, { foreignKey: 'SaleId' });
 Sale.belongsTo(User, { foreignKey: 'UserId' });
 Sale.hasMany(Wish);
+Comment.belongsTo(User, {
+	foreignKey: {
+		name: 'UserId',
+		unique: 'uniqueFlag'
+	}
+});
+Comment.belongsTo(Product, {
+	foreignKey: {
+		name: 'ProductId',
+		unique: 'uniqueFlag'
+	}
+});
 
 // Model custom functions
 Section.prototype.findByAlias	=  function(alias) {
@@ -98,12 +118,18 @@ const productIncludes	= [
 	{
 		model: Category,
 		attributes: [ 'id', 'displayName', 'alias' ],
-		include:    [
-			{
-				model:  Section,
-				attributes: [ 'id', 'displayName', 'alias' ]
-			}
-		]
+		include:    [{
+			model:  Section,
+			attributes: [ 'id', 'displayName', 'alias' ]
+		}]
+	},
+	{
+		model:  Comment,
+		attributes: ['id', 'text'],
+		include: [{
+			model:  User,
+			attributes: ['id', 'username']
+		}]
 	}
 ];
 
@@ -155,3 +181,4 @@ module.exports.Category = Category;
 module.exports.Product  = Product;
 module.exports.Wish     = Wish;
 module.exports.Sale		= Sale;
+module.exports.Comment	= Comment;

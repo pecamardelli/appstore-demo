@@ -1,4 +1,4 @@
-const { Product, Category, Section }   = require('../models/models');
+const { Product, Category, Section, Comment, User }   = require('../models/models');
 const express	= require('express');
 const fs        = require('fs');
 const authorize	= require('../middleware/mwAuthorize');
@@ -7,7 +7,6 @@ const saveImage = require('../utils/saveImage');
 
 const router	    = express.Router();
 const imageDir      = './assets/images/products';
-// Developers and above can post and put products.
 const accessLevel   = 4;
 
 router.get('/:id', async (req, res) => {
@@ -19,6 +18,13 @@ router.get('/:id', async (req, res) => {
             include: [{
                 model:      Section,
                 attributes: [ 'id', 'displayName' ]
+            }]
+            },{
+            model:  Comment,
+            attributes: ['id', 'text'],
+            include: [{
+                model:  User,
+                attributes: ['id', 'username']
             }]
         }],
         attributes: [

@@ -1,12 +1,17 @@
 require('dotenv').config();
-const { Product, Category } = require('../../models/models');
+process.env.NODE_ENV = 'development';
+const { Product, Category, Section } = require('../../models/models');
 const fs        = require('fs');
 
 async function extract(){
     const extraction	= await Product.findAll({
         include: [{
             model:      Category,
-            attributes: [ 'displayName' ]
+            attributes: [ 'displayName' ],
+            include: [{
+                model: Section,
+                attributes: ['id']
+            }]
         }],
         attributes: [
             'id',
@@ -15,7 +20,7 @@ async function extract(){
     });
     
     const header    = `const { Product }           = require('../../models/models');
-const getRandomDescription  = require('./dummyText');
+const getRandomText  = require('./dummyText');
 const printErrorMessage     = require('./errorMessages');
 const { categories }        = require('./categories');
 const { getRandomUser }     = require('./users');
@@ -32,9 +37,9 @@ function getRandomPrice() {
     {
         id:             "${i.dataValues.id}",
         displayName:    "${i.dataValues.displayName}",
-        CategoryId:     categories.find(s => s.displayName === "${i.dataValues.Category.displayName}").id,
+        CategoryId:     categories.find(s => s.displayName === "${i.dataValues.Category.displayName}" && s.SectionId === "${i.dataValues.Category.Section.id}").id,
         UserId:       getRandomUser(),
-        description:    getRandomDescription(),
+        description:    getRandomText(),
         price:          getRandomPrice(),
         downloads:      Math.round(Math.random()*1000),
         rating:         Math.round(Math.random()*50)/10
@@ -55,8 +60,13 @@ async function setProducts() {
     }
 }
 
+function getRandomProduct() {
+    return products[Math.floor(products.length * Math.random())].id;
+}
+
 module.exports.products     = products;
-module.exports.setProducts  = setProducts;`;
+module.exports.setProducts  = setProducts;
+module.exports.getRandomProduct  = getRandomProduct;`;
 
     const data  = header + array + footer;
 

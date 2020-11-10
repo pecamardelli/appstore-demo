@@ -16,17 +16,17 @@ class CategoryForm extends Form {
 	async componentDidMount() {
 		try {
 			const { data: sections }	= await getSections();
-			const categoryId			= this.props.match.params.id;
+			const CategoryId			= this.props.match.params.id;
 			let	category	= {};
 
-			if (categoryId) {
+			if (CategoryId) {
 				try {
-					const { data }    = await getCategory(categoryId);
+					const { data }    = await getCategory(CategoryId);
 					console.log(data);
 					category = {
 						id:				data.id,
 						displayName:	data.displayName,
-						sectionId:		data.sectionId,
+						SectionId:		data.SectionId,
 						description:	data.description
 					};
 				}
@@ -45,7 +45,7 @@ class CategoryForm extends Form {
 
 	schema	= {
 		id:				Joi.any().label('Id'),
-		sectionId:		Joi.string().min(1).max(36).required().label('Section'),
+		SectionId:		Joi.string().min(1).max(36).required().label('Section'),
 		displayName:   	Joi.string().min(1).max(255).required().label('Name'),
 		description:   	Joi.string().min(5).max(255).required().label('Description'),
 		photo:   		Joi.any().label('Photo'),
@@ -92,7 +92,7 @@ class CategoryForm extends Form {
 						</div>
 						<form onSubmit={this.handleSubmit}>
 							<div className="card-body">
-								{ this.renderSelect('sectionId', 'Section', this.state.sections) }
+								{ this.renderSelect('SectionId', 'Section', this.state.sections) }
 								{ this.renderInput('displayName', 'Name') }
 								{ this.renderTextArea('description', 'Description') }
 							</div>

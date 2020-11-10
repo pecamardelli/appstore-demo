@@ -36,11 +36,10 @@ function ProductCard({ data }) {
                         isHalf={true}
                     />
                     <h5 style={{margin: '4px 50px 0 0'}}>{data.rating}</h5>
-                    
                 </div>
             </div>
             <div className="card-footer d-flex justify-content-between align-items-center">
-                <h5>{userIcons.downloadIcon('2em')}{data.downloads}</h5>
+                <h5 style={{ marginTop: '5px'}}>{userIcons.downloadIcon('2em')}{data.downloads}</h5>
                 <Price price={data.price} />
             </div>
         </div>
