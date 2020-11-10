@@ -104,7 +104,8 @@ Category.prototype.findBySectionAlias = async function (sectionAlias) {
                 model:      Section,
                 attributes: [ 'id', 'alias' ]
             }
-        ],
+		],
+		order: [['displayName', 'ASC']],
         group: ['Category.id'] 
     });
 };
@@ -125,7 +126,7 @@ const productIncludes	= [
 	},
 	{
 		model:  Comment,
-		attributes: ['id', 'text', 'createdAt'],
+		attributes: ['id', 'text', 'createdAt', 'rating'],
 		include: [{
 			model:  User,
 			attributes: ['id', 'username']

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Icons from '../assets/icons';
 import noImage from '../assets/images/image_not_found.png';
+import ReactStars from 'react-rating-stars-component';
 
 function CommentsContainer({comments}) {
     const [ pageSize, setPageSize ] = useState(5);
@@ -26,11 +27,14 @@ function CommentsContainer({comments}) {
                     {Icons.caretLeft()}
                 </span>
                 {
-                pages.map(p => <a
-                    role='button'
-                    onClick={() => changePage(p/pageSize)}>
+                pages.map(p =>
+                    <span
+                        className={(p/pageSize === pageNumber) ? "text-danger" : ""}
+                        role='button'
+                        onClick={() => changePage(p/pageSize)}
+                    >
                         {p/pageSize+1}&nbsp;
-                    </a>)
+                    </span>)
                 }
                 &nbsp;
                 <span role='button' onClick={() => changePage(pageNumber+1)}>
@@ -69,6 +73,12 @@ function CommentsContainer({comments}) {
                                     </small>
                                 </div>
                                 {comment.text}
+                                <ReactStars
+                                    size={30}
+                                    value={comment.rating}
+                                    edit={false}
+                                    isHalf={true}
+                                />
                             </div>
                         </li></>
                     )}
