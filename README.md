@@ -21,7 +21,7 @@ $ npm i
 
 All dependency references are stored in the `package.json` file, so `npm` should know what to do.
 
-##### Setting up environment variables <hr>
+### Setting up environment variables <hr>
 
 Create the `.env` file at the root of the project. This file is gitignored, so sensitive variables can be declared here.
 
@@ -46,9 +46,9 @@ NODE_ENV=development
 
 If you need to install MySQL server on your machine, check [this reference](https://dev.mysql.com/doc/refman/8.0/en/installing.html). If you have a remote host, then put all the data in the `.env` file.
 
-Once MySQL is installed and accessible, create the database and a user and reflect this data with your `.env` file.
+Once MySQL is installed and accessible, create the database and a user and reflect this data with your `.env` file and config files.
 
-The app will load example content automatically at the first run, so make sure you have access and permissions to the database and everything will be set up magically. It will check if the tables are empty and will populate them if that's the case and do nothing otherwise.
+The app will load example content automatically at the first run, so make sure you have access and permissions to the database and everything will be set up magically. It will check if the tables are empty and it will populate them if that's the case and do nothing otherwise.
 
 ## Frontend Installation
 
